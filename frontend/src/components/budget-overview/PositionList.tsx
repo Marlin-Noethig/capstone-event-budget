@@ -5,9 +5,9 @@ type PositionListProps = {
     positions: Position[]
 }
 
-export default function PositionList({positions}: PositionListProps) {
+export default function PositionList({positions}: PositionListProps){
 
-    return (
+    return(
         <div className={"position-list-container"}>
             {positions.map(position => <PositionCard
                 key={position.id}

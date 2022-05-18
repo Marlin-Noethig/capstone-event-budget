@@ -1,5 +1,6 @@
 import {Position} from "../../model/Position";
 import {netToGross} from "../../service/utils/taxHelpers";
+import "./styles/PositionCard.css"
 
 type PositionCardProps = {
     position: Position
