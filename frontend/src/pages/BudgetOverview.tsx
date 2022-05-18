@@ -5,7 +5,6 @@ export default function BudgetOverview(){
 
     const positions = usePositions();
 
-    console.log(positions);
 
 
     return(
