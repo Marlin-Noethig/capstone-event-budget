@@ -20,6 +20,7 @@ public class Position {
     private String name;
     private String description;
     private double price;
+    private double amount;
     private float tax;
 
 }
