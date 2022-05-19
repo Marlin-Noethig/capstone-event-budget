@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import {Position} from "../model/Position";
-import {getPositions} from "../service/api-service/positions-api-service";
+import {getPositions, postPosition} from "../service/api-service/positions-api-service";
 
 export default function usePositions(){
     const [positions, setPositions] = useState<Position[]>([]);
@@ -12,5 +12,12 @@ export default function usePositions(){
     },[])
 
 
-    return positions
+    const addNewPosition = (newPosition: Omit<Position, "id">) => {
+        postPosition(newPosition)
+            .then(addedPosition => setPositions([...positions, addedPosition]))
+            .catch(error => console.error(error));
+    }
+
+
+    return {positions, addNewPosition}
 }

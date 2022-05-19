@@ -5,7 +5,7 @@ import WritePosition from "../components/budget-overview/WritePosition";
 
 export default function BudgetOverview(){
 
-    const positions = usePositions();
+    const {positions, addNewPosition} = usePositions();
 
 
 
@@ -13,7 +13,7 @@ export default function BudgetOverview(){
         <div className={"budget-overview-container"}>
             <EventDetailView/>
             <PositionList positions={positions}/>
-            <WritePosition/>
+            <WritePosition addNewPosition={addNewPosition}/>
         </div>
 
     )
