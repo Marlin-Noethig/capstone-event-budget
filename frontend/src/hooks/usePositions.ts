@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import {Position} from "../model/Position";
-import {getPositions, postPosition} from "../service/api-service/positions-api-service";
+import {deletePositionById, getPositions, postPosition} from "../service/api-service/positions-api-service";
 
 export default function usePositions(){
     const [positions, setPositions] = useState<Position[]>([]);
@@ -18,6 +18,12 @@ export default function usePositions(){
             .catch(error => console.error(error));
     }
 
+    const removePositionById = (id: string) =>{
+        deletePositionById(id)
+            .then(() => setPositions(positions.filter(position => position.id !==id)))
+            .catch(error => console.error(error))
+    }
 
-    return {positions, addNewPosition}
+
+    return {positions, addNewPosition, removePositionById}
 }
