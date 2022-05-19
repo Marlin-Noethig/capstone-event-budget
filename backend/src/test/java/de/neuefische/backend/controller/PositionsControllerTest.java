@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class PositionsControllerTest {
 
     @LocalServerPort
-    private  int port;
+    private int port;
 
     @Autowired
     private WebTestClient webTestClient;
@@ -27,32 +27,15 @@ class PositionsControllerTest {
     private PositionsRepo positionsRepo;
 
     @BeforeEach
-    public void setUp(){
+    public void setUp() {
         positionsRepo.deleteAll();
     }
 
     @Test
     void getPositions() {
         //GIVEN
-        Position position1 = Position.builder()
-                .id("1")
-                .name("Bauzaunplane")
-                .description("Lorem ipsum")
-                .price(50)
-                .amount(10)
-                .tax(19)
-                .build();
-        Position position2 = Position.builder()
-                .id("2")
-                .name("Bauzaunplane")
-                .description("Lorem ipsum")
-                .price(50)
-                .amount(10)
-                .tax(19)
-                .build();
-
-        positionsRepo.insert(position1);
-        positionsRepo.insert(position2);
+        positionsRepo.insert(testPosition1);
+        positionsRepo.insert(testPposition2);
 
         //WHEN
         List<Position> actual = webTestClient.get()
@@ -64,33 +47,15 @@ class PositionsControllerTest {
                 .getResponseBody();
 
         //THEN
-        Position returnedPosition1 = Position.builder()
-                .id("1")
-                .name("Bauzaunplane")
-                .description("Lorem ipsum")
-                .price(50)
-                .amount(10)
-                .tax(19)
-                .build();
-        Position returnedPosition2 = Position.builder()
-                .id("2")
-                .name("Bauzaunplane")
-                .description("Lorem ipsum")
-                .price(50)
-                .amount(10)
-                .tax(19)
-                .build();
-
-        List<Position> expected = List.of(returnedPosition1, returnedPosition2);
+        List<Position> expected = List.of(expectedPosition1, expectedPosition2);
         assertEquals(expected, actual);
     }
 
 
-
-
     @Test
-    void postPosition(){
+    void postPosition() {
         //GIVEN
+        //dto for testPosition1
         PositionDto newPosition = PositionDto.builder()
                 .name("Bauzaunplane")
                 .description("Lorem ipsum")
@@ -112,17 +77,48 @@ class PositionsControllerTest {
         //THEN
         assertNotNull(actual);
         assertNotNull(actual.getId());
-        Position expected = Position.builder()
-                .id(actual.getId())
-                .name("Bauzaunplane")
-                .description("Lorem ipsum")
-                .price(50)
-                .amount(10)
-                .tax(19)
-                .build();
+        Position expected = testPosition1;
+        expected.setId(actual.getId());
         assertEquals(24, actual.getId().length());
         assertEquals(expected, actual);
     }
+
+
+    //global dummy Objects for build up / matching below
+    Position testPosition1 = Position.builder()
+            .id("1")
+            .name("Bauzaunplane")
+            .description("Lorem ipsum")
+            .price(50)
+            .amount(10)
+            .tax(19)
+            .build();
+    Position testPposition2 = Position.builder()
+            .id("2")
+            .name("Bauzaunplane")
+            .description("Lorem ipsum")
+            .price(50)
+            .amount(10)
+            .tax(19)
+            .build();
+
+    //global dummy Objects for expectations / matching above
+    Position expectedPosition1 = Position.builder()
+            .id("1")
+            .name("Bauzaunplane")
+            .description("Lorem ipsum")
+            .price(50)
+            .amount(10)
+            .tax(19)
+            .build();
+    Position expectedPosition2 = Position.builder()
+            .id("2")
+            .name("Bauzaunplane")
+            .description("Lorem ipsum")
+            .price(50)
+            .amount(10)
+            .tax(19)
+            .build();
 
 
 }

@@ -106,4 +106,17 @@ class PositionsServiceTest {
         verify(positionsRepo).insert(positionToAdd);
         assertEquals(expected, actual);
     }
+
+    @Test
+    void deletePositionById(){
+
+        //WHEN
+        positionsService.deletePositionById("1");
+
+        //THEN
+        verify(positionsRepo).deleteById("1");
+
+    }
+
+
 }
