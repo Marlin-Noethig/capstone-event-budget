@@ -83,6 +83,33 @@ class PositionsControllerTest {
         assertEquals(expected, actual);
     }
 
+    @Test
+    void deletePositionById(){
+        //GIVEN
+        positionsRepo.insert(testPosition1);
+        positionsRepo.insert(testPposition2);
+
+        //WHEN
+        webTestClient.delete()
+                .uri("http://localhost:" + port + "/api/positions/" + testPosition1.getId())
+                .exchange()
+                .expectStatus().is2xxSuccessful();
+
+        List<Position> actual = webTestClient.get()
+                .uri("http://localhost:" + port + "/api/positions/")
+                .exchange()
+                .expectStatus().is2xxSuccessful()
+                .expectBodyList(Position.class)
+                .returnResult()
+                .getResponseBody();
+
+        //THEN
+        List<Position> expected = List.of(expectedPosition2);
+        assertEquals(expected, actual);
+
+
+    }
+
 
     //global dummy Objects for build up / matching below
     Position testPosition1 = Position.builder()
