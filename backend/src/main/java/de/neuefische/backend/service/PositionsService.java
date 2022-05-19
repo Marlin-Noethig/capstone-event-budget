@@ -1,5 +1,6 @@
 package de.neuefische.backend.service;
 
+import de.neuefische.backend.dto.PositionDto;
 import de.neuefische.backend.model.Position;
 import de.neuefische.backend.repository.PositionsRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,5 +20,15 @@ public class PositionsService {
 
     public List<Position> getPositions() {
         return positionsRepo.findAll();
+    }
+
+    public Position addNewPosition(PositionDto newPosition){
+        Position positionToAdd = new Position();
+        positionToAdd.setName(newPosition.getName());
+        positionToAdd.setDescription(newPosition.getDescription());
+        positionToAdd.setPrice(newPosition.getPrice());
+        positionToAdd.setAmount(newPosition.getAmount());
+        positionToAdd.setTax(newPosition.getTax());
+        return positionsRepo.insert(positionToAdd);
     }
 }
