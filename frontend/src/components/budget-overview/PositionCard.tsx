@@ -7,6 +7,11 @@ type PositionCardProps = {
 }
 
 export default function PositionCard({position}:PositionCardProps){
+
+    const onDelete = () =>{
+        return
+    }
+
     return(
         <div className={"position-item-container"}>
             <ul>
@@ -18,6 +23,7 @@ export default function PositionCard({position}:PositionCardProps){
                 <li>tax: {position.tax}%</li>
                 <li>sum: {position.price * position.amount}€</li>
             </ul>
+            <button className={"delete-position-button"}>delete</button>
         </div>
     )
 }
