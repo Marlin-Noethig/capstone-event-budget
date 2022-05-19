@@ -1,0 +1,20 @@
+.write-position-form{
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    background-color: dimgray;
+    padding: 0 5px 0 5px;
+    margin-top: 20px;
+    border-radius: 3px;
+}
+
+.add-button{
+    cursor: pointer;
+    background-color: #78d593;
+    border: 0;
+    border-radius: 3px;
+    font-weight: bold;
+    color: #363434;
+    margin-left: 20px;
+
+}
