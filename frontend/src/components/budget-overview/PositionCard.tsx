@@ -1,30 +1,35 @@
+import ViewPosition from "./ViewPosition";
 import {Position} from "../../model/Position";
-import {netToGross} from "../../service/utils/taxHelpers";
-import "./styles/PositionCard.css"
+import {useState} from "react";
+import WritePosition from "./WritePosition";
 
 type PositionCardProps = {
     position: Position
     deletePosition: (id: string) => void
+    updatePosition: (id: string,newPosition: Omit<Position, "id">) => void
 }
 
-export default function PositionCard({position, deletePosition}:PositionCardProps){
 
-    const onDelete = () =>{
-        deletePosition(position.id)
+export default function PositionCard({position, deletePosition, updatePosition}: PositionCardProps) {
+
+    const [enableEdit, setEnableEdit] = useState<boolean>(false);
+
+    const toggleEnableEdit = () => {
+        setEnableEdit(!enableEdit)
     }
 
-    return(
-        <div className={"position-item-container"}>
-            <ul>
-                <li>name: {position.name}</li>
-                <li>description: {position.description}</li>
-                <li>amount: {position.amount}</li>
-                <li>net price: {position.price}€</li>
-                <li>gross price: {netToGross(position.price, position.tax)}€</li>
-                <li>tax: {position.tax}%</li>
-                <li>sum: {position.price * position.amount}€</li>
-            </ul>
-            <button className={"delete-position-button"} onClick={onDelete}>delete</button>
+    return (
+        <div className={"position-container"}>
+            {enableEdit ? <WritePosition mode={"EDIT"}
+                                         position={position}
+                                         toggleEnableEdit={toggleEnableEdit}
+                                         updatePosition={updatePosition}
+            /> : <ViewPosition position={position}
+                               deletePosition={deletePosition}
+                               toggleEnableEdit={toggleEnableEdit}
+            />
+            }
+
         </div>
     )
 }

@@ -37,5 +37,5 @@ export default function usePositions(){
     }
 
 
-    return {positions, addNewPosition, removePositionById}
+    return {positions, addNewPosition, updatePositionById, removePositionById}
 }

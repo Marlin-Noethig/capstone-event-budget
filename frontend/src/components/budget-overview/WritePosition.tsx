@@ -5,36 +5,67 @@ import "./styles/WritePosition.css"
 
 
 type WritePositionProps = {
-    addNewPosition: (newPosition: Omit<Position, "id">) => void
+    mode: string,
+    position?: Position,
+    addNewPosition?: (newPosition: Omit<Position, "id">) => void,
+    toggleEnableAdd?: () => void,
+    toggleEnableEdit?: () => void
+    updatePosition?: (id: string, newPosition: Omit<Position, "id">) => void
 }
 
-export default function WritePosition({addNewPosition}:WritePositionProps) {
-    const [name, setName] = useState<string>("");
-    const [description, setDescription] = useState<string>("");
-    const [amount, setAmount] = useState<number>(0);
-    const [netPrice, setNetPrice] = useState<number>(0);
-    const [grossPrice, setGrossPrice] = useState<number>(0);
-    const [tax, setTax] = useState<number>(19);
+export default function WritePosition({
+                                          mode,
+                                          position,
+                                          addNewPosition,
+                                          toggleEnableAdd,
+                                          toggleEnableEdit,
+                                          updatePosition
+                                      }: WritePositionProps) {
+
+    const [name, setName] = useState<string>(position ? position.name : "");
+    const [description, setDescription] = useState<string>(position ? position.description : "");
+    const [amount, setAmount] = useState<number>(position ? position.amount : 0);
+    const [netPrice, setNetPrice] = useState<number>(position ? position.price : 0);
+    const [grossPrice, setGrossPrice] = useState<number>(position ? netToGross(position.price, position.tax) : 0);
+    const [tax, setTax] = useState<number>(position ? position.tax : 19);
 
     const onSubmitNewPosition = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
-        if (!name){
+        if (!name) {
             alert("Name must be set")
             return
         }
-        if(amount <= 0){
+        if (amount <= 0) {
             alert("amount must be more than 0")
             return
         }
-        const positionToAdd = {
+        const positionValues = {
             name: name,
             description: description,
             amount: amount,
             price: netPrice,
             tax: tax
         }
-        addNewPosition(positionToAdd)
-        clearForm()
+
+        //Typescript made me encapsulate the function call into conditionals
+        if (mode === "ADD") {
+            if (addNewPosition) {
+                addNewPosition(positionValues);
+            }
+            if (toggleEnableAdd) {
+                toggleEnableAdd();
+            }
+        }
+        if (mode === "EDIT") {
+            if (position) {
+                if (updatePosition) {
+                    updatePosition(position.id, positionValues)
+                }
+            }
+            if (toggleEnableEdit) {
+                toggleEnableEdit();
+            }
+        }
     }
 
     const onChangeNetPrice = (e: ChangeEvent<HTMLInputElement>) => {
@@ -55,15 +86,6 @@ export default function WritePosition({addNewPosition}:WritePositionProps) {
         setGrossPrice(netToGross(netPrice, newTax))
     }
 
-    const clearForm = () => {
-        setName("")
-        setDescription("")
-        setAmount(0)
-        setNetPrice(0)
-        setGrossPrice(0)
-        setTax(19)
-    }
-
     return (
         <form onSubmit={onSubmitNewPosition} className={"write-position-form"}>
             <label>name:</label>
@@ -73,7 +95,7 @@ export default function WritePosition({addNewPosition}:WritePositionProps) {
             <input type={"text"} value={description} onChange={e => setDescription(e.target.value)}/><br/>
 
             <label>amount:</label>
-            <input type={"number"} value={amount} onChange={e => setAmount(Number(e.target.value))}/><br/>
+            <input type={"number"} value={amount} min={0} onChange={e => setAmount(Number(e.target.value))}/><br/>
 
             <label>tax:</label>
             <select value={tax} onChange={onChangeTax}>
@@ -82,14 +104,21 @@ export default function WritePosition({addNewPosition}:WritePositionProps) {
                 <option value="0">0 %</option>
             </select><br/>
 
-
             <label>net price:</label>
             <input type={"number"} value={netPrice} onChange={onChangeNetPrice}/><br/>
 
             <label>gross price:</label>
             <input type={"number"} value={grossPrice} onChange={onChangeGrossPrice}/><br/>
 
-            <input type={"submit"} value={"add"} className={"add-button"}/>
+            {mode === "ADD" ?
+                <div className={"add-mode-buttons-wrapper"}>
+                    <input type={"submit"} value={"add"} className={"add-button"}/>
+                    <button onClick={toggleEnableAdd}>X</button>
+                </div>
+                :
+                <input type={"submit"} value={"save"} className={"save-button"}/>
+            }
+
         </form>
     )
 }
