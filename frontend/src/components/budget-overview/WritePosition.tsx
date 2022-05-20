@@ -118,7 +118,6 @@ export default function WritePosition({
                 :
                 <input type={"submit"} value={"save"} className={"save-button"}/>
             }
-
         </form>
     )
 }
