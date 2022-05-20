@@ -29,7 +29,6 @@ export default function PositionCard({position, deletePosition, updatePosition}:
                                toggleEnableEdit={toggleEnableEdit}
             />
             }
-
         </div>
     )
 }
