@@ -67,7 +67,6 @@ class PositionsServiceTest {
         assertEquals(expected, actual);
     }
 
-
     @Test
     void updatePositionById_IdExists(){
         //GIVEN
