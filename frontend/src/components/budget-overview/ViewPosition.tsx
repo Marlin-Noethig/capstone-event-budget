@@ -17,13 +17,13 @@ export default function ViewPosition({position, deletePosition, toggleEnableEdit
     return(
         <div className={"position-item-container"}>
             <ul>
-                <li>name: {position.name}</li>
-                <li>description: {position.description}</li>
-                <li>amount: {position.amount}</li>
-                <li>net price: {position.price}€</li>
-                <li>gross price: {netToGross(position.price, position.tax)}€</li>
-                <li>tax: {position.tax}%</li>
-                <li>sum: {position.price * position.amount}€</li>
+                <li>{position.name}</li>
+                <li>{position.description}</li>
+                <li>{position.amount}</li>
+                <li>{position.tax}%</li>
+                <li>{position.price.toFixed(2)}€</li>
+                <li>{netToGross(position.price, position.tax).toFixed(2) }€</li>
+                <li>{(position.price * position.amount).toFixed(2)}€</li>
             </ul>
             <div className={"position-view-buttons-container"}>
                 <button className={"edit-position-button"} onClick={toggleEnableEdit}>edit</button>

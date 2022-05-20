@@ -1,11 +1,12 @@
 .write-position-form{
-    display: flex;
-    justify-content: left;
+    display: grid;
+    grid-template-columns: 200px 600px 80px 50px repeat(2, 100px)  120px;
     align-items: center;
     background-color: dimgray;
     padding: 0 5px 0 5px;
-    margin: 15px 0 15px 0;
+    margin: 10px 0 10px 0;
     border-radius: 3px;
+
 }
 
 .add-button{
