@@ -35,6 +35,5 @@ export default function usePositions(){
             .catch(error => console.error(error))
     }
 
-
     return {positions, addNewPosition, updatePositionById, removePositionById}
 }
