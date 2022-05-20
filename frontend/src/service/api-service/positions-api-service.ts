@@ -14,8 +14,8 @@ export const postPosition: (newPosition: Omit<Position, "id">) => Promise<Positi
         .then(response => response.data)
 }
 
-export const putPositionById: (id: string, updatedPosition : Omit<Position, "id">) => Promise<Position> = (id, updatedPosition) =>{
-    return axios.put(baseUrl + id, updatedPosition)
+export const putPositionById: (id: string, positionToUpdate : Omit<Position, "id">) => Promise<Position> = (id, positionToUpdate) =>{
+    return axios.put(baseUrl + id, positionToUpdate)
         .then(response => response.data)
 }
 
