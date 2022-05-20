@@ -85,7 +85,6 @@ export default function WritePosition({
         setTax(newTax)
         setGrossPrice(netToGross(netPrice, newTax))
     }
-
     return (
         <form onSubmit={onSubmitNewPosition} className={"write-position-form"}>
             <label>name:</label>
