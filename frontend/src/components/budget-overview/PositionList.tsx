@@ -17,8 +17,6 @@ export default function PositionList({positions, deletePosition, addNewPosition,
     const toggleEnableAdd = () => {
         setEnableAdd(!enableAdd)
     }
-
-
     return (
         <div className={"position-list-container"}>
             {positions.map(position => <PositionCard
