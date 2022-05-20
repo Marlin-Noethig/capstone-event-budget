@@ -114,7 +114,6 @@ class PositionsControllerTest {
         assertEquals(expected, actual);
     }
 
-
     @Test
     void putPositionById_unsuccessful(){
         //GIVEN
