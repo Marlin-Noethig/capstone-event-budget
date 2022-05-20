@@ -14,7 +14,6 @@ export default function BudgetOverview(){
                           deletePosition={removePositionById}
                           addNewPosition={addNewPosition}
             />
-
         </div>
     )
 }
