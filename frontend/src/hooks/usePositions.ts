@@ -29,7 +29,6 @@ export default function usePositions(){
             .catch(error => console.error(error));
     }
 
-
     const removePositionById = (id: string) =>{
         deletePositionById(id)
             .then(() => setPositions(positions.filter(position => position.id !==id)))
