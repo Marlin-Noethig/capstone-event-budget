@@ -1,6 +1,7 @@
 package de.neuefische.backend.model;
 
 
+import de.neuefische.backend.dto.PositionDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,6 +15,14 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Builder
 @Document (collection = "positions")
 public class Position {
+
+    public Position(PositionDto dto) {
+        this.name = dto.getName();
+        this.description = dto.getDescription();
+        this.price = dto.getPrice();
+        this.amount = dto.getAmount();
+        this.tax = dto.getTax();
+    }
 
     @Id
     private String id;

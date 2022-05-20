@@ -24,12 +24,7 @@ public class PositionsService {
     }
 
     public Position addNewPosition(PositionDto newPosition){
-        Position positionToAdd = new Position();
-        positionToAdd.setName(newPosition.getName());
-        positionToAdd.setDescription(newPosition.getDescription());
-        positionToAdd.setPrice(newPosition.getPrice());
-        positionToAdd.setAmount(newPosition.getAmount());
-        positionToAdd.setTax(newPosition.getTax());
+        Position positionToAdd = new Position(newPosition);
         return positionsRepo.insert(positionToAdd);
     }
 
@@ -37,12 +32,8 @@ public class PositionsService {
         if(!positionsRepo.existsById(id)){
             throw new NoSuchElementException("Position with this Id does not exist.");
         }
-        Position positionToSave = new Position();
-        positionToSave.setName(updatedPosition.getName());
-        positionToSave.setDescription(updatedPosition.getDescription());
-        positionToSave.setPrice(updatedPosition.getPrice());
-        positionToSave.setAmount(updatedPosition.getAmount());
-        positionToSave.setTax(updatedPosition.getTax());
+        Position positionToSave = new Position(updatedPosition);
+        positionToSave.setId(id);
         return positionsRepo.save(positionToSave);
     }
 
