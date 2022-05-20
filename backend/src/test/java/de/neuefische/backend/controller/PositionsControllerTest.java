@@ -137,7 +137,6 @@ class PositionsControllerTest {
 
     }
 
-
     @Test
     void deletePositionById(){
         //GIVEN
