@@ -84,6 +84,60 @@ class PositionsControllerTest {
     }
 
     @Test
+    void putPositionById_successful(){
+        //GIVEN
+        positionsRepo.insert(testPosition1);
+
+        PositionDto updatedPosition = PositionDto.builder()
+                .name("Bauzaunplane")
+                .description("Lorem ipsum")
+                .price(50)
+                .amount(10)
+                .tax(7) // changed tax in update
+                .build();
+
+        //WHEN
+        Position actual = webTestClient.put()
+                .uri("http://localhost:" + port + "/api/positions/" + testPosition1.getId())
+                .bodyValue(updatedPosition)
+                .exchange()
+                .expectStatus().is2xxSuccessful()
+                .expectBody(Position.class)
+                .returnResult()
+                .getResponseBody();
+
+        //Then
+        assertNotNull(actual);
+        assertNotNull(actual.getId());
+        Position expected = expectedPosition1;
+        expected.setTax(7);
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void putPositionById_unsuccessful(){
+        //GIVEN
+        positionsRepo.insert(testPosition1);
+        String wrongId = "123";
+
+        PositionDto updatedPosition = PositionDto.builder()
+                .name("Bauzaunplane")
+                .description("Lorem ipsum")
+                .price(50)
+                .amount(10)
+                .tax(7) // changed tax in update
+                .build();
+
+        //WHEN
+        webTestClient.put()
+                .uri("http://localhost:" + port + "/api/positions/" + wrongId)
+                .bodyValue(updatedPosition)
+                .exchange()
+                .expectStatus().is5xxServerError(); //needs to be refactored after adding appropriate controller advice
+
+    }
+
+    @Test
     void deletePositionById(){
         //GIVEN
         positionsRepo.insert(testPosition1);
@@ -106,7 +160,6 @@ class PositionsControllerTest {
         //THEN
         List<Position> expected = List.of(expectedPosition2);
         assertEquals(expected, actual);
-
 
     }
 

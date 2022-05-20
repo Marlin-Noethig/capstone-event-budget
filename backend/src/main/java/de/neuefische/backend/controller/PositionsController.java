@@ -29,6 +29,11 @@ public class PositionsController {
         return positionsService.addNewPosition(newPosition);
     }
 
+    @PutMapping("{id}")
+    public Position putPositionById(@PathVariable String id, @RequestBody PositionDto updatedPosition){
+        return positionsService.updatePositionById(id, updatedPosition);
+    }
+
     @DeleteMapping("{id}")
     public void deletePositionById(@PathVariable String id){
         positionsService.deletePositionById(id);
