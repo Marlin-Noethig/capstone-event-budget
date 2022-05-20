@@ -106,7 +106,6 @@ class PositionsControllerTest {
                 .returnResult()
                 .getResponseBody();
 
-
         //Then
         assertNotNull(actual);
         assertNotNull(actual.getId());
