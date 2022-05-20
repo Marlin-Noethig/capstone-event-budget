@@ -31,4 +31,8 @@ public class PositionsService {
         positionToAdd.setTax(newPosition.getTax());
         return positionsRepo.insert(positionToAdd);
     }
+
+    public void deletePositionById(String id){
+        positionsRepo.deleteById(id);
+    }
 }

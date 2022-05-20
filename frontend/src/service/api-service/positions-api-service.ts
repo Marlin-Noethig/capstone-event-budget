@@ -13,3 +13,7 @@ export const postPosition: (newPosition: Omit<Position, "id">) => Promise<Positi
     return axios.post(baseUrl, newPosition)
         .then(response => response.data)
 }
+
+export const deletePositionById: (id: string) => Promise<void> = (id) =>{
+    return axios.delete(baseUrl + id)
+}

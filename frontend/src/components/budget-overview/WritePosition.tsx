@@ -1,6 +1,7 @@
 import {ChangeEvent, FormEvent, useState} from "react";
 import {grossToNet, netToGross} from "../../service/utils/taxHelpers";
 import {Position} from "../../model/Position";
+import "./styles/WritePosition.css"
 
 
 type WritePositionProps = {
@@ -64,7 +65,7 @@ export default function WritePosition({addNewPosition}:WritePositionProps) {
     }
 
     return (
-        <form onSubmit={onSubmitNewPosition}>
+        <form onSubmit={onSubmitNewPosition} className={"write-position-form"}>
             <label>name:</label>
             <input type={"text"} value={name} onChange={e => setName(e.target.value)}/><br/>
 
@@ -88,7 +89,7 @@ export default function WritePosition({addNewPosition}:WritePositionProps) {
             <label>gross price:</label>
             <input type={"number"} value={grossPrice} onChange={onChangeGrossPrice}/><br/>
 
-            <input type={"submit"} value={"add"}/>
+            <input type={"submit"} value={"add"} className={"add-button"}/>
         </form>
     )
 }
