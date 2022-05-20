@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class PositionsService {
@@ -30,6 +31,19 @@ public class PositionsService {
         positionToAdd.setAmount(newPosition.getAmount());
         positionToAdd.setTax(newPosition.getTax());
         return positionsRepo.insert(positionToAdd);
+    }
+
+    public Position updatePositionById(String id, PositionDto updatedPosition){
+        if(!positionsRepo.existsById(id)){
+            throw new NoSuchElementException("Position with this Id does not exist.");
+        }
+        Position positionToSave = new Position();
+        positionToSave.setName(updatedPosition.getName());
+        positionToSave.setDescription(updatedPosition.getDescription());
+        positionToSave.setPrice(updatedPosition.getPrice());
+        positionToSave.setAmount(updatedPosition.getAmount());
+        positionToSave.setTax(updatedPosition.getTax());
+        return positionsRepo.save(positionToSave);
     }
 
     public void deletePositionById(String id){
