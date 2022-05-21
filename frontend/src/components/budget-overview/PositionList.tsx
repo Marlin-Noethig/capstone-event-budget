@@ -2,6 +2,7 @@ import {Position} from "../../model/Position";
 import WritePosition from "./WritePosition";
 import {useState} from "react";
 import PositionCard from "./PositionCard";
+import PositionListHead from "./PositionListHead";
 
 type PositionListProps = {
     positions: Position[],
@@ -19,6 +20,7 @@ export default function PositionList({positions, deletePosition, addNewPosition,
     }
     return (
         <div className={"position-list-container"}>
+            <PositionListHead/>
             {positions.map(position => <PositionCard
                 key={position.id}
                 position={position}

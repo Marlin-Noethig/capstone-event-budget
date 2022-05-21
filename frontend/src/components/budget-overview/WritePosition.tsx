@@ -87,27 +87,17 @@ export default function WritePosition({
     }
     return (
         <form onSubmit={onSubmitNewPosition} className={"write-position-form"}>
-            <label>name:</label>
-            <input type={"text"} value={name} onChange={e => setName(e.target.value)}/><br/>
-
-            <label>description:</label>
-            <input type={"text"} value={description} onChange={e => setDescription(e.target.value)}/><br/>
-
-            <label>amount:</label>
-            <input type={"number"} value={amount} min={0} onChange={e => setAmount(Number(e.target.value))}/><br/>
-
-            <label>tax:</label>
+            <input type={"text"} value={name} onChange={e => setName(e.target.value)}/>
+            <input type={"text"} value={description} onChange={e => setDescription(e.target.value)}/>
+            <input type={"number"} value={amount} min={0} onChange={e => setAmount(Number(e.target.value))}/>
             <select value={tax} onChange={onChangeTax}>
                 <option value="19">19 %</option>
                 <option value="7">7 %</option>
                 <option value="0">0 %</option>
-            </select><br/>
-
-            <label>net price:</label>
-            <input type={"number"} value={netPrice} onChange={onChangeNetPrice}/><br/>
-
-            <label>gross price:</label>
-            <input type={"number"} value={grossPrice} onChange={onChangeGrossPrice}/><br/>
+            </select>
+            <input type={"number"} value={netPrice} onChange={onChangeNetPrice}/>
+            <input type={"number"} value={grossPrice} onChange={onChangeGrossPrice}/>
+            <p>{(netPrice * amount).toFixed(2)}</p>
 
             {mode === "ADD" ?
                 <div className={"add-mode-buttons-wrapper"}>
