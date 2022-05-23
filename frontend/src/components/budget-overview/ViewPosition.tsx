@@ -16,7 +16,7 @@ export default function ViewPosition({position, deletePosition, toggleEnableEdit
 
     return(
         <div className={"position-item-container"}>
-            <ul>
+            <ul className={"overview-grid-item"}>
                 <li>{position.name}</li>
                 <li>{position.description}</li>
                 <li>{position.amount}</li>

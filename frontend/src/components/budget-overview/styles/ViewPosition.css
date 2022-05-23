@@ -7,10 +7,13 @@
     border-radius: 3px;
 }
 
-.position-item-container ul{
-    list-style-type: none;
+.overview-grid-item{
     display: grid;
     grid-template-columns: 200px 600px 80px 50px repeat(2, 100px) 120px;
+}
+
+.position-item-container ul{
+    list-style-type: none;
     margin: 0;
     padding: 0;
 

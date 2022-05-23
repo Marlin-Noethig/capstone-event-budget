@@ -1,7 +1,5 @@
 .position-list-head ul{
     list-style-type: none;
-    display: grid;
-    grid-template-columns: 200px 600px 80px 50px repeat(2, 100px)  120px;
     padding-left: 5px;
     margin: 0;
 }
