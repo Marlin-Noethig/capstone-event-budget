@@ -3,7 +3,7 @@ import "./styles/PositionListHead.css"
 export default function PositionListHead(){
     return(
         <div className={"position-list-head"}>
-            <ul>
+            <ul className={"overview-grid-item"}>
                 <li>Name</li>
                 <li>Description</li>
                 <li>Amount</li>

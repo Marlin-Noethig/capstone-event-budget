@@ -87,26 +87,31 @@ export default function WritePosition({
     }
     return (
         <form onSubmit={onSubmitNewPosition} className={"write-position-form"}>
-            <input type={"text"} value={name} onChange={e => setName(e.target.value)}/>
-            <input type={"text"} value={description} onChange={e => setDescription(e.target.value)}/>
-            <input type={"number"} value={amount} min={0} onChange={e => setAmount(Number(e.target.value))}/>
-            <select value={tax} onChange={onChangeTax}>
-                <option value="19">19 %</option>
-                <option value="7">7 %</option>
-                <option value="0">0 %</option>
-            </select>
-            <input type={"number"} value={netPrice} onChange={onChangeNetPrice}/>
-            <input type={"number"} value={grossPrice} onChange={onChangeGrossPrice}/>
-            <p>{(netPrice * amount).toFixed(2)}</p>
+            <div className={"write-position-form-inputs overview-grid-item"}>
+                <input type={"text"} value={name} onChange={e => setName(e.target.value)}/>
+                <input type={"text"} value={description} onChange={e => setDescription(e.target.value)}/>
+                <input type={"number"} value={amount} min={0} step={"any"}
+                       onChange={e => setAmount(Number(e.target.value))}/>
+                <select value={tax} onChange={onChangeTax}>
+                    <option value="19">19 %</option>
+                    <option value="7">7 %</option>
+                    <option value="0">0 %</option>
+                </select>
+                <input type={"number"} value={netPrice} step={"any"} onChange={onChangeNetPrice}/>
+                <input type={"number"} value={grossPrice} step={"any"} onChange={onChangeGrossPrice}/>
+                <span className={"current-sum"}>{(netPrice * amount).toFixed(2)} €</span>
+            </div>
 
-            {mode === "ADD" ?
-                <div className={"add-mode-buttons-wrapper"}>
-                    <input type={"submit"} value={"add"} className={"add-button"}/>
-                    <button onClick={toggleEnableAdd}>X</button>
-                </div>
-                :
-                <input type={"submit"} value={"save"} className={"save-button"}/>
-            }
+            <div className={"write-position-form-buttons"}>
+                {mode === "ADD" ?
+                    <div className={"add-mode-buttons-wrapper"}>
+                        <input type={"submit"} value={"add"} className={"add-button"}/>
+                    </div>
+                    :
+                    <input type={"submit"} value={"save"} className={"save-button"}/>
+                }
+                <button onClick={toggleEnableAdd ? toggleEnableAdd : toggleEnableEdit}>X</button>
+            </div>
         </form>
     )
 }

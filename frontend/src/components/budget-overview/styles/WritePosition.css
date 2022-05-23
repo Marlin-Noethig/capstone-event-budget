@@ -1,24 +1,39 @@
 .write-position-form{
-    display: grid;
-    grid-template-columns: 200px 600px 80px 50px repeat(2, 100px)  120px;
     align-items: center;
     background-color: dimgray;
     padding: 0 5px 0 5px;
     margin: 10px 0 10px 0;
     border-radius: 3px;
+    display: flex;
+    justify-content: space-between;
 
 }
 
+.write-position-form-inputs{
+    margin: 5px 0 5px 0;
+}
+
 .add-button{
-    cursor: pointer;
     background-color: #78d593;
-    border: 0;
-    border-radius: 3px;
-    font-weight: bold;
-    color: #363434;
-    margin-left: 20px;
 }
 
 .add-mode-buttons-wrapper{
     display: flex;
+}
+
+.write-position-form-buttons{
+    display: flex;
+}
+
+.write-position-form-buttons button{
+    cursor: pointer;
+    border: 0;
+    border-radius: 3px;
+    font-weight: bold;
+    color: #363434;
+}
+
+.current-sum{
+    color: black;
+    text-decoration: underline;
 }
