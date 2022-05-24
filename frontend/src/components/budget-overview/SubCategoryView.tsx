@@ -3,7 +3,7 @@ import "./styles/SubCategoryView.css"
 import PositionList from "./PositionList";
 import {Position} from "../../model/Position";
 import {useEffect, useState} from "react";
-import {getSumFromPositions} from "../../service/utils/sumHelpers";
+import {getSubSum} from "../../service/utils/sumHelpers";
 
 type SubCategoryViewProps = {
     subCategory: SubCategory,
@@ -24,15 +24,19 @@ export default function SubCategoryView({
     const filteredPositions = positions.filter(position => position.subCategoryId === subCategory.id)
     const [enableAdd, setEnableAdd] = useState<boolean>(false);
     const [subSum, setSubSum] = useState<number>(0)
+    const [collapsed, setCollapsed] = useState<boolean>(true);
 
     const toggleEnableAdd = () => {
         setEnableAdd(!enableAdd)
     }
 
     useEffect(() => {
-        setSubSum(getSumFromPositions(filteredPositions))
-    }, [filteredPositions])
+            setSubSum(getSubSum(filteredPositions))
+        }, [filteredPositions])
 
+    const  toggleCollapsed = () => {
+        setCollapsed(!collapsed)
+    }
 
     return (
         <div>
@@ -43,16 +47,17 @@ export default function SubCategoryView({
                 </div>
                 <div className={"sub-category-end"}>
                     <span>{subSum.toFixed(2)} €</span>
+                    <button className={"collapse-category-button"} onClick={toggleCollapsed}>{collapsed ? "˄" : "˅"}</button>
                 </div>
             </div>
-            <PositionList positions={filteredPositions}
+            {collapsed && <PositionList positions={filteredPositions}
                           addNewPosition={addNewPosition}
                           deletePosition={deletePosition}
                           updatePosition={updatePosition}
                           subCategoryId={subCategory.id}
                           enableAdd={enableAdd}
                           toggleEnableAdd={toggleEnableAdd}
-            />
+            />}
         </div>
     )
 }
