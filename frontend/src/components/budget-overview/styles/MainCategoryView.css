@@ -17,4 +17,11 @@
 
 .collapse-category-button{
     margin-left: 10px;
+    margin-right: 2px;
+    border: 0;
+    font-weight: bold;
+    background-color: rgba(71, 101, 101, 0.61);
+    cursor: pointer;
+    border-radius: 100%;
 }
+

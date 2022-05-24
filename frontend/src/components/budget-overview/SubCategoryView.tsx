@@ -2,7 +2,7 @@ import {SubCategory} from "../../model/SubCategory";
 import "./styles/SubCategoryView.css"
 import PositionList from "./PositionList";
 import {Position} from "../../model/Position";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import {getSubSum} from "../../service/utils/sumHelpers";
 
 type SubCategoryViewProps = {
@@ -23,18 +23,13 @@ export default function SubCategoryView({
 
     const filteredPositions = positions.filter(position => position.subCategoryId === subCategory.id)
     const [enableAdd, setEnableAdd] = useState<boolean>(false);
-    const [subSum, setSubSum] = useState<number>(0)
-    const [collapsed, setCollapsed] = useState<boolean>(true);
+    const [collapsed, setCollapsed] = useState<boolean>(false);
 
     const toggleEnableAdd = () => {
         setEnableAdd(!enableAdd)
     }
 
-    useEffect(() => {
-            setSubSum(getSubSum(filteredPositions))
-        }, [filteredPositions])
-
-    const  toggleCollapsed = () => {
+    const toggleCollapsed = () => {
         setCollapsed(!collapsed)
     }
 
@@ -46,17 +41,18 @@ export default function SubCategoryView({
                     <button onClick={toggleEnableAdd}>+</button>
                 </div>
                 <div className={"sub-category-end"}>
-                    <span>{subSum.toFixed(2)} €</span>
-                    <button className={"collapse-category-button"} onClick={toggleCollapsed}>{collapsed ? "˄" : "˅"}</button>
+                    <span>{getSubSum(filteredPositions).toFixed(2)} €</span>
+                    <button className={"collapse-category-button"}
+                            onClick={toggleCollapsed}>{collapsed ? "˄" : "˅"}</button>
                 </div>
             </div>
             {collapsed && <PositionList positions={filteredPositions}
-                          addNewPosition={addNewPosition}
-                          deletePosition={deletePosition}
-                          updatePosition={updatePosition}
-                          subCategoryId={subCategory.id}
-                          enableAdd={enableAdd}
-                          toggleEnableAdd={toggleEnableAdd}
+                                        addNewPosition={addNewPosition}
+                                        deletePosition={deletePosition}
+                                        updatePosition={updatePosition}
+                                        subCategoryId={subCategory.id}
+                                        enableAdd={enableAdd}
+                                        toggleEnableAdd={toggleEnableAdd}
             />}
         </div>
     )

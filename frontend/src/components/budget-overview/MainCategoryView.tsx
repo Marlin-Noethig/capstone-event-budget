@@ -3,7 +3,7 @@ import {SubCategory} from "../../model/SubCategory";
 import SubCategoryView from "./SubCategoryView";
 import "./styles/MainCategoryView.css"
 import {Position} from "../../model/Position";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import {getMainSum} from "../../service/utils/sumHelpers";
 
 type MainCategoryViewProps = {
@@ -24,18 +24,12 @@ export default function MainCategoryView({
                                              updatePosition
                                          }: MainCategoryViewProps) {
 
-    const [sum, setSum] = useState<number>(0);
     const [collapsed, setCollapsed] = useState<boolean>(true);
 
     const filteredSubCategories = subCategories.filter(subCategory => subCategory.mainCategoryId === mainCategory.id)
     const isIncomeClassName = mainCategory.income ? "incomes" : "expenses"
 
-
-    useEffect(() => {
-        setSum(getMainSum(positions, filteredSubCategories))
-    }, [filteredSubCategories, positions])
-
-    const  toggleCollapsed = () => {
+    const toggleCollapsed = () => {
         setCollapsed(!collapsed)
     }
 
@@ -46,16 +40,17 @@ export default function MainCategoryView({
                     {mainCategory.name}
                 </span>
                 <span className={"main-sum"}>
-                    {sum.toFixed(2)} €
-                    <button className={"collapse-category-button"} onClick={toggleCollapsed}>{collapsed ? "˄" : "˅"}</button>
+                    {getMainSum(positions, filteredSubCategories).toFixed(2)} €
+                    <button className={"collapse-category-button"}
+                            onClick={toggleCollapsed}>{collapsed ? "˄" : "˅"}</button>
                 </span>
             </div>
             {collapsed && filteredSubCategories.map(subCategory => <SubCategoryView key={subCategory.id}
-                                                                       subCategory={subCategory}
-                                                                       positions={positions}
-                                                                       addNewPosition={addNewPosition}
-                                                                       deletePosition={deletePosition}
-                                                                       updatePosition={updatePosition}
+                                                                                    subCategory={subCategory}
+                                                                                    positions={positions}
+                                                                                    addNewPosition={addNewPosition}
+                                                                                    deletePosition={deletePosition}
+                                                                                    updatePosition={updatePosition}
 
             />)}
         </div>
