@@ -22,7 +22,6 @@ class MainCategoriesControllerTest {
     @Autowired
     private WebTestClient webTestClient;
 
-
     @Autowired
     private MainCategoriesRepo mainCategoriesRepo;
 

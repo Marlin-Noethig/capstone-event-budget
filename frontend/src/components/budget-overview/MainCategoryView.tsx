@@ -12,7 +12,6 @@ export default function MainCategoryView({mainCategory, subCategories}: MainCate
 
     const filteredSubCategories = subCategories.filter(subCategory => subCategory.mainCategoryId === mainCategory.id)
     const isIncomeClassName = mainCategory.income ? "incomes" : "expenses"
-    console.log(mainCategory)
     return (
         <div>
             <div className={"category-view " + isIncomeClassName}>{mainCategory.name}</div>
