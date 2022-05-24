@@ -1,6 +1,5 @@
 package de.neuefische.backend.controller;
 
-
 import de.neuefische.backend.model.MainCategory;
 import de.neuefische.backend.service.MainCategoriesService;
 import org.springframework.beans.factory.annotation.Autowired;
