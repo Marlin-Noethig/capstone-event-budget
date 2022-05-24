@@ -1,17 +1,28 @@
 import WritePosition from "./WritePosition";
-import {useState} from "react";
 import PositionCard from "./PositionCard";
 import PositionListHead from "./PositionListHead";
-import usePositions from "../../hooks/usePositions";
+import {Position} from "../../model/Position";
 
-export default function PositionList() {
+type PositionListProps = {
+    positions: Position[],
+    addNewPosition: (newPosition: Omit<Position, "id">) => void,
+    deletePosition: (id: string) => void,
+    updatePosition: (id: string, newPosition: Omit<Position, "id">) => void,
+    subCategoryId: string,
+    enableAdd: boolean
+    toggleEnableAdd: () => void
+}
 
-    const {positions, addNewPosition, updatePositionById, removePositionById} = usePositions();
-    const [enableAdd, setEnableAdd] = useState<boolean>(false)
+export default function PositionList({
+                                         positions,
+                                         addNewPosition,
+                                         deletePosition,
+                                         updatePosition,
+                                         subCategoryId,
+                                         enableAdd,
+                                         toggleEnableAdd
+                                     }: PositionListProps) {
 
-    const toggleEnableAdd = () => {
-        setEnableAdd(!enableAdd)
-    }
 
     return (
         <div className={"position-list-container"}>
@@ -19,12 +30,13 @@ export default function PositionList() {
             {positions.map(position => <PositionCard
                 key={position.id}
                 position={position}
-                deletePosition={removePositionById}
-                updatePosition={updatePositionById}/>)}
-            {enableAdd ? <WritePosition mode={"ADD"}
-                                        addNewPosition={addNewPosition}
+                deletePosition={deletePosition}
+                updatePosition={updatePosition}
+                subCategoryId={subCategoryId}/>)}
+            {enableAdd && <WritePosition addNewPosition={addNewPosition}
                                         toggleEnableAdd={toggleEnableAdd}
-            /> : <button onClick={toggleEnableAdd}>add new</button>}
+                                        subCategoryId={subCategoryId}
+            />}
         </div>
     )
 }

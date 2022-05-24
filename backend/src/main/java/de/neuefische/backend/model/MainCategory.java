@@ -17,5 +17,5 @@ public class MainCategory {
     @Id
     private String id;
     private String name;
-    private boolean isIncome;
+    private boolean income;
 }

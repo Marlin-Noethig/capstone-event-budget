@@ -31,25 +31,25 @@ class MainCategoriesServiceTest {
     MainCategory testMainCategory1 = MainCategory.builder()
             .id("1")
             .name("Production")
-            .isIncome(false)
+            .income(false)
             .build();
 
     MainCategory testMainCategory2 = MainCategory.builder()
             .id("2")
             .name("Incomes")
-            .isIncome(true)
+            .income(true)
             .build();
 
     MainCategory expectedMainCategory1 = MainCategory.builder()
             .id("1")
             .name("Production")
-            .isIncome(false)
+            .income(false)
             .build();
 
     MainCategory expectedMainCategory2 = MainCategory.builder()
             .id("2")
             .name("Incomes")
-            .isIncome(true)
+            .income(true)
             .build();
 
 
