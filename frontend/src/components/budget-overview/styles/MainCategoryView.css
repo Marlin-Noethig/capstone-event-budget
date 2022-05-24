@@ -1,0 +1,16 @@
+.category-view{
+    display: flex;
+    font-weight: bold;
+    border-radius: 3px;
+    padding: 3px;
+    margin-bottom: 5px;
+    color: #363434;
+
+}
+
+.expenses{
+    background-color: rgba(253, 172, 172, 0.71);
+}
+.incomes{
+    background-color: rgba(185, 225, 174, 0.71);
+}

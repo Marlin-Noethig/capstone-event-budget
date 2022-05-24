@@ -23,13 +23,13 @@ public class PositionsService {
         return positionsRepo.findAll();
     }
 
-    public Position addNewPosition(PositionDto newPosition){
+    public Position addNewPosition(PositionDto newPosition) {
         Position positionToAdd = new Position(newPosition);
         return positionsRepo.insert(positionToAdd);
     }
 
-    public Position updatePositionById(String id, PositionDto updatedPosition){
-        if(!positionsRepo.existsById(id)){
+    public Position updatePositionById(String id, PositionDto updatedPosition) {
+        if (!positionsRepo.existsById(id)) {
             throw new NoSuchElementException("Position with this Id does not exist.");
         }
         Position positionToSave = new Position(updatedPosition);
@@ -37,7 +37,7 @@ public class PositionsService {
         return positionsRepo.save(positionToSave);
     }
 
-    public void deletePositionById(String id){
+    public void deletePositionById(String id) {
         positionsRepo.deleteById(id);
     }
 }

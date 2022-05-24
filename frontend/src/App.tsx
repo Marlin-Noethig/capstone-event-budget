@@ -3,8 +3,13 @@ import './App.css';
 import {Route, Routes} from "react-router-dom";
 import BudgetOverview from "./pages/BudgetOverview";
 import AppTitle from "./components/AppTitle";
+import useMainCategories from "./hooks/useMainCategories";
+import useSubCategories from "./hooks/useSubCategories";
 
 function App() {
+
+    const {mainCategories} = useMainCategories();
+    const {subCategories} = useSubCategories();
 
 
     return (
@@ -12,7 +17,8 @@ function App() {
             <AppTitle/>
             <Routes>
                 <Route path="/"
-                       element={<BudgetOverview/>}
+                       element={<BudgetOverview mainCategories={mainCategories}
+                                                subCategories={subCategories}/>}
                 />
             </Routes>
         </div>
