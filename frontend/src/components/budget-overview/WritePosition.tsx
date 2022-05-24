@@ -5,7 +5,6 @@ import "./styles/WritePosition.css"
 
 
 type WritePositionProps = {
-    mode: string,
     position?: Position,
     addNewPosition?: (newPosition: Omit<Position, "id">) => void,
     toggleEnableAdd?: () => void,
@@ -14,7 +13,6 @@ type WritePositionProps = {
 }
 
 export default function WritePosition({
-                                          mode,
                                           position,
                                           addNewPosition,
                                           toggleEnableAdd,
@@ -47,25 +45,16 @@ export default function WritePosition({
             tax: tax
         }
 
-        //Typescript made me encapsulate the function call into conditionals
-        if (mode === "ADD") {
-            if (addNewPosition) {
-                addNewPosition(positionValues);
-            }
-            if (toggleEnableAdd) {
-                toggleEnableAdd();
-            }
+        if (addNewPosition && toggleEnableAdd) {
+            addNewPosition(positionValues);
+            toggleEnableAdd();
         }
-        if (mode === "EDIT") {
-            if (position) {
-                if (updatePosition) {
-                    updatePosition(position.id, positionValues)
-                }
-            }
-            if (toggleEnableEdit) {
-                toggleEnableEdit();
-            }
+        if (position && updatePosition && toggleEnableEdit) {
+
+            updatePosition(position.id, positionValues);
+            toggleEnableEdit();
         }
+
     }
 
     const onChangeNetPrice = (e: ChangeEvent<HTMLInputElement>) => {
@@ -103,12 +92,10 @@ export default function WritePosition({
             </div>
 
             <div className={"write-position-form-buttons"}>
-                {mode === "ADD" ?
-                    <div className={"add-mode-buttons-wrapper"}>
-                        <input type={"submit"} value={"add"} className={"add-button"}/>
-                    </div>
-                    :
+                {position ?
                     <input type={"submit"} value={"save"} className={"save-button"}/>
+                    :
+                    <input type={"submit"} value={"add"} className={"add-button"}/>
                 }
                 <button onClick={toggleEnableAdd ? toggleEnableAdd : toggleEnableEdit}>X</button>
             </div>

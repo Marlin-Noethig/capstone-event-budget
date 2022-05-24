@@ -21,8 +21,7 @@ export default function PositionList() {
                 position={position}
                 deletePosition={removePositionById}
                 updatePosition={updatePositionById}/>)}
-            {enableAdd ? <WritePosition mode={"ADD"}
-                                        addNewPosition={addNewPosition}
+            {enableAdd ? <WritePosition addNewPosition={addNewPosition}
                                         toggleEnableAdd={toggleEnableAdd}
             /> : <button onClick={toggleEnableAdd}>add new</button>}
         </div>

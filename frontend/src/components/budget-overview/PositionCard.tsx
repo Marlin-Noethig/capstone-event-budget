@@ -20,8 +20,7 @@ export default function PositionCard({position, deletePosition, updatePosition}:
 
     return (
         <div className={"position-container"}>
-            {enableEdit ? <WritePosition mode={"EDIT"}
-                                         position={position}
+            {enableEdit ? <WritePosition position={position}
                                          toggleEnableEdit={toggleEnableEdit}
                                          updatePosition={updatePosition}
             /> : <ViewPosition position={position}
