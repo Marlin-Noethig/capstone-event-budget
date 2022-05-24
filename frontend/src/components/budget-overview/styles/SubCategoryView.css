@@ -1,4 +1,10 @@
 .sub-category-view{
     font-size: 15px;
     background-color: rgba(193, 199, 241, 0.99);
+    display: flex;
+    justify-content: space-between;
+}
+
+.sub-category-start span{
+    margin-right: 10px;
 }
