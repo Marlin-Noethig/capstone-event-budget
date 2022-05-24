@@ -2,6 +2,7 @@ import {SubCategory} from "../../model/SubCategory";
 import "./styles/SubCategoryView.css"
 import PositionList from "./PositionList";
 import {Position} from "../../model/Position";
+import {useState} from "react";
 
 type SubCategoryViewProps = {
     subCategory: SubCategory,
@@ -20,14 +21,26 @@ export default function SubCategoryView({
                                         }: SubCategoryViewProps) {
 
     const filteredPositions = positions.filter(position => position.subCategoryId === subCategory.id)
+    const [enableAdd, setEnableAdd] = useState<boolean>(false);
+
+    const toggleEnableAdd = () => {
+        setEnableAdd(!enableAdd)
+    }
 
     return (
         <div>
-            <div className={"category-view sub-category-view"}>{subCategory.name}</div>
+            <div className={"category-view sub-category-view"}>
+                <span>{subCategory.name}</span>
+                <button onClick={toggleEnableAdd}>+</button>
+            </div>
             <PositionList positions={filteredPositions}
                           addNewPosition={addNewPosition}
                           deletePosition={deletePosition}
-                          updatePosition={updatePosition}/>
+                          updatePosition={updatePosition}
+                          subCategoryId={subCategory.id}
+                          enableAdd={enableAdd}
+                          toggleEnableAdd={toggleEnableAdd}
+            />
         </div>
     )
 }

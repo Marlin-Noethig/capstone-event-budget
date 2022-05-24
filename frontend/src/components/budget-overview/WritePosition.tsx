@@ -9,7 +9,8 @@ type WritePositionProps = {
     addNewPosition?: (newPosition: Omit<Position, "id">) => void,
     toggleEnableAdd?: () => void,
     toggleEnableEdit?: () => void,
-    updatePosition?: (id: string, newPosition: Omit<Position, "id">) => void
+    updatePosition?: (id: string, newPosition: Omit<Position, "id">) => void,
+    subCategoryId: string
 }
 
 export default function WritePosition({
@@ -17,7 +18,8 @@ export default function WritePosition({
                                           addNewPosition,
                                           toggleEnableAdd,
                                           toggleEnableEdit,
-                                          updatePosition
+                                          updatePosition,
+                                          subCategoryId
                                       }: WritePositionProps) {
 
     const [name, setName] = useState<string>(position ? position.name : "");
@@ -43,7 +45,7 @@ export default function WritePosition({
             amount: amount,
             price: netPrice,
             tax: tax,
-            subCategoryId: "0"
+            subCategoryId: subCategoryId
         }
 
         if (addNewPosition && toggleEnableAdd) {
