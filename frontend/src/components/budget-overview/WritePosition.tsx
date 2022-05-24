@@ -42,7 +42,8 @@ export default function WritePosition({
             description: description,
             amount: amount,
             price: netPrice,
-            tax: tax
+            tax: tax,
+            subCategoryId: "0"
         }
 
         if (addNewPosition && toggleEnableAdd) {

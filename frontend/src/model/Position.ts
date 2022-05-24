@@ -5,4 +5,5 @@ export type Position = {
     amount: number;
     price: number;
     tax: number;
+    subCategoryId: string;
 }
