@@ -3,8 +3,11 @@ import './App.css';
 import {Route, Routes} from "react-router-dom";
 import BudgetOverview from "./pages/BudgetOverview";
 import AppTitle from "./components/AppTitle";
+import useMainCategories from "./hooks/useMainCategories";
 
 function App() {
+
+    const {mainCategories} = useMainCategories();
 
 
     return (
@@ -12,7 +15,7 @@ function App() {
             <AppTitle/>
             <Routes>
                 <Route path="/"
-                       element={<BudgetOverview/>}
+                       element={<BudgetOverview mainCategories={mainCategories} />}
                 />
             </Routes>
         </div>
