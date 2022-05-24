@@ -4,11 +4,11 @@ import PositionListHead from "./PositionListHead";
 import {Position} from "../../model/Position";
 
 type PositionListProps = {
-    positions: Position[]
+    positions: Position[],
     addNewPosition: (newPosition: Omit<Position, "id">) => void,
-    deletePosition: (id: string) => void
-    updatePosition: (id: string, newPosition: Omit<Position, "id">) => void
-    subCategoryId: string
+    deletePosition: (id: string) => void,
+    updatePosition: (id: string, newPosition: Omit<Position, "id">) => void,
+    subCategoryId: string,
     enableAdd: boolean
     toggleEnableAdd: () => void
 }

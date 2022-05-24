@@ -7,7 +7,7 @@ import {Position} from "../../model/Position";
 type MainCategoryViewProps = {
     mainCategory: MainCategory,
     subCategories: SubCategory[],
-    positions: Position[]
+    positions: Position[],
     addNewPosition: (newPosition: Omit<Position, "id">) => void,
     deletePosition: (id: string) => void,
     updatePosition: (id: string, newPosition: Omit<Position, "id">) => void
