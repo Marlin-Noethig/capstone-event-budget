@@ -8,7 +8,7 @@ type WritePositionProps = {
     position?: Position,
     addNewPosition?: (newPosition: Omit<Position, "id">) => void,
     toggleEnableAdd?: () => void,
-    toggleEnableEdit?: () => void
+    toggleEnableEdit?: () => void,
     updatePosition?: (id: string, newPosition: Omit<Position, "id">) => void
 }
 
