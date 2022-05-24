@@ -2,6 +2,7 @@ import WritePosition from "./WritePosition";
 import PositionCard from "./PositionCard";
 import PositionListHead from "./PositionListHead";
 import {Position} from "../../model/Position";
+import "./styles/PositionList.css"
 
 type PositionListProps = {
     positions: Position[]
