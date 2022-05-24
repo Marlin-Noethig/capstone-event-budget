@@ -1,4 +1,5 @@
 import {SubCategory} from "../../model/SubCategory";
+import "./styles/SubCategoryView.css"
 
 type SubCategoryViewProps = {
     subCategory: SubCategory
@@ -6,6 +7,6 @@ type SubCategoryViewProps = {
 
 export default function SubCategoryView({subCategory}: SubCategoryViewProps) {
     return (
-        <div>{subCategory.name}</div>
+        <div className={"category-view sub-category-view"}>{subCategory.name}</div>
     )
 }

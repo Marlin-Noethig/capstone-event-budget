@@ -2,7 +2,7 @@
     align-items: center;
     background-color: dimgray;
     padding: 0 5px 0 5px;
-    margin: 10px 0 10px 0;
+    margin: 5px 0 5px 0;
     border-radius: 3px;
     display: flex;
     justify-content: space-between;
@@ -12,6 +12,7 @@
 .write-position-form-inputs{
     margin: 5px 0 5px 0;
 }
+
 
 .add-button{
     background-color: #78d593;
