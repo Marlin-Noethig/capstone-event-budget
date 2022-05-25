@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
@@ -68,6 +69,23 @@ class PositionsControllerTest {
         //THEN
         List<Position> expected = List.of(expectedPosition1, expectedPosition2);
         assertEquals(expected, actual);
+    }
+
+    @Test
+    void getPositions_whenWrongToken_shouldReturnForbidden() {
+        //GIVEN
+        positionsRepo.insert(testPosition1);
+        positionsRepo.insert(testPposition2);
+
+        String wrongToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6Indyb25nIHN0dWZmIiwiaWF0IjoxNTE2MjM5MDIyfQ._L8LHFgSbnXxLLT1Qhni-9IZsXaUG-t0Y0qU9gabqhw";
+
+        //WHEN
+        webTestClient.get()
+                .uri("http://localhost:" + port + "/api/positions/")
+                .headers(http -> http.setBearerAuth(wrongToken))
+                .exchange()
+                //THEN
+                .expectStatus().isEqualTo(HttpStatus.FORBIDDEN);
     }
 
     @Test
