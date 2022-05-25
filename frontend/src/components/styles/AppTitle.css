@@ -1,7 +1,22 @@
+.app-title-container{
+    display: flex;
+    justify-content: space-between;
+}
+
 .app-title{
     font-weight: bold;
     font-style: italic;
     font-size: 26px;
     text-align: center;
     padding: 10px;
+}
+
+.logout-button-wrapper{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logout-button{
+    margin-right: 10px;
 }

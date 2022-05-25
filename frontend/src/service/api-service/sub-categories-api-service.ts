@@ -3,7 +3,9 @@ import {SubCategory} from "../../model/SubCategory";
 
 const baseUrl: string = "/api/sub-categories"
 
-export const getSubCategories: () => Promise<SubCategory[]> = () => {
-    return axios.get(baseUrl)
+export const getSubCategories: (token?: string) => Promise<SubCategory[]> = (token) => {
+    return axios.get(baseUrl, token
+        ? {headers: {"Authorization": token}}
+        : {})
         .then(response => response.data);
 }

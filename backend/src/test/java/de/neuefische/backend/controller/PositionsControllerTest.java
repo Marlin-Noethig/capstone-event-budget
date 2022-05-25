@@ -3,11 +3,16 @@ package de.neuefische.backend.controller;
 import de.neuefische.backend.dto.PositionDto;
 import de.neuefische.backend.model.Position;
 import de.neuefische.backend.repository.PositionsRepo;
+import de.neuefische.backend.security.dto.AppUserDto;
+import de.neuefische.backend.security.model.AppUser;
+import de.neuefische.backend.security.repository.AppUserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 import java.util.List;
@@ -17,6 +22,10 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class PositionsControllerTest {
 
+    private String jwt1;
+    private final String userMail1 = "test@tester.de";
+
+
     @LocalServerPort
     private int port;
 
@@ -24,11 +33,21 @@ class PositionsControllerTest {
     private WebTestClient webTestClient;
 
     @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private AppUserRepository appUserRepository;
+
+    @Autowired
     private PositionsRepo positionsRepo;
 
     @BeforeEach
     public void setUp() {
         positionsRepo.deleteAll();
+        appUserRepository.deleteAll();
+
+        jwt1 = generateJwtAndSaveUserToRepo(userMail1);
+
     }
 
     @Test
@@ -40,6 +59,7 @@ class PositionsControllerTest {
         //WHEN
         List<Position> actual = webTestClient.get()
                 .uri("http://localhost:" + port + "/api/positions/")
+                .headers(http -> http.setBearerAuth(jwt1))
                 .exchange()
                 .expectStatus().is2xxSuccessful()
                 .expectBodyList(Position.class)
@@ -51,6 +71,22 @@ class PositionsControllerTest {
         assertEquals(expected, actual);
     }
 
+    @Test
+    void getPositions_whenWrongToken_shouldReturnForbidden() {
+        //GIVEN
+        positionsRepo.insert(testPosition1);
+        positionsRepo.insert(testPposition2);
+
+        String wrongToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6Indyb25nIHN0dWZmIiwiaWF0IjoxNTE2MjM5MDIyfQ._L8LHFgSbnXxLLT1Qhni-9IZsXaUG-t0Y0qU9gabqhw";
+
+        //WHEN
+        webTestClient.get()
+                .uri("http://localhost:" + port + "/api/positions/")
+                .headers(http -> http.setBearerAuth(wrongToken))
+                .exchange()
+                //THEN
+                .expectStatus().isEqualTo(HttpStatus.FORBIDDEN);
+    }
 
     @Test
     void postPosition() {
@@ -67,6 +103,7 @@ class PositionsControllerTest {
         //WHEN
         Position actual = webTestClient.post()
                 .uri("http://localhost:" + port + "/api/positions/")
+                .headers(http -> http.setBearerAuth(jwt1))
                 .bodyValue(newPosition)
                 .exchange()
                 .expectStatus().is2xxSuccessful()
@@ -84,7 +121,7 @@ class PositionsControllerTest {
     }
 
     @Test
-    void putPositionById_successful(){
+    void putPositionById_successful() {
         //GIVEN
         positionsRepo.insert(testPosition1);
 
@@ -99,6 +136,7 @@ class PositionsControllerTest {
         //WHEN
         Position actual = webTestClient.put()
                 .uri("http://localhost:" + port + "/api/positions/" + testPosition1.getId())
+                .headers(http -> http.setBearerAuth(jwt1))
                 .bodyValue(updatedPosition)
                 .exchange()
                 .expectStatus().is2xxSuccessful()
@@ -115,7 +153,7 @@ class PositionsControllerTest {
     }
 
     @Test
-    void putPositionById_unsuccessful(){
+    void putPositionById_unsuccessful() {
         //GIVEN
         positionsRepo.insert(testPosition1);
         String wrongId = "123";
@@ -131,6 +169,7 @@ class PositionsControllerTest {
         //WHEN
         webTestClient.put()
                 .uri("http://localhost:" + port + "/api/positions/" + wrongId)
+                .headers(http -> http.setBearerAuth(jwt1))
                 .bodyValue(updatedPosition)
                 .exchange()
                 .expectStatus().is5xxServerError(); //needs to be refactored after adding appropriate controller advice
@@ -138,7 +177,7 @@ class PositionsControllerTest {
     }
 
     @Test
-    void deletePositionById(){
+    void deletePositionById() {
         //GIVEN
         positionsRepo.insert(testPosition1);
         positionsRepo.insert(testPposition2);
@@ -146,11 +185,13 @@ class PositionsControllerTest {
         //WHEN
         webTestClient.delete()
                 .uri("http://localhost:" + port + "/api/positions/" + testPosition1.getId())
+                .headers(http -> http.setBearerAuth(jwt1))
                 .exchange()
                 .expectStatus().is2xxSuccessful();
 
         List<Position> actual = webTestClient.get()
                 .uri("http://localhost:" + port + "/api/positions/")
+                .headers(http -> http.setBearerAuth(jwt1))
                 .exchange()
                 .expectStatus().is2xxSuccessful()
                 .expectBodyList(Position.class)
@@ -161,6 +202,26 @@ class PositionsControllerTest {
         List<Position> expected = List.of(expectedPosition2);
         assertEquals(expected, actual);
 
+    }
+
+    private String generateJwtAndSaveUserToRepo(String mail) {
+        String hashedPassword = passwordEncoder.encode("super-safe-password");
+        AppUser newUser = AppUser.builder()
+                .mail(mail)
+                .password(hashedPassword)
+                .build();
+        appUserRepository.insert(newUser);
+
+        return webTestClient.post()
+                .uri("/auth/login")
+                .bodyValue(AppUserDto.builder()
+                        .mail(mail)
+                        .password("super-safe-password")
+                        .build())
+                .exchange()
+                .expectBody(String.class)
+                .returnResult()
+                .getResponseBody();
     }
 
 
