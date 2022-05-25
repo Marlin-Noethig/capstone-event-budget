@@ -1,0 +1,18 @@
+.balance-view-container{
+    background-color: black;
+    font-weight: bold;
+    font-size: 18px;
+    padding: 10px 20px 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    position: sticky;
+    bottom: 0;
+}
+
+.balance-sum{
+    text-decoration: underline;
+}
+
+.negative-sum{
+    color: #e05555;
+}
