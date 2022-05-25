@@ -5,6 +5,8 @@ import BudgetOverview from "./pages/BudgetOverview";
 import AppTitle from "./components/AppTitle";
 import useMainCategories from "./hooks/useMainCategories";
 import useSubCategories from "./hooks/useSubCategories";
+import RequireAuth from "./routing/RequireAuth";
+import LoginPage from "./pages/LoginPage";
 
 function App() {
 
@@ -16,10 +18,13 @@ function App() {
         <div className="App">
             <AppTitle/>
             <Routes>
-                <Route path="/"
-                       element={<BudgetOverview mainCategories={mainCategories}
-                                                subCategories={subCategories}/>}
-                />
+                <Route element={<RequireAuth/>}>
+                    <Route path="/"
+                           element={<BudgetOverview mainCategories={mainCategories}
+                                                    subCategories={subCategories}/>}
+                    />
+                </Route>
+                <Route path={"/login"} element={<LoginPage/>}/>
             </Routes>
         </div>
     );

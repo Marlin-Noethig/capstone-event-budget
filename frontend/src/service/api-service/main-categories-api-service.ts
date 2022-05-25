@@ -3,7 +3,9 @@ import axios from "axios";
 
 const baseUrl: string = "/api/main-categories"
 
-export const getMainCategories: () => Promise<MainCategory[]> = () => {
-    return axios.get(baseUrl)
+export const getMainCategories: (token?: string) => Promise<MainCategory[]> = (token) => {
+    return axios.get(baseUrl, token
+        ? {headers: {"Authorization": token}}
+        : {})
         .then(response => response.data);
 }
