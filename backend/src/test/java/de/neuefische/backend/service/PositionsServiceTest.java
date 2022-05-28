@@ -136,6 +136,40 @@ class PositionsServiceTest {
     }
 
     @Test
+    void updatePositionById_amountIs0_shouldThrowException() {
+        //GIVEN
+        String idOfToUpdate = "1";
+
+        PositionDto positionToUpdate = PositionDto.builder()
+                .name("Bauzaunplane")
+                .description("Lorem ipsum")
+                .price(50)
+                .amount(0)
+                .tax(19)
+                .build();
+
+        Position updatedPosition = Position.builder()
+                .id("1")
+                .name("Bauzaunplane")
+                .description("Lorem ipsum")
+                .price(50)
+                .amount(10)
+                .tax(7)
+                .build();
+        when(positionsRepo.existsById(any())).thenReturn(true);
+        when(positionsRepo.save(any())).thenReturn(updatedPosition);
+
+        //THEN
+        assertThrows(IllegalArgumentException.class, () -> {
+            //WHEN
+            positionsService.updatePositionById(idOfToUpdate, positionToUpdate);
+        });
+    }
+
+
+
+
+    @Test
     void deletePositionById() {
 
         //WHEN

@@ -35,6 +35,9 @@ public class PositionsService {
         if (!positionsRepo.existsById(id)) {
             throw new NoSuchElementException("Position with Id " + id +  " does not exist.");
         }
+        if (updatedPosition.getName() == null || updatedPosition.getAmount() <= 0){
+            throw new IllegalArgumentException("Name of updated position must be set and amount must be more than 0!");
+        }
         Position positionToSave = new Position(updatedPosition);
         positionToSave.setId(id);
         return positionsRepo.save(positionToSave);
