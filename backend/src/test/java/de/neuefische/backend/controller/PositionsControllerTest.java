@@ -121,6 +121,26 @@ class PositionsControllerTest {
     }
 
     @Test
+    void postPosition_whenNameNull_shouldThrow422Status(){
+        //GIVEN
+        //dto for testPosition1 without name
+        PositionDto newPosition = PositionDto.builder()
+                .description("Lorem ipsum")
+                .price(50)
+                .amount(10)
+                .tax(19)
+                .build();
+
+        //WHEN
+        webTestClient.post()
+                .uri("http://localhost:" + port + "/api/positions/")
+                .headers(http -> http.setBearerAuth(jwt1))
+                .bodyValue(newPosition)
+                .exchange()
+                .expectStatus().is4xxClientError();
+    }
+
+    @Test
     void putPositionById_successful() {
         //GIVEN
         positionsRepo.insert(testPosition1);
@@ -172,7 +192,7 @@ class PositionsControllerTest {
                 .headers(http -> http.setBearerAuth(jwt1))
                 .bodyValue(updatedPosition)
                 .exchange()
-                .expectStatus().is5xxServerError(); //needs to be refactored after adding appropriate controller advice
+                .expectStatus().isNotFound(); //needs to be refactored after adding appropriate controller advice
 
     }
 
