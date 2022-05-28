@@ -166,20 +166,34 @@ class PositionsServiceTest {
         });
     }
 
-
-
-
     @Test
     void deletePositionById() {
+        //GIVEN
+        String idOfToDelete= "1";
+
+        when(positionsRepo.existsById(idOfToDelete)).thenReturn(true);
 
         //WHEN
-        positionsService.deletePositionById("1");
+        positionsService.deletePositionById(idOfToDelete);
 
         //THEN
         verify(positionsRepo).deleteById("1");
 
     }
 
+    @Test
+    void deletePositionById_whenIdWrong_shouldThrowException(){
+        //GIVEN
+        String wrongIdOfToDelete= "1";
+
+        when(positionsRepo.existsById(wrongIdOfToDelete)).thenReturn(false);
+
+        //WHEN
+        assertThrows(NoSuchElementException.class, () -> {
+            //WHEN
+            positionsService.deletePositionById(wrongIdOfToDelete);
+        });
+    }
 
     //global dummy objects for multiple set ups
     Position testPosition1 = Position.builder()

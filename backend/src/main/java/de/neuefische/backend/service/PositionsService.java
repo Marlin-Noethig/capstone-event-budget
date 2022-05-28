@@ -44,6 +44,11 @@ public class PositionsService {
     }
 
     public void deletePositionById(String id) {
+        if (!positionsRepo.existsById(id)) {
+            throw new NoSuchElementException("Position with Id " + id +  " does not exist.");
+        }
+
         positionsRepo.deleteById(id);
+
     }
 }
