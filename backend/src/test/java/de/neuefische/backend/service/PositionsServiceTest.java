@@ -68,7 +68,24 @@ class PositionsServiceTest {
     }
 
     @Test
-    void updatePositionById_IdExists(){
+    void addNewPosition_whenNameIsNull_shouldReturnException() {
+        //GIVEN
+        PositionDto positionToAdd = PositionDto.builder()
+                .description("Lorem ipsum")
+                .price(50)
+                .amount(10)
+                .tax(19)
+                .build();
+
+        //THEN
+        assertThrows(IllegalArgumentException.class, () -> {
+            //WHEN
+            positionsService.addNewPosition(positionToAdd);
+        });
+    }
+
+    @Test
+    void updatePositionById_IdExists() {
         //GIVEN
         String idOfToUpdate = "1";
 
@@ -99,7 +116,7 @@ class PositionsServiceTest {
     }
 
     @Test
-    void updatePositionById_IdDoesNotExist(){
+    void updatePositionById_IdDoesNotExist() {
         //GIVEN
         String idOfToUpdate = "1";
 
@@ -111,15 +128,15 @@ class PositionsServiceTest {
                 .tax(19)
                 .build();
 
-       //THEN
+        //THEN
         assertThrows(NoSuchElementException.class, () -> {
             //WHEN
-           positionsService.updatePositionById(idOfToUpdate, positionToUpdate);
+            positionsService.updatePositionById(idOfToUpdate, positionToUpdate);
         });
     }
 
     @Test
-    void deletePositionById(){
+    void deletePositionById() {
 
         //WHEN
         positionsService.deletePositionById("1");
