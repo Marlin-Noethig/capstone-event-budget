@@ -3,7 +3,6 @@ package de.neuefische.backend.controller.status;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-
 import java.time.LocalDateTime;
 
 @AllArgsConstructor

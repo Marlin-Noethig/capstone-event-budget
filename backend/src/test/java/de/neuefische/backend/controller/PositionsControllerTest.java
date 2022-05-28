@@ -192,7 +192,7 @@ class PositionsControllerTest {
                 .headers(http -> http.setBearerAuth(jwt1))
                 .bodyValue(updatedPosition)
                 .exchange()
-                .expectStatus().isNotFound(); //needs to be refactored after adding appropriate controller advice
+                .expectStatus().isNotFound(); 
 
     }
 
