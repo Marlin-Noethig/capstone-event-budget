@@ -1,6 +1,7 @@
 import {createContext, ReactElement, useState} from "react";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
+import {toast} from "react-toastify";
 
 const authKey: string = "AuthToken"
 
@@ -21,8 +22,8 @@ export type AuthProviderProps = {
 
 export const AuthContext = createContext<AuthContextType>({
     token: undefined,
-    login: () => console.error("Login not initialized!"),
-    logout: () => console.error("Something with the logout does not work")
+    login: () => toast.error("Login not initialized!"),
+    logout: () => toast.error("Something with the logout does not work")
 })
 
 export default function AuthProvider({children}:AuthProviderProps) {
@@ -37,13 +38,13 @@ export default function AuthProvider({children}:AuthProviderProps) {
                 localStorage.setItem(authKey, newToken)
             })
             .then(() => navigate("/"))
-            .catch((error) => console.error(error))
+            .catch(() => toast.warn("Login failed. Please check your credentials!"))
     }
 
     const logout = () => {
+        navigate("/login")
         setToken("")
         localStorage.setItem(authKey, "")
-        navigate("/login")
     }
 
     return <AuthContext.Provider value={{token, login, logout}}>

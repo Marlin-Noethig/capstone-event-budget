@@ -68,7 +68,24 @@ class PositionsServiceTest {
     }
 
     @Test
-    void updatePositionById_IdExists(){
+    void addNewPosition_whenNameIsNull_shouldReturnException() {
+        //GIVEN
+        PositionDto positionToAdd = PositionDto.builder()
+                .description("Lorem ipsum")
+                .price(50)
+                .amount(10)
+                .tax(19)
+                .build();
+
+        //THEN
+        assertThrows(IllegalArgumentException.class, () -> {
+            //WHEN
+            positionsService.addNewPosition(positionToAdd);
+        });
+    }
+
+    @Test
+    void updatePositionById_IdExists() {
         //GIVEN
         String idOfToUpdate = "1";
 
@@ -99,7 +116,7 @@ class PositionsServiceTest {
     }
 
     @Test
-    void updatePositionById_IdDoesNotExist(){
+    void updatePositionById_IdDoesNotExist() {
         //GIVEN
         String idOfToUpdate = "1";
 
@@ -111,24 +128,72 @@ class PositionsServiceTest {
                 .tax(19)
                 .build();
 
-       //THEN
+        //THEN
         assertThrows(NoSuchElementException.class, () -> {
             //WHEN
-           positionsService.updatePositionById(idOfToUpdate, positionToUpdate);
+            positionsService.updatePositionById(idOfToUpdate, positionToUpdate);
         });
     }
 
     @Test
-    void deletePositionById(){
+    void updatePositionById_amountIs0_shouldThrowException() {
+        //GIVEN
+        String idOfToUpdate = "1";
+
+        PositionDto positionToUpdate = PositionDto.builder()
+                .name("Bauzaunplane")
+                .description("Lorem ipsum")
+                .price(50)
+                .amount(0)
+                .tax(19)
+                .build();
+
+        Position updatedPosition = Position.builder()
+                .id("1")
+                .name("Bauzaunplane")
+                .description("Lorem ipsum")
+                .price(50)
+                .amount(10)
+                .tax(7)
+                .build();
+        when(positionsRepo.existsById(any())).thenReturn(true);
+        when(positionsRepo.save(any())).thenReturn(updatedPosition);
+
+        //THEN
+        assertThrows(IllegalArgumentException.class, () -> {
+            //WHEN
+            positionsService.updatePositionById(idOfToUpdate, positionToUpdate);
+        });
+    }
+
+    @Test
+    void deletePositionById() {
+        //GIVEN
+        String idOfToDelete= "1";
+
+        when(positionsRepo.existsById(idOfToDelete)).thenReturn(true);
 
         //WHEN
-        positionsService.deletePositionById("1");
+        positionsService.deletePositionById(idOfToDelete);
 
         //THEN
         verify(positionsRepo).deleteById("1");
 
     }
 
+    @Test
+    void deletePositionById_whenIdWrong_shouldThrowException(){
+        //GIVEN
+        String wrongIdOfToDelete= "1";
+
+        when(positionsRepo.existsById(wrongIdOfToDelete)).thenReturn(false);
+
+        //WHEN
+        assertThrows(NoSuchElementException.class, () -> {
+            //WHEN
+            positionsService.deletePositionById(wrongIdOfToDelete);
+        });
+    }
 
     //global dummy objects for multiple set ups
     Position testPosition1 = Position.builder()

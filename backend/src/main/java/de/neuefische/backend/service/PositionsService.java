@@ -25,12 +25,18 @@ public class PositionsService {
 
     public Position addNewPosition(PositionDto newPosition) {
         Position positionToAdd = new Position(newPosition);
+        if (newPosition.getName() == null || newPosition.getAmount() <= 0){
+            throw new IllegalArgumentException("Name of new position must be set and amount must be more than 0!");
+        }
         return positionsRepo.insert(positionToAdd);
     }
 
     public Position updatePositionById(String id, PositionDto updatedPosition) {
         if (!positionsRepo.existsById(id)) {
-            throw new NoSuchElementException("Position with this Id does not exist.");
+            throw new NoSuchElementException("Position with Id " + id +  " does not exist.");
+        }
+        if (updatedPosition.getName() == null || updatedPosition.getAmount() <= 0){
+            throw new IllegalArgumentException("Name of updated position must be set and amount must be more than 0!");
         }
         Position positionToSave = new Position(updatedPosition);
         positionToSave.setId(id);
@@ -38,6 +44,11 @@ public class PositionsService {
     }
 
     public void deletePositionById(String id) {
+        if (!positionsRepo.existsById(id)) {
+            throw new NoSuchElementException("Position with Id " + id +  " does not exist.");
+        }
+
         positionsRepo.deleteById(id);
+
     }
 }
