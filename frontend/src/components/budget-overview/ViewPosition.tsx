@@ -1,6 +1,7 @@
 import {Position} from "../../model/Position";
 import {netToGross} from "../../service/utils/taxHelpers";
 import "./styles/ViewPosition.css"
+import {toast} from "react-toastify";
 
 type ViewPositionProps = {
     position: Position
@@ -12,6 +13,7 @@ export default function ViewPosition({position, deletePosition, toggleEnableEdit
 
     const onDelete = () =>{
         deletePosition(position.id)
+        toast.success(`${position.name} has been deleted.`)
     }
 
     return(

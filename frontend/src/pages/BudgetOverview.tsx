@@ -1,20 +1,18 @@
 import EventDetailView from "../components/budget-overview/EventDetailView";
-import {MainCategory} from "../model/MainCategory";
 import MainCategoryView from "../components/budget-overview/MainCategoryView";
-import {SubCategory} from "../model/SubCategory";
 import usePositions from "../hooks/usePositions";
 import {getBalance} from "../service/utils/sumHelpers";
 import BalanceView from "../components/budget-overview/BalanceView";
 import "./styles/BudgetOverview.css"
+import useMainCategories from "../hooks/useMainCategories";
+import useSubCategories from "../hooks/useSubCategories";
 
-type BudgetOverviewProps = {
-    mainCategories: MainCategory[]
-    subCategories: SubCategory[]
-}
 
-export default function BudgetOverview({mainCategories, subCategories}: BudgetOverviewProps) {
+export default function BudgetOverview() {
 
     const {positions, addNewPosition, updatePositionById, removePositionById} = usePositions();
+    const {mainCategories} = useMainCategories();
+    const {subCategories} = useSubCategories();
 
     return (
         <div className={"budget-overview-container"}>

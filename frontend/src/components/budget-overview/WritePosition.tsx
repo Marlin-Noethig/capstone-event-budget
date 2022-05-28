@@ -2,6 +2,7 @@ import {ChangeEvent, FormEvent, useState} from "react";
 import {grossToNet, netToGross} from "../../service/utils/taxHelpers";
 import {Position} from "../../model/Position";
 import "./styles/WritePosition.css"
+import {toast} from "react-toastify";
 
 
 type WritePositionProps = {
@@ -32,11 +33,11 @@ export default function WritePosition({
     const onSubmitNewPosition = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
         if (!name) {
-            alert("Name must be set")
+            toast.warn("Name must be set")
             return
         }
         if (amount <= 0) {
-            alert("amount must be more than 0")
+            toast.warn("Amount must be more than 0")
             return
         }
         const positionValues = {
@@ -51,11 +52,12 @@ export default function WritePosition({
         if (addNewPosition && toggleEnableAdd) {
             addNewPosition(positionValues);
             toggleEnableAdd();
+            toast.success(`New Position for ${positionValues.name} was added.`)
         }
         if (position && updatePosition && toggleEnableEdit) {
-
             updatePosition(position.id, positionValues);
             toggleEnableEdit();
+            toast.success(`${positionValues.name} has been updated.`)
         }
 
     }
