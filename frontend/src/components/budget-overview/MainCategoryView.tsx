@@ -5,6 +5,7 @@ import "./styles/MainCategoryView.css"
 import {Position} from "../../model/Position";
 import {useState} from "react";
 import {getMainSum} from "../../service/utils/sumHelpers";
+import {formatMoney} from "../../service/utils/beatifyHelpers";
 
 type MainCategoryViewProps = {
     mainCategory: MainCategory,
@@ -45,7 +46,7 @@ export default function MainCategoryView({
                 </span>
 
                 <span className={"main-sum"}>
-                    {getMainSum(positions, filteredSubCategories).toFixed(2)} €
+                    {formatMoney(getMainSum(positions, filteredSubCategories))} €
                 </span>
             </div>
             {collapsed && filteredSubCategories.map(subCategory => <SubCategoryView key={subCategory.id}

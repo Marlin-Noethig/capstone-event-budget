@@ -1,4 +1,5 @@
 import "./styles/BalanceView.css"
+import {formatMoney} from "../../service/utils/beatifyHelpers";
 
 type BalanceViewProps = {
     sum: number
@@ -11,7 +12,7 @@ export default function BalanceView({sum}: BalanceViewProps) {
     return (
         <div className={"balance-view-container"}>
             <span>BALANCE</span>
-            <span className={"balance-sum " + negativeClassName}>{sum.toFixed(2)} €</span>
+            <span className={"balance-sum " + negativeClassName}>{formatMoney(sum)} €</span>
         </div>
     )
 }

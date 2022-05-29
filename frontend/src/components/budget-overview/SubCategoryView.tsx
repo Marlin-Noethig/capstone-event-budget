@@ -4,6 +4,7 @@ import PositionList from "./PositionList";
 import {Position} from "../../model/Position";
 import {useState} from "react";
 import {getSubSum} from "../../service/utils/sumHelpers";
+import {formatMoney} from "../../service/utils/beatifyHelpers";
 
 type SubCategoryViewProps = {
     subCategory: SubCategory,
@@ -41,7 +42,7 @@ export default function SubCategoryView({
                             onClick={toggleCollapsed}>{collapsed ? "˄" : "˅"}</button>
                     <span>{subCategory.name}</span>
                 </div>
-                    <span>{getSubSum(filteredPositions).toFixed(2)} €</span>
+                    <span>{formatMoney(getSubSum(filteredPositions))} €</span>
             </div>
             {collapsed && <PositionList positions={filteredPositions}
                                         addNewPosition={addNewPosition}
