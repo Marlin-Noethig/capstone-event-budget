@@ -37,14 +37,11 @@ export default function SubCategoryView({
         <div>
             <div className={"category-view sub-category-view"}>
                 <div className={"sub-category-start"}>
-                    <span>{subCategory.name}</span>
-                    <button onClick={toggleEnableAdd}>+</button>
-                </div>
-                <div className={"sub-category-end"}>
-                    <span>{getSubSum(filteredPositions).toFixed(2)} €</span>
                     <button className={"collapse-category-button"}
                             onClick={toggleCollapsed}>{collapsed ? "˄" : "˅"}</button>
+                    <span>{subCategory.name}</span>
                 </div>
+                    <span>{getSubSum(filteredPositions).toFixed(2)} €</span>
             </div>
             {collapsed && <PositionList positions={filteredPositions}
                                         addNewPosition={addNewPosition}

@@ -2,25 +2,32 @@
     display: flex;
     font-weight: bold;
     border-radius: 3px;
-    padding: 3px;
+    padding: 3px 10px 3px 3px;
     margin-bottom: 5px;
     color: #363434;
     justify-content: space-between;
 }
 
-.expenses{
-    background-color: rgba(253, 172, 172, 0.71);
+
+.main-category{
+    color: white;
 }
+
+.expenses{
+
+    background-color: #8C4843;
+}
+
 .incomes{
-    background-color: rgba(185, 225, 174, 0.71);
+    background-color: #0D5C63;
 }
 
 .collapse-category-button{
-    margin-left: 10px;
-    margin-right: 2px;
+    margin-left: 2px;
+    margin-right: 10px;
     border: 0;
     font-weight: bold;
-    background-color: rgba(71, 101, 101, 0.61);
+
     cursor: pointer;
     border-radius: 100%;
 }

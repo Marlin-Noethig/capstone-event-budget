@@ -5,7 +5,7 @@ html, body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #363434;
+  background-color: #0E0E1B;
   color: white;
   height: 100%;
 
@@ -13,4 +13,9 @@ html, body {
 
 p {
   margin: 0;
+}
+
+button {
+  background-color: #DDFFF7;
+  border: 0;
 }

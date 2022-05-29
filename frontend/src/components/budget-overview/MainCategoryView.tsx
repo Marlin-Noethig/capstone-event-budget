@@ -35,14 +35,17 @@ export default function MainCategoryView({
 
     return (
         <div>
-            <div className={"category-view " + isIncomeClassName}>
+            <div className={"category-view main-category " + isIncomeClassName}>
+                <span>
+                    <button className={"collapse-category-button"}
+                            onClick={toggleCollapsed}>{collapsed ? "˄" : "˅"}</button>
                 <span className={"main-category-name"}>
                     {mainCategory.name}
                 </span>
+                </span>
+
                 <span className={"main-sum"}>
                     {getMainSum(positions, filteredSubCategories).toFixed(2)} €
-                    <button className={"collapse-category-button"}
-                            onClick={toggleCollapsed}>{collapsed ? "˄" : "˅"}</button>
                 </span>
             </div>
             {collapsed && filteredSubCategories.map(subCategory => <SubCategoryView key={subCategory.id}
