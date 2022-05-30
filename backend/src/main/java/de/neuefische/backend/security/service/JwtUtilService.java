@@ -23,7 +23,7 @@ public class JwtUtilService {
                 .setClaims(new HashMap<>())
                 .setSubject(userMail)
                 .setIssuedAt(Date.from(Instant.now()))
-                .setExpiration(Date.from(Instant.now().plus(Duration.ofHours(1))))
+                .setExpiration(Date.from(Instant.now().plus(Duration.ofSeconds(20))))
                 .signWith(SignatureAlgorithm.HS256, jwtSecret)
                 .compact();
     }
