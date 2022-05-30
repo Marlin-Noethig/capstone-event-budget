@@ -5,7 +5,7 @@ import {Navigate, Outlet} from "react-router-dom";
 
 
 export default function RequireAuth() {
-    const {token, checkTokenExpiration} = useContext(AuthContext);
+    const {token} = useContext(AuthContext);
 
-    return (token && checkTokenExpiration() ? <Outlet /> : <Navigate to={"/login"}/>)
+    return (token ? <Outlet /> : <Navigate to={"/login"}/>)
 }

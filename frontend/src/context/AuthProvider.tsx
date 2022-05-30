@@ -1,4 +1,4 @@
-import {createContext, ReactElement, useState} from "react";
+import {createContext, ReactElement, useEffect, useState} from "react";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
 import {toast} from "react-toastify";
@@ -15,7 +15,6 @@ export type AuthContextType = {
     token: string | undefined,
     login: (credentials: Credentials) => void
     logout: () => void
-    checkTokenExpiration: () => boolean | undefined
 }
 
 export type AuthProviderProps = {
@@ -25,8 +24,7 @@ export type AuthProviderProps = {
 export const AuthContext = createContext<AuthContextType>({
     token: undefined,
     login: () => toast.error("Login not initialized!"),
-    logout: () => toast.error("Something with the logout does not work"),
-    checkTokenExpiration: () => false
+    logout: () => toast.error("Something with the logout does not work")
 })
 
 export default function AuthProvider({children}:AuthProviderProps) {
@@ -44,6 +42,7 @@ export default function AuthProvider({children}:AuthProviderProps) {
             .catch(() => toast.warn("Login failed. Please check your credentials!"))
     }
 
+
     const checkTokenExpiration = () => {
         let decodedToken;
         if (token){
@@ -55,14 +54,15 @@ export default function AuthProvider({children}:AuthProviderProps) {
         }
         const dateNow = Math.floor(new Date().getTime() / 1000)
         if(decodedToken && decodedToken.exp){
-            if (decodedToken.exp > Number(dateNow)){
-                return true
-            } else {
+            if (decodedToken.exp < Number(dateNow)){
                 logout()
-                return false
             }
         }
     }
+
+    useEffect(() => {
+        checkTokenExpiration()
+    } )
 
     const logout = () => {
         localStorage.removeItem(authKey)
@@ -70,7 +70,7 @@ export default function AuthProvider({children}:AuthProviderProps) {
         toast.info("You have been logged out")
     }
 
-    return <AuthContext.Provider value={{token, login, logout, checkTokenExpiration}}>
+    return <AuthContext.Provider value={{token, login, logout}}>
             {children}
         </AuthContext.Provider>
 }
