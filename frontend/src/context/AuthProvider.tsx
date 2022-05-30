@@ -2,6 +2,7 @@ import {createContext, ReactElement, useState} from "react";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
 import {toast} from "react-toastify";
+import {decodeJwt} from "jose";
 
 const authKey: string = "AuthToken"
 
@@ -14,6 +15,7 @@ export type AuthContextType = {
     token: string | undefined,
     login: (credentials: Credentials) => void
     logout: () => void
+    checkTokenExpiration: () => boolean | undefined
 }
 
 export type AuthProviderProps = {
@@ -23,7 +25,8 @@ export type AuthProviderProps = {
 export const AuthContext = createContext<AuthContextType>({
     token: undefined,
     login: () => toast.error("Login not initialized!"),
-    logout: () => toast.error("Something with the logout does not work")
+    logout: () => toast.error("Something with the logout does not work"),
+    checkTokenExpiration: () => false
 })
 
 export default function AuthProvider({children}:AuthProviderProps) {
@@ -41,13 +44,29 @@ export default function AuthProvider({children}:AuthProviderProps) {
             .catch(() => toast.warn("Login failed. Please check your credentials!"))
     }
 
-    const logout = () => {
-        navigate("/login")
-        localStorage.removeItem(authKey)
-        setToken("")
+    const checkTokenExpiration = () => {
+        let decodedToken;
+        if (token){
+            decodedToken = decodeJwt(token);
+        }
+        const dateNow = Math.floor(new Date().getTime() / 1000)
+        if(decodedToken && decodedToken.exp){
+            if (decodedToken.exp > Number(dateNow)){
+                return true
+            } else {
+                logout()
+                return false
+            }
+        }
     }
 
-    return <AuthContext.Provider value={{token, login, logout}}>
+    const logout = () => {
+        localStorage.removeItem(authKey)
+        setToken("")
+        toast.info("You have been logged out")
+    }
+
+    return <AuthContext.Provider value={{token, login, logout, checkTokenExpiration}}>
             {children}
         </AuthContext.Provider>
 }
