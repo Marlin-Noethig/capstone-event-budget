@@ -47,7 +47,11 @@ export default function AuthProvider({children}:AuthProviderProps) {
     const checkTokenExpiration = () => {
         let decodedToken;
         if (token){
-            decodedToken = decodeJwt(token);
+            try {
+                decodedToken = decodeJwt(token);
+            } catch {
+             toast.error("Token is corrupted, clear Web Storage!")
+            }
         }
         const dateNow = Math.floor(new Date().getTime() / 1000)
         if(decodedToken && decodedToken.exp){
