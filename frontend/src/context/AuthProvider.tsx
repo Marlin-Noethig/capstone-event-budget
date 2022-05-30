@@ -43,8 +43,8 @@ export default function AuthProvider({children}:AuthProviderProps) {
 
     const logout = () => {
         navigate("/login")
+        localStorage.removeItem(authKey)
         setToken("")
-        localStorage.setItem(authKey, "")
     }
 
     return <AuthContext.Provider value={{token, login, logout}}>
