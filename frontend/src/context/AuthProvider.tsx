@@ -1,7 +1,8 @@
-import {createContext, ReactElement, useState} from "react";
+import {createContext, ReactElement, useEffect, useState} from "react";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
 import {toast} from "react-toastify";
+import {decodeJwt} from "jose";
 
 const authKey: string = "AuthToken"
 
@@ -41,10 +42,32 @@ export default function AuthProvider({children}:AuthProviderProps) {
             .catch(() => toast.warn("Login failed. Please check your credentials!"))
     }
 
+
+    const checkTokenExpiration = () => {
+        let decodedToken;
+        if (token){
+            try {
+                decodedToken = decodeJwt(token);
+            } catch {
+             toast.error("Token is corrupted, clear Web Storage!")
+            }
+        }
+        const dateNow = Math.floor(new Date().getTime() / 1000)
+        if(decodedToken && decodedToken.exp){
+            if (decodedToken.exp < Number(dateNow)){
+                logout()
+            }
+        }
+    }
+
+    useEffect(() => {
+        checkTokenExpiration()
+    } )
+
     const logout = () => {
-        navigate("/login")
+        localStorage.removeItem(authKey)
         setToken("")
-        localStorage.setItem(authKey, "")
+        toast.info("You have been logged out")
     }
 
     return <AuthContext.Provider value={{token, login, logout}}>
