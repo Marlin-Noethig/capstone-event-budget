@@ -1,3 +1,7 @@
+.position-list-head{
+    display: flex;
+}
+
 .position-list-head ul{
     list-style-type: none;
     padding-left: 5px;

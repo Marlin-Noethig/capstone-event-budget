@@ -27,7 +27,7 @@ export default function PositionList({
 
     return (
         <div className={"position-list-container"}>
-            <PositionListHead/>
+            <PositionListHead toggleEnableAdd={toggleEnableAdd} />
             {positions.map(position => <PositionCard
                 key={position.id}
                 position={position}

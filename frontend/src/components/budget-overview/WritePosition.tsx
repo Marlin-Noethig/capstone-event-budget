@@ -3,6 +3,7 @@ import {grossToNet, netToGross} from "../../service/utils/taxHelpers";
 import {Position} from "../../model/Position";
 import "./styles/WritePosition.css"
 import {toast} from "react-toastify";
+import {formatMoney} from "../../service/utils/beatifyHelpers";
 
 
 type WritePositionProps = {
@@ -93,7 +94,7 @@ export default function WritePosition({
                 </select>
                 <input type={"number"} value={netPrice} step={"any"} onChange={onChangeNetPrice}/>
                 <input type={"number"} value={grossPrice} step={"any"} onChange={onChangeGrossPrice}/>
-                <span className={"current-sum"}>{(netPrice * amount).toFixed(2)} €</span>
+                <span className={"current-sum"}>{formatMoney((netPrice * amount))} €</span>
             </div>
 
             <div className={"write-position-form-buttons"}>

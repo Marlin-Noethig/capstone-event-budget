@@ -1,6 +1,11 @@
 import "./styles/PositionListHead.css"
 
-export default function PositionListHead(){
+type PositionListHeadProps = {
+    toggleEnableAdd: () => void
+}
+
+
+export default function PositionListHead({toggleEnableAdd}:PositionListHeadProps){
     return(
         <div className={"position-list-head"}>
             <ul className={"overview-grid-item"}>
@@ -12,6 +17,7 @@ export default function PositionListHead(){
                 <li>Gross Price</li>
                 <li>SUM</li>
             </ul>
+            <button onClick={toggleEnableAdd}>+</button>
         </div>
     )
 }

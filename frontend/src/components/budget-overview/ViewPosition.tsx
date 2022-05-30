@@ -2,6 +2,7 @@ import {Position} from "../../model/Position";
 import {netToGross} from "../../service/utils/taxHelpers";
 import "./styles/ViewPosition.css"
 import {toast} from "react-toastify";
+import {formatMoney} from "../../service/utils/beatifyHelpers";
 
 type ViewPositionProps = {
     position: Position
@@ -23,9 +24,9 @@ export default function ViewPosition({position, deletePosition, toggleEnableEdit
                 <li>{position.description}</li>
                 <li>{position.amount}</li>
                 <li>{position.tax}%</li>
-                <li>{position.price.toFixed(2)}€</li>
-                <li>{netToGross(position.price, position.tax).toFixed(2) }€</li>
-                <li>{(position.price * position.amount).toFixed(2)}€</li>
+                <li>{formatMoney(position.price)}€</li>
+                <li>{formatMoney(netToGross(position.price, position.tax))}€</li>
+                <li>{formatMoney((position.price * position.amount))}€</li>
             </ul>
             <div className={"position-view-buttons-container"}>
                 <button className={"edit-position-button"} onClick={toggleEnableEdit}>edit</button>
