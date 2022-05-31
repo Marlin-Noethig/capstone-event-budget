@@ -32,7 +32,7 @@ public class ControllerAdvice extends ResponseEntityExceptionHandler {
                 .requestUri(request.getDescription(false))
                 .build();
 
-        return handleExceptionInternal(exception, bodyOfResponse, new HttpHeaders(), HttpStatus.UNPROCESSABLE_ENTITY, request);
+        return handleExceptionInternal(exception, bodyOfResponse, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 
 
