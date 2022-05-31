@@ -47,7 +47,6 @@ class SubCategoriesControllerTest {
         jwt1 = generateJwtAndSaveUserToRepo(userMail1);
     }
 
-
     @Test
     void getSubCategories() {
         //GIVEN
