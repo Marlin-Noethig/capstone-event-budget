@@ -11,5 +11,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class AppUserInfoDto {
+    private String id;
     private String mail;
 }

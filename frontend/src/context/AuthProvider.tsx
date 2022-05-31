@@ -42,7 +42,6 @@ export default function AuthProvider({children}:AuthProviderProps) {
             .catch(() => toast.warn("Login failed. Please check your credentials!"))
     }
 
-
     const checkTokenExpiration = () => {
         let decodedToken;
         if (token){

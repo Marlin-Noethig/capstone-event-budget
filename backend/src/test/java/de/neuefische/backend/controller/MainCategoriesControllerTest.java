@@ -72,6 +72,7 @@ class MainCategoriesControllerTest {
         AppUser newUser = AppUser.builder()
                 .mail(mail)
                 .password(hashedPassword)
+                .role("ADMIN")
                 .build();
         appUserRepository.insert(newUser);
 
