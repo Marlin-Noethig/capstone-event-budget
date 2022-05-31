@@ -3,7 +3,7 @@ package de.neuefische.backend.controller;
 import de.neuefische.backend.dto.PositionDto;
 import de.neuefische.backend.model.Position;
 import de.neuefische.backend.repository.PositionsRepo;
-import de.neuefische.backend.security.dto.AppUserDto;
+import de.neuefische.backend.security.dto.AppUserLoginDto;
 import de.neuefische.backend.security.model.AppUser;
 import de.neuefische.backend.security.repository.AppUserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -234,7 +234,7 @@ class PositionsControllerTest {
 
         return webTestClient.post()
                 .uri("/auth/login")
-                .bodyValue(AppUserDto.builder()
+                .bodyValue(AppUserLoginDto.builder()
                         .mail(mail)
                         .password("super-safe-password")
                         .build())

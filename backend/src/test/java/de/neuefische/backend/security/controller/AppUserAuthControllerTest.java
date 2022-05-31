@@ -1,6 +1,6 @@
 package de.neuefische.backend.security.controller;
 
-import de.neuefische.backend.security.dto.AppUserDto;
+import de.neuefische.backend.security.dto.AppUserLoginDto;
 import de.neuefische.backend.security.model.AppUser;
 import de.neuefische.backend.security.repository.AppUserRepository;
 import io.jsonwebtoken.Jwts;
@@ -44,7 +44,7 @@ class AppUserAuthControllerTest {
         //WHEN
         String jwt = webTestClient.post()
                 .uri("/auth/login")
-                .bodyValue(AppUserDto.builder()
+                .bodyValue(AppUserLoginDto.builder()
                         .mail("test@testmail.com")
                         .password("suer-safe-password")
                         .build())

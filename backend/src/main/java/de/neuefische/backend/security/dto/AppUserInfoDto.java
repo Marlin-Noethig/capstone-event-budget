@@ -10,9 +10,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class AppUserDto {
-
+public class AppUserInfoDto {
     private String mail;
-    private String password;
-
 }

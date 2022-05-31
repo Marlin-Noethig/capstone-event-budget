@@ -1,9 +1,8 @@
 package de.neuefische.backend.controller;
 
 import de.neuefische.backend.model.SubCategory;
-import de.neuefische.backend.repository.MainCategoriesRepo;
 import de.neuefische.backend.repository.SubCategoriesRepo;
-import de.neuefische.backend.security.dto.AppUserDto;
+import de.neuefische.backend.security.dto.AppUserLoginDto;
 import de.neuefische.backend.security.model.AppUser;
 import de.neuefische.backend.security.repository.AppUserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -80,7 +79,7 @@ class SubCategoriesControllerTest {
 
         return webTestClient.post()
                 .uri("/auth/login")
-                .bodyValue(AppUserDto.builder()
+                .bodyValue(AppUserLoginDto.builder()
                         .mail(mail)
                         .password("super-safe-password")
                         .build())
