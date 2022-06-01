@@ -53,12 +53,10 @@ export default function WritePosition({
         if (addNewPosition && toggleEnableAdd) {
             addNewPosition(positionValues);
             toggleEnableAdd();
-            toast.success(`New Position for ${positionValues.name} was added.`)
         }
         if (position && updatePosition && toggleEnableEdit) {
             updatePosition(position.id, positionValues);
             toggleEnableEdit();
-            toast.success(`${positionValues.name} has been updated.`)
         }
 
     }

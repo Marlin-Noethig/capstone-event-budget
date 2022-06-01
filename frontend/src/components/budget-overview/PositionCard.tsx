@@ -5,7 +5,7 @@ import WritePosition from "./WritePosition";
 
 type PositionCardProps = {
     position: Position
-    deletePosition: (id: string) => void
+    deletePosition: (id: string, name:string) => void
     updatePosition: (id: string,newPosition: Omit<Position, "id">) => void
     subCategoryId: string
 }
