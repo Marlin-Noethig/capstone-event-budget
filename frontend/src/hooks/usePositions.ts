@@ -23,7 +23,7 @@ export default function usePositions() {
     const addNewPosition = (newPosition: Omit<Position, "id">) => {
         postPosition(newPosition, token)
             .then(addedPosition => setPositions([...positions, addedPosition]))
-            .then(() => toast.success(`New Position for ${newPosition.name} was added.`))
+            .then(() => toast.success(`${newPosition.name} has been added.`))
             .catch((error) => handleRequestError(error.response.status));
     }
 
