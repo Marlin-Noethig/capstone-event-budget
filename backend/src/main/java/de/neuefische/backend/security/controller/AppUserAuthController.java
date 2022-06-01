@@ -1,6 +1,6 @@
 package de.neuefische.backend.security.controller;
 
-import de.neuefische.backend.security.dto.AppUserDto;
+import de.neuefische.backend.security.dto.AppUserLoginDto;
 import de.neuefische.backend.security.service.JwtUtilService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,7 +24,7 @@ public class AppUserAuthController {
     }
 
     @PostMapping("/login")
-    public  String login(@RequestBody AppUserDto appUser) {
+    public  String login(@RequestBody AppUserLoginDto appUser) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(appUser.getMail(), appUser.getPassword()));
         return jwtUtilService.creatToken(appUser.getMail());
     }

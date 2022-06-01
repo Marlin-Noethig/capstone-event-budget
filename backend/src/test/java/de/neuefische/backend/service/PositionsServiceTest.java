@@ -3,6 +3,7 @@ package de.neuefische.backend.service;
 import de.neuefische.backend.dto.PositionDto;
 import de.neuefische.backend.model.Position;
 import de.neuefische.backend.repository.PositionsRepo;
+import de.neuefische.backend.repository.SubCategoriesRepo;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -16,7 +17,8 @@ import static org.mockito.Mockito.*;
 class PositionsServiceTest {
 
     private final PositionsRepo positionsRepo = mock(PositionsRepo.class);
-    private final PositionsService positionsService = new PositionsService(positionsRepo);
+    private final SubCategoriesService subCategoriesService = mock(SubCategoriesService.class);
+    private final PositionsService positionsService = new PositionsService(positionsRepo, subCategoriesService);
 
     @Test
     void getPositions_whenGetAll_retrieveAll() {

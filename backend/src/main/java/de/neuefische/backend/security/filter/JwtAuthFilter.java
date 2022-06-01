@@ -1,12 +1,16 @@
 package de.neuefische.backend.security.filter;
 
+import de.neuefische.backend.security.dto.AppUserInfoDto;
+import de.neuefische.backend.security.model.AppUser;
+import de.neuefische.backend.security.repository.AppUserRepository;
 import de.neuefische.backend.security.service.JwtUtilService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Component;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -22,10 +26,12 @@ import java.util.List;
 public class JwtAuthFilter extends OncePerRequestFilter {
 
     private final JwtUtilService jwtUtilService;
+    private final AppUserRepository appUserRepository;
 
     @Autowired
-    public JwtAuthFilter(JwtUtilService jwtUtilService) {
+    public JwtAuthFilter(JwtUtilService jwtUtilService, AppUserRepository appUserRepository) {
         this.jwtUtilService = jwtUtilService;
+        this.appUserRepository = appUserRepository;
     }
 
     @Override
@@ -47,8 +53,12 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     }
 
     private void setContext(String userMail) {
+        AppUser loggedUser = appUserRepository.findByMail(userMail).orElseThrow(() -> new UsernameNotFoundException("No username with this mail found"));
         UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(userMail, "", List.of());
+                new UsernamePasswordAuthenticationToken(AppUserInfoDto.builder()
+                        .id(loggedUser.getId())
+                        .mail(loggedUser.getMail())
+                        .build(), "", List.of(new SimpleGrantedAuthority(loggedUser.getRole())));
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
     }
 
