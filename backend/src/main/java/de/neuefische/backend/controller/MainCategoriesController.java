@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/main-categories")
+@RequestMapping("/api/main-categories/")
 public class MainCategoriesController {
 
     private final MainCategoriesService mainCategoriesService;
@@ -33,8 +33,17 @@ public class MainCategoriesController {
             String idOfCurrentUser = AuthUtils.getIdOfCurrentUser(authentication);
             return mainCategoriesService.getMainCategoriesByUserId(idOfCurrentUser);
         }
-
     }
 
+    @GetMapping("balance-allowed")
+    public boolean isBalanceAllowed (Authentication authentication){
+        String roleOfCurrentUser = authentication.getAuthorities().toArray()[0].toString();
+        if (roleOfCurrentUser.equals("ADMIN")){
+            return true;
+        } else {
+            String idOfCurrentUser = AuthUtils.getIdOfCurrentUser(authentication);
+            return mainCategoriesService.getIsBalanceAllowed(idOfCurrentUser);
+        }
+    }
 }
 

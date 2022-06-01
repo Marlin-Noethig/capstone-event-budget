@@ -23,6 +23,7 @@ class MainCategoriesControllerTest {
 
     private String adminJwt1;
     private String userJwt1;
+    private String userJwt2;
 
     @LocalServerPort
     private int port;
@@ -45,10 +46,12 @@ class MainCategoriesControllerTest {
         appUserRepository.deleteAll();
 
         final String adminMail1 = "admin@tester.de";
-        final String userMail1 = "user@tester.de";
+        final String userMail1 = "user1@tester.de";
+        final String userMail2 = "user2@tester.de";
 
         adminJwt1 = generateJwtAndSaveUserToRepo("a1", adminMail1, "ADMIN");
         userJwt1 = generateJwtAndSaveUserToRepo("u1", userMail1, "USER");
+        userJwt2 = generateJwtAndSaveUserToRepo("u2", userMail2, "USER");
 
     }
 
@@ -94,6 +97,58 @@ class MainCategoriesControllerTest {
         assertEquals(expected, actual);
     }
 
+    @Test
+    void isBalanceAllowed_whenRoleIsAdmin_shouldReturn_true(){
+        //GIVEN
+        mainCategoriesRepo.insert(testMainCategory1);
+        mainCategoriesRepo.insert(testMainCategory2);
+
+        //WHEN //THEN
+        Boolean.TRUE.equals(webTestClient.get()
+                .uri("http://localhost:" + port + "/api/main-categories/balance-allowed")
+                .headers(http -> http.setBearerAuth(adminJwt1))
+                .exchange()
+                .expectStatus().is2xxSuccessful()
+                .expectBody(boolean.class)
+                .returnResult()
+                .getResponseBody());
+    }
+
+    @Test
+    void isBalanceAllowed_whenRoleIsUserAndHasNotAllCategoriesVisible_shouldReturnFalse(){
+        //GIVEN
+        mainCategoriesRepo.insert(testMainCategory1);
+        mainCategoriesRepo.insert(testMainCategory2);
+
+        //WHEN //THEN
+        Boolean.FALSE.equals(webTestClient.get()
+                .uri("http://localhost:" + port + "/api/main-categories/balance-allowed")
+                .headers(http -> http.setBearerAuth(userJwt1))
+                .exchange()
+                .expectStatus().is2xxSuccessful()
+                .expectBody(boolean.class)
+                .returnResult()
+                .getResponseBody());
+    }
+
+    @Test
+    void isBalanceAllowed_whenRoleIsUserAndHasAllCategoriesVisible_shouldReturnTrue(){
+        //GIVEN
+        mainCategoriesRepo.insert(testMainCategory1);
+        mainCategoriesRepo.insert(testMainCategory2);
+
+        //WHEN //THEN
+        Boolean.TRUE.equals(webTestClient.get()
+                .uri("http://localhost:" + port + "/api/main-categories/balance-allowed")
+                .headers(http -> http.setBearerAuth(userJwt1))
+                .exchange()
+                .expectStatus().is2xxSuccessful()
+                .expectBody(boolean.class)
+                .returnResult()
+                .getResponseBody());
+    }
+
+
     private String generateJwtAndSaveUserToRepo(String id, String mail, String role) {
         String hashedPassword = passwordEncoder.encode("super-safe-password");
         AppUser newUser = AppUser.builder()
@@ -116,30 +171,34 @@ class MainCategoriesControllerTest {
                 .getResponseBody();
     }
 
+
+
     MainCategory testMainCategory1 = MainCategory.builder()
             .id("1")
             .name("Production")
             .income(false)
+            .userIds(new ArrayList<>(List.of("u2")))
             .build();
 
     MainCategory testMainCategory2 = MainCategory.builder()
             .id("2")
             .name("Incomes")
             .income(true)
-            .userIds(new ArrayList<>(List.of("u1")))
+            .userIds(new ArrayList<>(List.of("u1", "u2")))
             .build();
 
     MainCategory expectedMainCategory1 = MainCategory.builder()
             .id("1")
             .name("Production")
             .income(false)
+            .userIds(new ArrayList<>(List.of("u2")))
             .build();
 
     MainCategory expectedMainCategory2 = MainCategory.builder()
             .id("2")
             .name("Incomes")
             .income(true)
-            .userIds(new ArrayList<>(List.of("u1")))
+            .userIds(new ArrayList<>(List.of("u1", "u2")))
             .build();
 
 }

@@ -14,11 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class AppUserController {
     @GetMapping("current")
     public AppUserInfoDto getCurrentUser(Authentication authentication) {
-        return  (AppUserInfoDto) authentication.getPrincipal();
-    }
-
-    @GetMapping("current/authority")
-    public String getCurrentUserAuthority(Authentication authentication) {
-        return authentication.getAuthorities().toArray()[0].toString();
+        return (AppUserInfoDto) authentication.getPrincipal();
     }
 }

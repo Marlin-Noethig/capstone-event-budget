@@ -27,4 +27,8 @@ public class MainCategoriesService {
     public List<MainCategory> getMainCategoriesByUserId(String idOfCurrentUser) {
         return mainCategoriesRepo.findAllByUserIdsContaining(idOfCurrentUser);
     }
+
+    public boolean getIsBalanceAllowed(String idOfCurrentUser) {
+        return mainCategoriesRepo.findAll().size() == mainCategoriesRepo.findAllByUserIdsContaining(idOfCurrentUser).size();
+    }
 }
