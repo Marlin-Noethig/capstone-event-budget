@@ -8,12 +8,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
+
 @RestController
 @RequestMapping("/api/user/")
 public class AppUserController {
     @GetMapping("current")
-    public String getCurrentUser(Authentication authentication) {
-        AppUserInfoDto currentUser =  (AppUserInfoDto) authentication.getPrincipal();
-        return currentUser.getId();
+    public AppUserInfoDto getCurrentUser(Authentication authentication) {
+        return  (AppUserInfoDto) authentication.getPrincipal();
+    }
+
+    @GetMapping("current/authority")
+    public String getCurrentUserAuthority(Authentication authentication) {
+        return authentication.getAuthorities().toArray()[0].toString();
     }
 }

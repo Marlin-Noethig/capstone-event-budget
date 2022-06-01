@@ -3,6 +3,7 @@ package de.neuefische.backend.controller;
 import de.neuefische.backend.model.MainCategory;
 import de.neuefische.backend.service.MainCategoriesService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,9 +21,17 @@ public class MainCategoriesController {
         this.mainCategoriesService = mainCategoriesService;
     }
 
+
     @GetMapping
-    public List<MainCategory> getMainCategories(){
-        return mainCategoriesService.getMainCategories();
+    public List<MainCategory> getMainCategories(Authentication authentication)  {
+        String roleOfCurrentUser = authentication.getAuthorities().toArray()[0].toString();
+
+        if (roleOfCurrentUser.equals("ADMIN")){
+            return mainCategoriesService.getMainCategories();
+        } else {
+            return mainCategoriesService.getMainCategoriesByUserId(authentication);
+        }
+
     }
 
 }
