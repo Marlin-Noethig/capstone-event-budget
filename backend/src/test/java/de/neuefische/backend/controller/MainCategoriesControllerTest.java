@@ -148,7 +148,6 @@ class MainCategoriesControllerTest {
                 .getResponseBody());
     }
 
-
     private String generateJwtAndSaveUserToRepo(String id, String mail, String role) {
         String hashedPassword = passwordEncoder.encode("super-safe-password");
         AppUser newUser = AppUser.builder()
@@ -170,8 +169,6 @@ class MainCategoriesControllerTest {
                 .returnResult()
                 .getResponseBody();
     }
-
-
 
     MainCategory testMainCategory1 = MainCategory.builder()
             .id("1")

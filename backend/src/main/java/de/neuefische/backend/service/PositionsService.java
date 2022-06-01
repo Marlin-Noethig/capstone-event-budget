@@ -23,7 +23,6 @@ public class PositionsService {
         this.subCategoriesService = subCategoriesService;
     }
 
-
     @PreAuthorize("hasAuthority('ADMIN')")
     public List<Position> getPositions() {
         return positionsRepo.findAll();
@@ -69,6 +68,4 @@ public class PositionsService {
         positionsRepo.deleteById(id);
 
     }
-
-
 }

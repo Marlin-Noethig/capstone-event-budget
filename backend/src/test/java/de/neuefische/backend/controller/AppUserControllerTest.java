@@ -41,7 +41,7 @@ class AppUserControllerTest {
     }
 
     @Test
-    void getCurrentUser() {
+    void getInfosOfCurrentlyLoggedInUser() {
         //WHEN
         AppUserInfoDto actual = webTestClient.get()
                 .uri("http://localhost:" + port + "/api/user/current")

@@ -1,6 +1,5 @@
 package de.neuefische.backend.service;
 
-
 import de.neuefische.backend.model.MainCategory;
 import de.neuefische.backend.model.SubCategory;
 import de.neuefische.backend.repository.MainCategoriesRepo;

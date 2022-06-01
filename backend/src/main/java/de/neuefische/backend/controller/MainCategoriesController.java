@@ -22,7 +22,6 @@ public class MainCategoriesController {
         this.mainCategoriesService = mainCategoriesService;
     }
 
-
     @GetMapping
     public List<MainCategory> getMainCategories(Authentication authentication)  {
         String roleOfCurrentUser = authentication.getAuthorities().toArray()[0].toString();

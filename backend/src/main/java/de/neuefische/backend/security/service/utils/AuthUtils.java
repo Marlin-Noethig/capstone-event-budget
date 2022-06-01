@@ -5,7 +5,6 @@ import org.springframework.security.core.Authentication;
 
 public class AuthUtils {
 
-    //SonarLint suggested this
     private AuthUtils () {
         throw new IllegalStateException("This is a Utility Class.");
     }
