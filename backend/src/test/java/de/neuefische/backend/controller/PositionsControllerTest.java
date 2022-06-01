@@ -22,9 +22,8 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class PositionsControllerTest {
 
-    private String jwt1;
-    private final String userMail1 = "test@tester.de";
-
+    private String adminJwt1;
+    private String userJwt1;
 
     @LocalServerPort
     private int port;
@@ -46,7 +45,11 @@ class PositionsControllerTest {
         positionsRepo.deleteAll();
         appUserRepository.deleteAll();
 
-        jwt1 = generateJwtAndSaveUserToRepo(userMail1);
+        final String adminMail1 = "admin@tester.de";
+        final String userMail1 = "user@tester.de";
+
+        adminJwt1 = generateJwtAndSaveUserToRepo("a1", adminMail1, "ADMIN");
+        userJwt1 = generateJwtAndSaveUserToRepo("u1", userMail1, "USER");
 
     }
 
@@ -59,7 +62,7 @@ class PositionsControllerTest {
         //WHEN
         List<Position> actual = webTestClient.get()
                 .uri("http://localhost:" + port + "/api/positions/")
-                .headers(http -> http.setBearerAuth(jwt1))
+                .headers(http -> http.setBearerAuth(adminJwt1))
                 .exchange()
                 .expectStatus().is2xxSuccessful()
                 .expectBodyList(Position.class)
@@ -103,7 +106,7 @@ class PositionsControllerTest {
         //WHEN
         Position actual = webTestClient.post()
                 .uri("http://localhost:" + port + "/api/positions/")
-                .headers(http -> http.setBearerAuth(jwt1))
+                .headers(http -> http.setBearerAuth(adminJwt1))
                 .bodyValue(newPosition)
                 .exchange()
                 .expectStatus().is2xxSuccessful()
@@ -134,7 +137,7 @@ class PositionsControllerTest {
         //WHEN
         webTestClient.post()
                 .uri("http://localhost:" + port + "/api/positions/")
-                .headers(http -> http.setBearerAuth(jwt1))
+                .headers(http -> http.setBearerAuth(adminJwt1))
                 .bodyValue(newPosition)
                 .exchange()
                 .expectStatus().is4xxClientError();
@@ -156,7 +159,7 @@ class PositionsControllerTest {
         //WHEN
         Position actual = webTestClient.put()
                 .uri("http://localhost:" + port + "/api/positions/" + testPosition1.getId())
-                .headers(http -> http.setBearerAuth(jwt1))
+                .headers(http -> http.setBearerAuth(adminJwt1))
                 .bodyValue(updatedPosition)
                 .exchange()
                 .expectStatus().is2xxSuccessful()
@@ -189,7 +192,7 @@ class PositionsControllerTest {
         //WHEN
         webTestClient.put()
                 .uri("http://localhost:" + port + "/api/positions/" + wrongId)
-                .headers(http -> http.setBearerAuth(jwt1))
+                .headers(http -> http.setBearerAuth(adminJwt1))
                 .bodyValue(updatedPosition)
                 .exchange()
                 .expectStatus().isNotFound(); 
@@ -205,13 +208,13 @@ class PositionsControllerTest {
         //WHEN
         webTestClient.delete()
                 .uri("http://localhost:" + port + "/api/positions/" + testPosition1.getId())
-                .headers(http -> http.setBearerAuth(jwt1))
+                .headers(http -> http.setBearerAuth(adminJwt1))
                 .exchange()
                 .expectStatus().is2xxSuccessful();
 
         List<Position> actual = webTestClient.get()
                 .uri("http://localhost:" + port + "/api/positions/")
-                .headers(http -> http.setBearerAuth(jwt1))
+                .headers(http -> http.setBearerAuth(adminJwt1))
                 .exchange()
                 .expectStatus().is2xxSuccessful()
                 .expectBodyList(Position.class)
@@ -224,11 +227,13 @@ class PositionsControllerTest {
 
     }
 
-    private String generateJwtAndSaveUserToRepo(String mail) {
+    private String generateJwtAndSaveUserToRepo(String id, String mail, String role) {
         String hashedPassword = passwordEncoder.encode("super-safe-password");
         AppUser newUser = AppUser.builder()
+                .id(id)
                 .mail(mail)
                 .password(hashedPassword)
+                .role(role)
                 .build();
         appUserRepository.insert(newUser);
 

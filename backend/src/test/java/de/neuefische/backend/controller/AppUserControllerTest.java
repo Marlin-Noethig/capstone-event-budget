@@ -18,8 +18,8 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest(webEnvironment =  SpringBootTest.WebEnvironment.RANDOM_PORT)
 class AppUserControllerTest {
 
-    private String jwt1;
-    private final String userMail1 = "test@tester.de";
+    private String adminJwt1;
+    final String userMail1 = "test@tester.de";
 
     @LocalServerPort
     private int port;
@@ -37,7 +37,7 @@ class AppUserControllerTest {
     public void setUp() {
         appUserRepository.deleteAll();
 
-        jwt1 = generateJwtAndSaveUserToRepo(userMail1);
+        adminJwt1 = generateJwtAndSaveUserToRepo("u1", userMail1, "USER");
     }
 
     @Test
@@ -45,7 +45,7 @@ class AppUserControllerTest {
         //WHEN
         AppUserInfoDto actual = webTestClient.get()
                 .uri("http://localhost:" + port + "/api/user/current")
-                .headers(httpHeaders -> httpHeaders.setBearerAuth(jwt1))
+                .headers(httpHeaders -> httpHeaders.setBearerAuth(adminJwt1))
                 .exchange()
                 .expectStatus().is2xxSuccessful()
                 .expectBody(AppUserInfoDto.class)
@@ -53,17 +53,19 @@ class AppUserControllerTest {
                 .getResponseBody();
 
         //THEN
-        AppUserInfoDto expected = AppUserInfoDto.builder().mail(userMail1).build();
+        AppUserInfoDto expected = AppUserInfoDto.builder().id("u1").mail(userMail1).build();
 
         assertEquals(expected, actual);
 
     }
 
-    private String generateJwtAndSaveUserToRepo(String mail) {
+    private String generateJwtAndSaveUserToRepo(String id, String mail, String role) {
         String hashedPassword = passwordEncoder.encode("super-safe-password");
         AppUser newUser = AppUser.builder()
+                .id(id)
                 .mail(mail)
                 .password(hashedPassword)
+                .role(role)
                 .build();
         appUserRepository.insert(newUser);
 

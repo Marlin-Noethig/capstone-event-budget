@@ -24,7 +24,6 @@ class MainCategoriesControllerTest {
     private String adminJwt1;
     private String userJwt1;
 
-
     @LocalServerPort
     private int port;
 
