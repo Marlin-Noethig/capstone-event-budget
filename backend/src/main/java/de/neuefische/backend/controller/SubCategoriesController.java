@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/sub-categories")
+@RequestMapping("/api/sub-categories/")
 public class SubCategoriesController {
 
     private final SubCategoriesService subCategoriesService;
