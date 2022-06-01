@@ -29,7 +29,6 @@ class MainCategoriesServiceTest {
         assertEquals(expected, actual);
     }
 
-
     @Test
     void getMainCategoriesByUserIdTest() {
         //GIVEN
