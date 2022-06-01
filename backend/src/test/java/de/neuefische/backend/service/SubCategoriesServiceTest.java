@@ -16,7 +16,6 @@ class SubCategoriesServiceTest {
     private final MainCategoriesRepo mainCategoriesRepo  = mock(MainCategoriesRepo.class);
     private final SubCategoriesService subCategoriesService = new SubCategoriesService(subCategoriesRepo, mainCategoriesRepo);
 
-
     @Test
     void getSubCategories() {
         //GIVEN

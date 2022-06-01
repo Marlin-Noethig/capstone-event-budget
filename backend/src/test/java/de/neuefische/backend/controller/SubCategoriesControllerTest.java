@@ -178,7 +178,4 @@ class SubCategoriesControllerTest {
             .mainCategoryId(testMainCategory2.getId())
             .build();
 
-
-
-
 }

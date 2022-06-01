@@ -31,7 +31,7 @@ class MainCategoriesServiceTest {
 
 
     @Test
-    void getMainCategoriesByUserId() {
+    void getMainCategoriesByUserIdTest() {
         //GIVEN
         when(mainCategoriesRepo.findAllByUserIdsContaining("2")).thenReturn(List.of(testMainCategory1));
         String idOfUser = "2";
@@ -44,7 +44,6 @@ class MainCategoriesServiceTest {
         verify(mainCategoriesRepo).findAllByUserIdsContaining("2");
         assertEquals(expected, actual);
     }
-
 
     MainCategory testMainCategory1 = MainCategory.builder()
             .id("1")
