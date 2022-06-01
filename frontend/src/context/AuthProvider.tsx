@@ -15,6 +15,7 @@ export type AuthContextType = {
     token: string | undefined,
     login: (credentials: Credentials) => void
     logout: () => void
+    showBalance: boolean | undefined
 }
 
 export type AuthProviderProps = {
@@ -24,11 +25,13 @@ export type AuthProviderProps = {
 export const AuthContext = createContext<AuthContextType>({
     token: undefined,
     login: () => toast.error("Login not initialized!"),
-    logout: () => toast.error("Something with the logout does not work")
+    logout: () => toast.error("Something with the logout does not work"),
+    showBalance: false
 })
 
 export default function AuthProvider({children}:AuthProviderProps) {
     const [token, setToken] = useState<string | undefined>(localStorage.getItem(authKey) ?? undefined);
+    const [showBalance, setShowBalance] = useState<boolean>(false);
     const navigate = useNavigate();
 
     const login = (credentials: Credentials) => {
@@ -69,7 +72,15 @@ export default function AuthProvider({children}:AuthProviderProps) {
         toast.info("You have been logged out")
     }
 
-    return <AuthContext.Provider value={{token, login, logout}}>
+    useEffect(() => {
+        axios.get("/api/main-categories/balance-allowed", token
+            ? {headers: {"Authorization": token}}
+            : {})
+            .then(response => response.data)
+            .then(data => setShowBalance(data));
+    }, [token])
+
+    return <AuthContext.Provider value={{token, login, logout, showBalance}}>
             {children}
         </AuthContext.Provider>
 }
