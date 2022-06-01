@@ -1,6 +1,7 @@
 package de.neuefische.backend.controller;
 
 import de.neuefische.backend.model.MainCategory;
+import de.neuefische.backend.security.service.utils.AuthUtils;
 import de.neuefische.backend.service.MainCategoriesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -29,7 +30,8 @@ public class MainCategoriesController {
         if (roleOfCurrentUser.equals("ADMIN")){
             return mainCategoriesService.getMainCategories();
         } else {
-            return mainCategoriesService.getMainCategoriesByUserId(authentication);
+            String idOfCurrentUser = AuthUtils.getIdOfCurrentUser(authentication);
+            return mainCategoriesService.getMainCategoriesByUserId(idOfCurrentUser);
         }
 
     }

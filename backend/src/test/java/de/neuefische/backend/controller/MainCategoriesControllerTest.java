@@ -13,6 +13,7 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -20,8 +21,9 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class MainCategoriesControllerTest {
 
-    private String jwt1;
-    private final String userMail1 = "test@tester.de";
+    private String adminJwt1;
+    private String userJwt1;
+
 
     @LocalServerPort
     private int port;
@@ -43,11 +45,16 @@ class MainCategoriesControllerTest {
         mainCategoriesRepo.deleteAll();
         appUserRepository.deleteAll();
 
-        jwt1 = generateJwtAndSaveUserToRepo(userMail1);
+        final String adminMail1 = "admin@tester.de";
+        final String userMail1 = "user@tester.de";
+
+        adminJwt1 = generateJwtAndSaveUserToRepo("a1", adminMail1, "ADMIN");
+        userJwt1 = generateJwtAndSaveUserToRepo("u1", userMail1, "USER");
+
     }
 
     @Test
-    void getMainCategories() {
+    void getMainCategories_whenAdmin() {
         //GIVEN
         mainCategoriesRepo.insert(testMainCategory1);
         mainCategoriesRepo.insert(testMainCategory2);
@@ -55,7 +62,7 @@ class MainCategoriesControllerTest {
         //WHEN
         List<MainCategory> actual = webTestClient.get()
                 .uri("http://localhost:" + port + "/api/main-categories/")
-                .headers(http -> http.setBearerAuth(jwt1))
+                .headers(http -> http.setBearerAuth(adminJwt1))
                 .exchange()
                 .expectStatus().is2xxSuccessful()
                 .expectBodyList(MainCategory.class)
@@ -67,12 +74,34 @@ class MainCategoriesControllerTest {
         assertEquals(expected, actual);
     }
 
-    private String generateJwtAndSaveUserToRepo(String mail) {
+    @Test
+    void getMainCategories_whenUser() {
+        //GIVEN
+        mainCategoriesRepo.insert(testMainCategory1);
+        mainCategoriesRepo.insert(testMainCategory2);
+
+        //WHEN
+        List<MainCategory> actual = webTestClient.get()
+                .uri("http://localhost:" + port + "/api/main-categories/")
+                .headers(http -> http.setBearerAuth(userJwt1))
+                .exchange()
+                .expectStatus().is2xxSuccessful()
+                .expectBodyList(MainCategory.class)
+                .returnResult()
+                .getResponseBody();
+
+        //THEN
+        List<MainCategory> expected = List.of(expectedMainCategory2);
+        assertEquals(expected, actual);
+    }
+
+    private String generateJwtAndSaveUserToRepo(String id, String mail, String role) {
         String hashedPassword = passwordEncoder.encode("super-safe-password");
         AppUser newUser = AppUser.builder()
+                .id(id)
                 .mail(mail)
                 .password(hashedPassword)
-                .role("ADMIN")
+                .role(role)
                 .build();
         appUserRepository.insert(newUser);
 
@@ -98,6 +127,7 @@ class MainCategoriesControllerTest {
             .id("2")
             .name("Incomes")
             .income(true)
+            .userIds(new ArrayList<>(List.of("u1")))
             .build();
 
     MainCategory expectedMainCategory1 = MainCategory.builder()
@@ -110,6 +140,7 @@ class MainCategoriesControllerTest {
             .id("2")
             .name("Incomes")
             .income(true)
+            .userIds(new ArrayList<>(List.of("u1")))
             .build();
 
 }
