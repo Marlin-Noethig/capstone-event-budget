@@ -19,8 +19,12 @@ export default function PositionCard({position, deletePosition, updatePosition, 
         setEnableEdit(!enableEdit)
     }
 
+    const setEnableEditToTrue = () => {
+        setEnableEdit(true)
+    }
+
     return (
-        <div className={"position-container"}>
+        <div className={"position-container"} onDoubleClick={setEnableEditToTrue}>
             {enableEdit ? <WritePosition position={position}
                                          toggleEnableEdit={toggleEnableEdit}
                                          updatePosition={updatePosition}
