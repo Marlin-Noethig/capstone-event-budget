@@ -2,8 +2,10 @@ package de.neuefische.backend.controller;
 
 import de.neuefische.backend.dto.PositionDto;
 import de.neuefische.backend.model.Position;
+import de.neuefische.backend.security.service.utils.AuthUtils;
 import de.neuefische.backend.service.PositionsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,8 +22,14 @@ public class PositionsController {
     }
 
     @GetMapping
-    public List<Position> getPositions(){
-        return positionsService.getPositions();
+    public List<Position> getPositions(Authentication authentication){
+        String roleOfCurrentUser = authentication.getAuthorities().toArray()[0].toString();
+        if (roleOfCurrentUser.equals("ADMIN")){
+            return positionsService.getPositions();
+        } else {
+            String idOfCurrentUser = AuthUtils.getIdOfCurrentUser(authentication);
+            return positionsService.getPositionsByUserId(idOfCurrentUser);
+        }
     }
 
     @PostMapping

@@ -137,7 +137,7 @@ class SubCategoriesControllerTest {
 
     MainCategory testMainCategory2 = MainCategory.builder()
             .id("222")
-            .name("Büromittel")
+            .name("Organisation")
             .income(false)
             .userIds(new ArrayList<>(List.of("u1", "u2")))
             .build();
