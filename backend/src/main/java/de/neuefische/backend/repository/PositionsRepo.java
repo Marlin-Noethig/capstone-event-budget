@@ -11,6 +11,6 @@ import java.util.List;
 @Repository
 public interface PositionsRepo extends MongoRepository<Position, String> {
 
-    List<Position> findAllBySubCategoryIdIsIn(ArrayList<String> subCategoryIds);
+    List<Position> findAllBySubCategoryIdIsInAndEventIdIsIn(ArrayList<String> subCategoryIds, ArrayList<String> eventIds);
 
 }

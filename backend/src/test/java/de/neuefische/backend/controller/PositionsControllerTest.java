@@ -1,9 +1,11 @@
 package de.neuefische.backend.controller;
 
 import de.neuefische.backend.dto.PositionDto;
+import de.neuefische.backend.model.Event;
 import de.neuefische.backend.model.MainCategory;
 import de.neuefische.backend.model.Position;
 import de.neuefische.backend.model.SubCategory;
+import de.neuefische.backend.repository.EventsRepo;
 import de.neuefische.backend.repository.MainCategoriesRepo;
 import de.neuefische.backend.repository.PositionsRepo;
 import de.neuefische.backend.repository.SubCategoriesRepo;
@@ -19,6 +21,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,12 +54,16 @@ class PositionsControllerTest {
     @Autowired
     private MainCategoriesRepo mainCategoriesRepo;
 
+   @Autowired
+   private EventsRepo  eventsRepo;
+
 
     @BeforeEach
     public void setUp() {
         positionsRepo.deleteAll();
         subCategoriesRepo.deleteAll();
         mainCategoriesRepo.deleteAll();
+        eventsRepo.deleteAll();
         appUserRepository.deleteAll();
 
         final String adminMail1 = "admin@tester.de";
@@ -78,6 +85,8 @@ class PositionsControllerTest {
         subCategoriesRepo.insert(testSubCategory3);
         mainCategoriesRepo.insert(testMainCategory1);
         mainCategoriesRepo.insert(testMainCategory2);
+        eventsRepo.insert(testEvent1);
+        eventsRepo.insert(testEvent2);
 
         //WHEN
         List<Position> actual = webTestClient.get()
@@ -105,6 +114,8 @@ class PositionsControllerTest {
         subCategoriesRepo.insert(testSubCategory3);
         mainCategoriesRepo.insert(testMainCategory1);
         mainCategoriesRepo.insert(testMainCategory2);
+        eventsRepo.insert(testEvent1);
+        eventsRepo.insert(testEvent2);
 
         //WHEN
         List<Position> actual = webTestClient.get()
@@ -149,6 +160,7 @@ class PositionsControllerTest {
                 .amount(10)
                 .tax(19)
                 .subCategoryId(testSubCategory1.getId())
+                .eventId(testEvent1.getId())
                 .build();
 
         //WHEN
@@ -203,6 +215,7 @@ class PositionsControllerTest {
                 .amount(10)
                 .tax(7) // changed tax in update
                 .subCategoryId(testSubCategory1.getId())
+                .eventId(testEvent1.getId())
                 .build();
 
         //WHEN
@@ -330,6 +343,25 @@ class PositionsControllerTest {
             .mainCategoryId(testMainCategory2.getId())
             .build();
 
+    Event testEvent1 = Event.builder()
+            .id("a")
+            .name("Test Event 1")
+            .startDate(LocalDate.parse("2023-04-01"))
+            .endDate(LocalDate.parse("2023-04-03"))
+            .guests(300)
+            .userIds(new ArrayList<>(List.of("u1", "u2")))
+            .build();
+
+    Event testEvent2 = Event.builder()
+            .id("b")
+            .name("Test Event 3")
+            .startDate(LocalDate.parse("2023-04-01"))
+            .endDate(LocalDate.parse("2023-04-03"))
+            .guests(400)
+            .userIds(new ArrayList<>(List.of("u2")))
+            .build();
+
+
     //global dummy Objects for build up / matching below
     Position testPosition1 = Position.builder()
             .id("1")
@@ -339,6 +371,7 @@ class PositionsControllerTest {
             .amount(10)
             .tax(19)
             .subCategoryId(testSubCategory1.getId())
+            .eventId(testEvent1.getId())
             .build();
 
     Position testPosition2 = Position.builder()
@@ -349,6 +382,7 @@ class PositionsControllerTest {
             .amount(10)
             .tax(19)
             .subCategoryId(testSubCategory2.getId())
+            .eventId(testEvent1.getId())
             .build();
 
     Position testPosition3 = Position.builder()
@@ -359,6 +393,7 @@ class PositionsControllerTest {
             .amount(10)
             .tax(19)
             .subCategoryId(testSubCategory3.getId())
+            .eventId(testEvent2.getId())
             .build();
 
     //global dummy Objects for expectations / matching above
@@ -370,6 +405,7 @@ class PositionsControllerTest {
             .amount(10)
             .tax(19)
             .subCategoryId(testSubCategory1.getId())
+            .eventId(testEvent1.getId())
             .build();
 
     Position expectedPosition2 = Position.builder()
@@ -380,6 +416,7 @@ class PositionsControllerTest {
             .amount(10)
             .tax(19)
             .subCategoryId(testSubCategory2.getId())
+            .eventId(testEvent1.getId())
             .build();
 
     Position expectedPosition3 = Position.builder()
@@ -390,6 +427,7 @@ class PositionsControllerTest {
             .amount(10)
             .tax(19)
             .subCategoryId(testSubCategory3.getId())
+            .eventId(testEvent2.getId())
             .build();
 
 }

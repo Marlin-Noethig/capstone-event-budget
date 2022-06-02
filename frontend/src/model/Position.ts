@@ -6,4 +6,5 @@ export type Position = {
     price: number;
     tax: number;
     subCategoryId: string;
+    eventId: string;
 }

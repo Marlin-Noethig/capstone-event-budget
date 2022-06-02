@@ -47,7 +47,8 @@ export default function WritePosition({
             amount: amount,
             price: netPrice,
             tax: tax,
-            subCategoryId: subCategoryId
+            subCategoryId: subCategoryId,
+            eventId: "666" // this will be changed when frontend logic for multiple events is implemented
         }
 
         if (addNewPosition && toggleEnableAdd) {

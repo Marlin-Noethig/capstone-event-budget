@@ -18,4 +18,5 @@ public class PositionDto {
     private double amount;
     private float tax;
     private String subCategoryId;
+    private String eventId;
 }

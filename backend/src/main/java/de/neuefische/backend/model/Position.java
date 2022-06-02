@@ -23,6 +23,7 @@ public class Position {
         this.amount = dto.getAmount();
         this.tax = dto.getTax();
         this.subCategoryId = dto.getSubCategoryId();
+        this.eventId = dto.getEventId();
     }
 
     @Id
@@ -33,4 +34,5 @@ public class Position {
     private double amount;
     private float tax;
     private String subCategoryId;
+    private String eventId;
 }
