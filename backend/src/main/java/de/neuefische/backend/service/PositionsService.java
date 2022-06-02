@@ -1,6 +1,7 @@
 package de.neuefische.backend.service;
 
 import de.neuefische.backend.dto.PositionDto;
+import de.neuefische.backend.model.Event;
 import de.neuefische.backend.model.Position;
 import de.neuefische.backend.model.SubCategory;
 import de.neuefische.backend.repository.PositionsRepo;
@@ -16,11 +17,13 @@ import java.util.NoSuchElementException;
 public class PositionsService {
     private final PositionsRepo positionsRepo;
     private final SubCategoriesService subCategoriesService;
+    private final EventsService eventsService;
 
     @Autowired
-    public PositionsService(PositionsRepo positionsRepo, SubCategoriesService subCategoriesService) {
+    public PositionsService(PositionsRepo positionsRepo, SubCategoriesService subCategoriesService, EventsService eventsService) {
         this.positionsRepo = positionsRepo;
         this.subCategoriesService = subCategoriesService;
+        this.eventsService = eventsService;
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
@@ -31,13 +34,20 @@ public class PositionsService {
     @PreAuthorize("hasAuthority('USER')")
     public List<Position> getPositionsByUserId(String idOfCurrentUser) {
         List<SubCategory> subCategories = subCategoriesService.getSubCategoriesByUserId(idOfCurrentUser);
+        List<Event> events = eventsService.getEventsByUserId(idOfCurrentUser);
+
         ArrayList<String> subCategoryIds = new ArrayList<>();
+        ArrayList<String> eventIds = new ArrayList<>();
 
         for(SubCategory subCategory : subCategories) {
             subCategoryIds.add(subCategory.getId());
         }
 
-        return positionsRepo.findAllBySubCategoryIdIsIn(subCategoryIds);
+        for(Event event : events){
+            eventIds.add(event.getId());
+        }
+
+        return positionsRepo.findAllBySubCategoryIdIsInAndEventIdIsIn(subCategoryIds, eventIds);
     }
 
     public Position addNewPosition(PositionDto newPosition) {
