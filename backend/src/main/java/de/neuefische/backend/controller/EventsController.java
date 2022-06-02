@@ -15,8 +15,9 @@ import java.util.List;
 public class EventsController {
 
     private final EventsService eventsService;
+    
         @Autowired
-         public EventsController(EventsService eventsService) {
+        public EventsController(EventsService eventsService) {
         this.eventsService = eventsService;
     }
 
