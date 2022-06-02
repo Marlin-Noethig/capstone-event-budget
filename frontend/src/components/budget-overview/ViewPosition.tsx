@@ -1,20 +1,18 @@
 import {Position} from "../../model/Position";
 import {netToGross} from "../../service/utils/taxHelpers";
 import "./styles/ViewPosition.css"
-import {toast} from "react-toastify";
 import {formatMoney} from "../../service/utils/beatifyHelpers";
 
 type ViewPositionProps = {
     position: Position
-    deletePosition: (id: string) => void
+    deletePosition: (id: string, name: string) => void
     toggleEnableEdit: () => void
 }
 
 export default function ViewPosition({position, deletePosition, toggleEnableEdit}:ViewPositionProps){
 
     const onDelete = () =>{
-        deletePosition(position.id)
-        toast.success(`${position.name} has been deleted.`)
+        deletePosition(position.id, position.name)
     }
 
     return(

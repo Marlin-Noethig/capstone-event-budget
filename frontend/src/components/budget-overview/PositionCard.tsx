@@ -5,7 +5,7 @@ import WritePosition from "./WritePosition";
 
 type PositionCardProps = {
     position: Position
-    deletePosition: (id: string) => void
+    deletePosition: (id: string, name:string) => void
     updatePosition: (id: string,newPosition: Omit<Position, "id">) => void
     subCategoryId: string
 }
@@ -19,8 +19,12 @@ export default function PositionCard({position, deletePosition, updatePosition, 
         setEnableEdit(!enableEdit)
     }
 
+    const setEnableEditToTrue = () => {
+        setEnableEdit(true)
+    }
+
     return (
-        <div className={"position-container"}>
+        <div className={"position-container"} onDoubleClick={setEnableEditToTrue}>
             {enableEdit ? <WritePosition position={position}
                                          toggleEnableEdit={toggleEnableEdit}
                                          updatePosition={updatePosition}

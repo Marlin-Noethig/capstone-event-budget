@@ -7,7 +7,7 @@ import "./styles/PositionList.css"
 type PositionListProps = {
     positions: Position[],
     addNewPosition: (newPosition: Omit<Position, "id">) => void,
-    deletePosition: (id: string) => void,
+    deletePosition: (id: string, name: string) => void,
     updatePosition: (id: string, newPosition: Omit<Position, "id">) => void,
     subCategoryId: string,
     enableAdd: boolean

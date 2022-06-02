@@ -15,6 +15,7 @@ export type AuthContextType = {
     token: string | undefined,
     login: (credentials: Credentials) => void
     logout: () => void
+    showBalance: boolean;
 }
 
 export type AuthProviderProps = {
@@ -24,11 +25,13 @@ export type AuthProviderProps = {
 export const AuthContext = createContext<AuthContextType>({
     token: undefined,
     login: () => toast.error("Login not initialized!"),
-    logout: () => toast.error("Something with the logout does not work")
+    logout: () => toast.error("Something with the logout does not work"),
+    showBalance: false
 })
 
-export default function AuthProvider({children}:AuthProviderProps) {
+export default function AuthProvider({children}: AuthProviderProps) {
     const [token, setToken] = useState<string | undefined>(localStorage.getItem(authKey) ?? undefined);
+    const [showBalance, setShowBalance] = useState<boolean>(false);
     const navigate = useNavigate();
 
     const login = (credentials: Credentials) => {
@@ -37,6 +40,7 @@ export default function AuthProvider({children}:AuthProviderProps) {
             .then((newToken) => {
                 setToken(newToken)
                 localStorage.setItem(authKey, newToken)
+                getShowBalance(newToken)
             })
             .then(() => navigate("/"))
             .catch(() => toast.warn("Login failed. Please check your credentials!"))
@@ -44,16 +48,16 @@ export default function AuthProvider({children}:AuthProviderProps) {
 
     const checkTokenExpiration = () => {
         let decodedToken;
-        if (token){
+        if (token) {
             try {
                 decodedToken = decodeJwt(token);
             } catch {
-             toast.error("Token is corrupted, clear Web Storage!")
+                toast.error("Token is corrupted, clear Web Storage!")
             }
         }
         const dateNow = Math.floor(new Date().getTime() / 1000)
-        if(decodedToken && decodedToken.exp){
-            if (decodedToken.exp < Number(dateNow)){
+        if (decodedToken && decodedToken.exp) {
+            if (decodedToken.exp < Number(dateNow)) {
                 logout()
             }
         }
@@ -61,15 +65,26 @@ export default function AuthProvider({children}:AuthProviderProps) {
 
     useEffect(() => {
         checkTokenExpiration()
-    } )
+    })
 
     const logout = () => {
         localStorage.removeItem(authKey)
         setToken("")
+        setShowBalance(false)
         toast.info("You have been logged out")
     }
 
-    return <AuthContext.Provider value={{token, login, logout}}>
-            {children}
-        </AuthContext.Provider>
+    const getShowBalance = (currentToken: string) => {
+        axios.get("/api/main-categories/balance-allowed", currentToken
+            ? {headers: {"Authorization": currentToken}}
+            : {})
+            .then(response => response.data)
+            .then(data => setShowBalance(data));
+    }
+
+
+
+return <AuthContext.Provider value={{token, login, logout, showBalance}}>
+    {children}
+</AuthContext.Provider>
 }

@@ -6,6 +6,8 @@ import BalanceView from "../components/budget-overview/BalanceView";
 import "./styles/BudgetOverview.css"
 import useMainCategories from "../hooks/useMainCategories";
 import useSubCategories from "../hooks/useSubCategories";
+import {useContext} from "react";
+import {AuthContext} from "../context/AuthProvider";
 
 
 export default function BudgetOverview() {
@@ -13,6 +15,7 @@ export default function BudgetOverview() {
     const {positions, addNewPosition, updatePositionById, removePositionById} = usePositions();
     const {mainCategories} = useMainCategories();
     const {subCategories} = useSubCategories();
+    const {showBalance} = useContext(AuthContext);
 
     return (
         <div className={"budget-overview-container"}>
@@ -27,7 +30,7 @@ export default function BudgetOverview() {
                                                                       updatePosition={updatePositionById}
                 />)}
             </div>
-            <BalanceView sum={getBalance(positions, subCategories, mainCategories)}/>
+            {showBalance && <BalanceView sum={getBalance(positions, subCategories, mainCategories)}/>}
         </div>
     )
 }
