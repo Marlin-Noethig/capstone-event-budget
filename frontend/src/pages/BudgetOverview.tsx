@@ -1,20 +1,31 @@
 import EventDetailView from "../components/budget-overview/EventDetailView";
 import MainCategoryView from "../components/budget-overview/MainCategoryView";
-import usePositions from "../hooks/usePositions";
 import {getBalance} from "../service/utils/sumHelpers";
 import BalanceView from "../components/budget-overview/BalanceView";
 import "./styles/BudgetOverview.css"
-import useMainCategories from "../hooks/useMainCategories";
-import useSubCategories from "../hooks/useSubCategories";
+import {MainCategory} from "../model/MainCategory";
+import {SubCategory} from "../model/SubCategory";
+import {Position} from "../model/Position";
 import {useContext} from "react";
 import {AuthContext} from "../context/AuthProvider";
 
+type BudgetOverviewProps = {
+    mainCategories: MainCategory[],
+    subCategories: SubCategory[],
+    positions: Position[],
+    addNewPosition: (newPosition: Omit<Position, "id">) => void,
+    deletePosition: (id: string, name: string) => void,
+    updatePosition: (id: string, newPosition: Omit<Position, "id">) => void
+}
 
-export default function BudgetOverview() {
-
-    const {positions, addNewPosition, updatePositionById, removePositionById} = usePositions();
-    const {mainCategories} = useMainCategories();
-    const {subCategories} = useSubCategories();
+export default function BudgetOverview({
+                                           mainCategories,
+                                           subCategories,
+                                           positions,
+                                           addNewPosition,
+                                           deletePosition,
+                                           updatePosition,
+                                       }: BudgetOverviewProps) {
     const {showBalance} = useContext(AuthContext);
 
     return (
@@ -26,8 +37,8 @@ export default function BudgetOverview() {
                                                                       subCategories={subCategories}
                                                                       positions={positions}
                                                                       addNewPosition={addNewPosition}
-                                                                      deletePosition={removePositionById}
-                                                                      updatePosition={updatePositionById}
+                                                                      deletePosition={deletePosition}
+                                                                      updatePosition={updatePosition}
                 />)}
             </div>
             {showBalance && <BalanceView sum={getBalance(positions, subCategories, mainCategories)}/>}
