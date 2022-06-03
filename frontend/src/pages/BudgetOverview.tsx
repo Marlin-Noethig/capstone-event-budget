@@ -41,7 +41,8 @@ export default function BudgetOverview({
                                                                       updatePosition={updatePosition}
                 />)}
             </div>
-            {showBalance && <BalanceView sum={getBalance(positions, subCategories, mainCategories)}/>}
+            {showBalance && <BalanceView sum={getBalance(positions, subCategories, mainCategories)}
+                                         onBudgedList={true}/>}
         </div>
     )
 }

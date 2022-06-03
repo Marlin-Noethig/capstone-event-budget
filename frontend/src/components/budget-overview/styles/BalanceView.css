@@ -5,8 +5,7 @@
     padding: 10px 20px 10px 20px;
     display: flex;
     justify-content: space-between;
-    position: sticky;
-    bottom: 0;
+
 }
 
 .balance-sum{
@@ -15,4 +14,9 @@
 
 .negative-sum{
     color: #e05555;
+}
+
+.on-budget-list {
+    position: sticky;
+    bottom: 0;
 }
