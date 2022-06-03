@@ -3,6 +3,7 @@ import {SubCategory} from "../../model/SubCategory";
 import {Position} from "../../model/Position";
 import {formatMoney} from "../../service/utils/beatifyHelpers";
 import {getMainSum} from "../../service/utils/sumHelpers";
+import SubCategoryOverview from "./SubCategoryOverview";
 
 
 type MainCategoryOverviewProps = {
@@ -25,6 +26,7 @@ export default function MainCategoryOverview({mainCategory, subCategories, posit
                     {formatMoney(getMainSum(positions, filteredSubCategories))} €
                 </span>
             </div>
+            {filteredSubCategories.map(subCategory => <SubCategoryOverview subCategory={subCategory} positions={positions}/>)}
         </div>
     )
 }
