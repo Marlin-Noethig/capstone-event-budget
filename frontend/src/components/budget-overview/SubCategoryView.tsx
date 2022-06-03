@@ -12,6 +12,7 @@ type SubCategoryViewProps = {
     addNewPosition: (newPosition: Omit<Position, "id">) => void,
     deletePosition: (id: string, name: string) => void,
     updatePosition: (id: string, newPosition: Omit<Position, "id">) => void
+    idOfEvent: string
 }
 
 export default function SubCategoryView({
@@ -19,7 +20,8 @@ export default function SubCategoryView({
                                             positions,
                                             addNewPosition,
                                             deletePosition,
-                                            updatePosition
+                                            updatePosition,
+                                            idOfEvent
                                         }: SubCategoryViewProps) {
 
     const filteredPositions = positions.filter(position => position.subCategoryId === subCategory.id)
@@ -42,7 +44,7 @@ export default function SubCategoryView({
                             onClick={toggleCollapsed}>{collapsed ? "˄" : "˅"}</button>
                     <span>{subCategory.name}</span>
                 </div>
-                    <span>{formatMoney(getSubSum(filteredPositions))} €</span>
+                <span>{formatMoney(getSubSum(filteredPositions))} €</span>
             </div>
             {collapsed && <PositionList positions={filteredPositions}
                                         addNewPosition={addNewPosition}
@@ -51,6 +53,8 @@ export default function SubCategoryView({
                                         subCategoryId={subCategory.id}
                                         enableAdd={enableAdd}
                                         toggleEnableAdd={toggleEnableAdd}
+                                        idOfEvent={idOfEvent}
+
             />}
         </div>
     )

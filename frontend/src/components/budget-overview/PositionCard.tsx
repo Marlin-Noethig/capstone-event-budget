@@ -5,13 +5,19 @@ import WritePosition from "./WritePosition";
 
 type PositionCardProps = {
     position: Position
-    deletePosition: (id: string, name:string) => void
-    updatePosition: (id: string,newPosition: Omit<Position, "id">) => void
+    deletePosition: (id: string, name: string) => void
+    updatePosition: (id: string, newPosition: Omit<Position, "id">) => void
     subCategoryId: string
+    idOfEvent: string
 }
 
-
-export default function PositionCard({position, deletePosition, updatePosition, subCategoryId}: PositionCardProps) {
+export default function PositionCard({
+                                         position,
+                                         deletePosition,
+                                         updatePosition,
+                                         subCategoryId,
+                                         idOfEvent
+                                     }: PositionCardProps) {
 
     const [enableEdit, setEnableEdit] = useState<boolean>(false);
 
@@ -29,6 +35,7 @@ export default function PositionCard({position, deletePosition, updatePosition, 
                                          toggleEnableEdit={toggleEnableEdit}
                                          updatePosition={updatePosition}
                                          subCategoryId={subCategoryId}
+                                         idOfEvent={idOfEvent}
             /> : <ViewPosition position={position}
                                deletePosition={deletePosition}
                                toggleEnableEdit={toggleEnableEdit}

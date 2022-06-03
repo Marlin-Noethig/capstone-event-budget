@@ -1,20 +1,24 @@
 import "./styles/EventDetailView.css"
+import {EventData} from "../../model/EventData";
+import {useNavigate} from "react-router-dom";
 
+type EventDetailViewProps = {
+    event: EventData
+}
 
-export default function EventDetailView(){
+export default function EventDetailView({event}: EventDetailViewProps){
 
-    //these are dummy-values for future data of specific events which will be fetched from the api
-    const eventName: string = ":/localfestival:3000/";
-    const maximumCapacity: number = 2000;
-    const fromDate: string = "21.04.2023"
-    const untilDate: string = "23.04.30"
+    const navigate = useNavigate()
 
     return(
-        <div className={"event-detail-view-container"}>
-            <p className={"event-detail-name"}>Event: {eventName}</p>
-            <p>Max. Capacity: {maximumCapacity}</p>
-            <p>From: {fromDate}</p>
-            <p>Until: {untilDate}</p>
+        <div className={"event-detail-view-wrapper"}>
+            <button onClick={() => navigate("/")}>Back</button>
+            <div className={"event-detail-view-container"}>
+                <p className={"event-detail-name"}>Event: {event.name}</p>
+                <p>Max. Capacity: {event.guests}</p>
+                <p>From: {new Date(event.startDate).toLocaleDateString()}</p>
+                <p>Until: {new Date(event.endDate).toLocaleDateString()}</p>
+            </div>
         </div>
     )
 }

@@ -8,8 +8,11 @@ import {SubCategory} from "../model/SubCategory";
 import {Position} from "../model/Position";
 import {useContext} from "react";
 import {AuthContext} from "../context/AuthProvider";
+import {EventData} from "../model/EventData";
+import {useParams} from "react-router-dom";
 
 type BudgetOverviewProps = {
+    events: EventData[],
     mainCategories: MainCategory[],
     subCategories: SubCategory[],
     positions: Position[],
@@ -19,6 +22,7 @@ type BudgetOverviewProps = {
 }
 
 export default function BudgetOverview({
+                                           events,
                                            mainCategories,
                                            subCategories,
                                            positions,
@@ -26,22 +30,33 @@ export default function BudgetOverview({
                                            deletePosition,
                                            updatePosition,
                                        }: BudgetOverviewProps) {
+
     const {showBalance} = useContext(AuthContext);
+    const{idOfEvent} = useParams();
+    const displayedEvent = events.find(event => event.id === idOfEvent);
+    const positionsOfEvent = positions.filter(position => position.eventId === idOfEvent);
+
+    if (!displayedEvent || !idOfEvent){
+        return <div>
+            Event with provided id has not been found.
+        </div>
+    }
 
     return (
         <div className={"budget-overview-container"}>
             <div className={"budget-overview-wrapper"}>
-                <EventDetailView/>
+                <EventDetailView event={displayedEvent}/>
                 {mainCategories.map(mainCategory => <MainCategoryView key={mainCategory.id}
                                                                       mainCategory={mainCategory}
                                                                       subCategories={subCategories}
-                                                                      positions={positions}
+                                                                      positions={positionsOfEvent}
                                                                       addNewPosition={addNewPosition}
                                                                       deletePosition={deletePosition}
                                                                       updatePosition={updatePosition}
+                                                                      idOfEvent={idOfEvent}
                 />)}
             </div>
-            {showBalance && <BalanceView sum={getBalance(positions, subCategories, mainCategories)}
+            {showBalance && <BalanceView sum={getBalance(positionsOfEvent, subCategories, mainCategories)}
                                          onBudgedList={true}/>}
         </div>
     )
