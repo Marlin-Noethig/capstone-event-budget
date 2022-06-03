@@ -1,5 +1,6 @@
 export  type MainCategory = {
-    id: string,
-    name: string,
+    id: string
+    name: string
     income: boolean
+    userIds: string[]
 }

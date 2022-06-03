@@ -1,0 +1,6 @@
+.event-overview-container {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(3, 33%);
+    justify-items: center;
+}

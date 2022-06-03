@@ -1,0 +1,21 @@
+.event-card {
+    background-color: #8F91A2;
+    padding: 5px;
+    border-radius: 5px;
+    margin: 10px;
+    width: 93%;
+}
+
+.event-card-heading {
+    font-weight: bold;
+    font-size: 20px;
+    background-color: #0E0E1B;
+    padding: 3px;
+    margin-bottom: 5px;
+}
+
+.event-card-heading:hover {
+    color: black;
+    background-color: lightgray;
+    cursor: pointer;
+}
