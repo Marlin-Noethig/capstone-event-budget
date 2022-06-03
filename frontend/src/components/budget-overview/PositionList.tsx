@@ -12,6 +12,7 @@ type PositionListProps = {
     subCategoryId: string,
     enableAdd: boolean
     toggleEnableAdd: () => void
+    idOfEvent: string
 }
 
 export default function PositionList({
@@ -21,22 +22,25 @@ export default function PositionList({
                                          updatePosition,
                                          subCategoryId,
                                          enableAdd,
-                                         toggleEnableAdd
+                                         toggleEnableAdd,
+                                         idOfEvent
                                      }: PositionListProps) {
 
 
     return (
         <div className={"position-list-container"}>
-            <PositionListHead toggleEnableAdd={toggleEnableAdd} />
+            <PositionListHead toggleEnableAdd={toggleEnableAdd}/>
             {positions.map(position => <PositionCard
                 key={position.id}
                 position={position}
                 deletePosition={deletePosition}
                 updatePosition={updatePosition}
-                subCategoryId={subCategoryId}/>)}
+                subCategoryId={subCategoryId}
+                idOfEvent={idOfEvent}/>)}
             {enableAdd && <WritePosition addNewPosition={addNewPosition}
-                                        toggleEnableAdd={toggleEnableAdd}
-                                        subCategoryId={subCategoryId}
+                                         toggleEnableAdd={toggleEnableAdd}
+                                         subCategoryId={subCategoryId}
+                                         idOfEvent={idOfEvent}
             />}
         </div>
     )

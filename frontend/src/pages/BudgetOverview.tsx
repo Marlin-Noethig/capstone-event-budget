@@ -36,7 +36,7 @@ export default function BudgetOverview({
     const displayedEvent = events.find(event => event.id === idOfEvent);
     const positionsOfEvent = positions.filter(position => position.eventId === idOfEvent);
 
-    if (!displayedEvent){
+    if (!displayedEvent || !idOfEvent){
         return <div>
             Event with provided id has not been found.
         </div>
@@ -53,6 +53,7 @@ export default function BudgetOverview({
                                                                       addNewPosition={addNewPosition}
                                                                       deletePosition={deletePosition}
                                                                       updatePosition={updatePosition}
+                                                                      idOfEvent={idOfEvent}
                 />)}
             </div>
             {showBalance && <BalanceView sum={getBalance(positionsOfEvent, subCategories, mainCategories)}

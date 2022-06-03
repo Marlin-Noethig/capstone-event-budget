@@ -14,6 +14,7 @@ type MainCategoryViewProps = {
     addNewPosition: (newPosition: Omit<Position, "id">) => void,
     deletePosition: (id: string, name: string) => void,
     updatePosition: (id: string, newPosition: Omit<Position, "id">) => void
+    idOfEvent: string
 }
 
 export default function MainCategoryView({
@@ -22,7 +23,8 @@ export default function MainCategoryView({
                                              positions,
                                              addNewPosition,
                                              deletePosition,
-                                             updatePosition
+                                             updatePosition,
+                                             idOfEvent
                                          }: MainCategoryViewProps) {
 
     const [collapsed, setCollapsed] = useState<boolean>(true);
@@ -55,6 +57,7 @@ export default function MainCategoryView({
                                                                                     addNewPosition={addNewPosition}
                                                                                     deletePosition={deletePosition}
                                                                                     updatePosition={updatePosition}
+                                                                                    idOfEvent={idOfEvent}
 
             />)}
         </div>
