@@ -17,15 +17,16 @@ export default function HomePage() {
     return (
         <div className={"home-page"}>
             <Routes>
-                <Route path="/"
+                <Route path={"/"}
                        element={<EventOverview events={events}
                                                mainCategories={mainCategories}
                                                subCategories={subCategories}
                                                positions={positions}
                        />}
                 />
-                <Route path="budget-overview/"
-                       element={<BudgetOverview mainCategories={mainCategories}
+                <Route path={"budget-overview/:idOfEvent"}
+                       element={<BudgetOverview events={events}
+                                                mainCategories={mainCategories}
                                                 subCategories={subCategories}
                                                 positions={positions}
                                                 addNewPosition={addNewPosition}
