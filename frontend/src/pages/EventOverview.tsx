@@ -4,6 +4,7 @@ import {SubCategory} from "../model/SubCategory";
 import {Position} from "../model/Position";
 import EventCard from "../components/event-overview/EventCard";
 import {EventData} from "../model/EventData";
+import "./styles/EventOverview.css"
 
 type EventOverviewProps = {
     events: EventData [],

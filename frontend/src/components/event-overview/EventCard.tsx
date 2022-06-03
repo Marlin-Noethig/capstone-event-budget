@@ -22,13 +22,14 @@ export default function EventCard({event, mainCategories, subCategories, positio
     const {showBalance} = useContext(AuthContext)
 
     return (
-        <div className={"event-card-container"}>
-            <div className={"event-card-heading"}>{event.name}</div>
-            {mainCategories.map(mainCategory => <MainCategoryOverview mainCategory={mainCategory}
-                                                                      subCategories={subCategories}
-                                                                      positions={positionsOfEvent}/>
-            )}
-            {showBalance && <BalanceView sum={getBalance(positionsOfEvent, subCategories, mainCategories)}/>}
-        </div>
+            <div className={"event-card"}>
+                <div className={"event-card-heading"}>{event.name}</div>
+                {mainCategories.map(mainCategory => <MainCategoryOverview key={mainCategory.id}
+                                                                          mainCategory={mainCategory}
+                                                                          subCategories={subCategories}
+                                                                          positions={positionsOfEvent}/>
+                )}
+                {showBalance && <BalanceView sum={getBalance(positionsOfEvent, subCategories, mainCategories)}/>}
+            </div>
     )
 }
