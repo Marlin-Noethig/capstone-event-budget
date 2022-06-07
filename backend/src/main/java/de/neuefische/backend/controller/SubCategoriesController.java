@@ -33,8 +33,8 @@ public class SubCategoriesController {
         }
     }
 
-    @PutMapping
-    public SubCategory putSubCategory(@RequestBody SubCategoryDto newSubCategory) {
+    @PostMapping
+    public SubCategory postSubCategory(@RequestBody SubCategoryDto newSubCategory) {
         return subCategoriesService.addNewSubCategory(newSubCategory);
     }
 

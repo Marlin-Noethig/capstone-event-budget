@@ -72,6 +72,7 @@ public class SubCategoriesService {
         return subCategoriesRepo.save(updatedSubCategory);
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     public void deleteSubCategoryById(String id) {
         if (!subCategoriesRepo.existsById(id)){
             throw new NoSuchElementException("Subcategory with Id " + id + " does not exist.");
