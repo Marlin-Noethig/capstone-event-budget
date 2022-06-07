@@ -43,5 +43,8 @@ public class SubCategoriesController {
         return subCategoriesService.updateSubCategoryById(id, subCategoryToUpdate);
     }
 
-
+    @DeleteMapping("{id}")
+    public void deleteSubCategory(@PathVariable String id){
+        subCategoriesService.deleteSubCategoryById(id);
+    }
 }

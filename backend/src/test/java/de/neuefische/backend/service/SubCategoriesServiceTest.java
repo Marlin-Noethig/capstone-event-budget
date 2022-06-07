@@ -2,6 +2,7 @@ package de.neuefische.backend.service;
 
 import de.neuefische.backend.model.SubCategory;
 import de.neuefische.backend.repository.MainCategoriesRepo;
+import de.neuefische.backend.repository.PositionsRepo;
 import de.neuefische.backend.repository.SubCategoriesRepo;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +15,8 @@ class SubCategoriesServiceTest {
 
     private final SubCategoriesRepo subCategoriesRepo = mock(SubCategoriesRepo.class);
     private final MainCategoriesRepo mainCategoriesRepo  = mock(MainCategoriesRepo.class);
-    private final SubCategoriesService subCategoriesService = new SubCategoriesService(subCategoriesRepo, mainCategoriesRepo);
+    private final PositionsRepo positionsRepo = mock(PositionsRepo.class);
+    private final SubCategoriesService subCategoriesService = new SubCategoriesService(subCategoriesRepo, mainCategoriesRepo, positionsRepo);
 
     @Test
     void getSubCategories() {

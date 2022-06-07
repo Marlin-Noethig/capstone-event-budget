@@ -4,11 +4,11 @@ import de.neuefische.backend.dto.SubCategoryDto;
 import de.neuefische.backend.model.MainCategory;
 import de.neuefische.backend.model.SubCategory;
 import de.neuefische.backend.repository.MainCategoriesRepo;
+import de.neuefische.backend.repository.PositionsRepo;
 import de.neuefische.backend.repository.SubCategoriesRepo;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
-import javax.management.InstanceAlreadyExistsException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -18,10 +18,12 @@ public class SubCategoriesService {
 
     private final SubCategoriesRepo subCategoriesRepo;
     private final MainCategoriesRepo mainCategoriesRepo;
+    private final PositionsRepo positionsRepo;
 
-    public SubCategoriesService(SubCategoriesRepo subCategoriesRepo, MainCategoriesRepo mainCategoriesRepo) {
+    public SubCategoriesService(SubCategoriesRepo subCategoriesRepo, MainCategoriesRepo mainCategoriesRepo, PositionsRepo positionsRepo) {
         this.subCategoriesRepo = subCategoriesRepo;
         this.mainCategoriesRepo = mainCategoriesRepo;
+        this.positionsRepo = positionsRepo;
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
@@ -70,4 +72,11 @@ public class SubCategoriesService {
         return subCategoriesRepo.save(updatedSubCategory);
     }
 
+    public void deleteSubCategoryById(String id) {
+        if (!subCategoriesRepo.existsById(id)){
+            throw new NoSuchElementException("Subcategory with Id " + id + " does not exist.");
+        }
+        subCategoriesRepo.deleteById(id);
+        positionsRepo.deleteAllBySubCategoryId(id);
+    }
 }
