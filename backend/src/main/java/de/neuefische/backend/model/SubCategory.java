@@ -1,5 +1,6 @@
 package de.neuefische.backend.model;
 
+import de.neuefische.backend.dto.SubCategoryDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,6 +14,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Builder
 @Document(collection = "subCategories")
 public class SubCategory {
+
+    public SubCategory(SubCategoryDto dto) {
+        this.name = dto.getName();
+        this.mainCategoryId = dto.getMainCategoryId();
+    }
 
     @Id
     private String id;
