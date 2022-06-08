@@ -12,4 +12,6 @@ public interface SubCategoriesRepo extends MongoRepository<SubCategory, String> 
 
     List<SubCategory> findAllByMainCategoryIdIsIn(ArrayList<String> mainCategoryIds);
 
+    SubCategory findByName(String name);
+
 }

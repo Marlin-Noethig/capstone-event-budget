@@ -186,7 +186,7 @@ class PositionsServiceTest {
     @Test
     void deletePositionById_whenIdWrong_shouldThrowException(){
         //GIVEN
-        String wrongIdOfToDelete= "1";
+        String wrongIdOfToDelete = "1";
 
         when(positionsRepo.existsById(wrongIdOfToDelete)).thenReturn(false);
 

@@ -1,13 +1,12 @@
 package de.neuefische.backend.controller;
 
+import de.neuefische.backend.dto.SubCategoryDto;
 import de.neuefische.backend.model.SubCategory;
 import de.neuefische.backend.security.service.utils.AuthUtils;
 import de.neuefische.backend.service.SubCategoriesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -32,5 +31,20 @@ public class SubCategoriesController {
             String idOfCurrentUser = AuthUtils.getIdOfCurrentUser(authentication);
             return subCategoriesService.getSubCategoriesByUserId(idOfCurrentUser);
         }
+    }
+
+    @PostMapping
+    public SubCategory postSubCategory(@RequestBody SubCategoryDto newSubCategory) {
+        return subCategoriesService.addNewSubCategory(newSubCategory);
+    }
+
+    @PutMapping("{id}")
+    public SubCategory putSubCategoryById(@PathVariable String id, @RequestBody SubCategoryDto subCategoryToUpdate) {
+        return subCategoriesService.updateSubCategoryById(id, subCategoryToUpdate);
+    }
+
+    @DeleteMapping("{id}")
+    public void deleteSubCategory(@PathVariable String id){
+        subCategoriesService.deleteSubCategoryById(id);
     }
 }
