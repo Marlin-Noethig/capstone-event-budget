@@ -3,8 +3,10 @@ package de.neuefische.backend.controller;
 import de.neuefische.backend.dto.EventDto;
 import de.neuefische.backend.model.Event;
 import de.neuefische.backend.model.MainCategory;
+import de.neuefische.backend.model.Position;
 import de.neuefische.backend.model.SubCategory;
 import de.neuefische.backend.repository.EventsRepo;
+import de.neuefische.backend.repository.PositionsRepo;
 import de.neuefische.backend.security.dto.AppUserLoginDto;
 import de.neuefische.backend.security.model.AppUser;
 import de.neuefische.backend.security.repository.AppUserRepository;
@@ -44,9 +46,13 @@ class EventsControllerTest {
     @Autowired
     private EventsRepo eventsRepo;
 
+    @Autowired
+    private PositionsRepo positionsRepo;
+
     @BeforeEach
     public void setUp() {
         eventsRepo.deleteAll();
+        positionsRepo.deleteAll();
         appUserRepository.deleteAll();
 
         final String adminMail1 = "admin@tester.de";
@@ -206,6 +212,67 @@ class EventsControllerTest {
                 .headers(http -> http.setBearerAuth(userJwt1))
                 .bodyValue(eventToUpdate)
                 .exchange()
+                //THEN
+                .expectStatus().isForbidden();
+    }
+
+    @Test
+    void deleteEventById_whenSuccessful_shouldReturnReducedSetOfEvents_andPositions() {
+        //GIVEN
+        eventsRepo.insert(testEvent1);
+        eventsRepo.insert(testEvent2);
+        positionsRepo.insert(testPosition1);
+        positionsRepo.insert(testPosition2);
+        positionsRepo.insert(testPosition3);
+
+        //WHEN
+        webTestClient.delete()
+                .uri("http://localhost:" + port + "/api/events/" + testEvent1.getId())
+                .headers(http -> http.setBearerAuth(adminJwt1))
+                .exchange()
+                .expectStatus().is2xxSuccessful();
+
+        List<Event> actualEvents = webTestClient.get()
+                .uri("http://localhost:" + port + "/api/events/")
+                .headers(http -> http.setBearerAuth(adminJwt1))
+                .exchange()
+                .expectStatus().is2xxSuccessful()
+                .expectBodyList(Event.class)
+                .returnResult()
+                .getResponseBody();
+
+        List<Position> actualPositions = webTestClient.get()
+                .uri("http://localhost:" + port + "/api/positions/")
+                .headers(http -> http.setBearerAuth(adminJwt1))
+                .exchange()
+                .expectStatus().is2xxSuccessful()
+                .expectBodyList(Position.class)
+                .returnResult()
+                .getResponseBody();
+
+        //THEN
+        List<Event> expectedEvents = List.of(expectedEvent2);
+        List<Position> expectedPositions = List.of(expectedPosition3);
+
+        assertEquals(expectedEvents, actualEvents);
+        assertEquals(expectedPositions, actualPositions);
+    }
+
+    @Test
+    void deleteEvent_whenUser_shouldReturnClientError403() {
+        //GIVEN
+        eventsRepo.insert(testEvent1);
+        eventsRepo.insert(testEvent2);
+        positionsRepo.insert(testPosition1);
+        positionsRepo.insert(testPosition2);
+        positionsRepo.insert(testPosition3);
+
+        //WHEN
+        webTestClient.delete()
+                .uri("http://localhost:" + port + "/api/events/" + testEvent1.getId())
+                .headers(http -> http.setBearerAuth(userJwt1))
+                .exchange()
+                //THEN
                 .expectStatus().isForbidden();
     }
 
@@ -265,5 +332,72 @@ class EventsControllerTest {
             .endDate(LocalDate.parse("2023-04-03"))
             .guests(400)
             .userIds(new ArrayList<>(List.of("u2")))
+            .build();
+
+    Position testPosition1 = Position.builder()
+            .id("1")
+            .name("Starkstromanschluss")
+            .description("Lorem ipsum")
+            .price(50)
+            .amount(10)
+            .tax(19)
+            .subCategoryId("111")
+            .eventId("a")
+            .build();
+
+    Position testPosition2 = Position.builder()
+            .id("2")
+            .name("Lautsprecher")
+            .description("Lorem ipsum")
+            .price(50)
+            .amount(10)
+            .tax(19)
+            .subCategoryId("222")
+            .eventId("a")
+            .build();
+
+    Position testPosition3 = Position.builder()
+            .id("3")
+            .name("Drucker")
+            .description("Lorem ipsum")
+            .price(50)
+            .amount(10)
+            .tax(19)
+            .subCategoryId("333")
+            .eventId("b")
+            .build();
+
+    //expected Positions
+    Position expectedPosition1 = Position.builder()
+            .id("1")
+            .name("Starkstromanschluss")
+            .description("Lorem ipsum")
+            .price(50)
+            .amount(10)
+            .tax(19)
+            .subCategoryId("111")
+            .eventId("a")
+            .build();
+
+    Position expectedPosition2 = Position.builder()
+            .id("2")
+            .name("Lautsprecher")
+            .description("Lorem ipsum")
+            .price(50)
+            .amount(10)
+            .tax(19)
+            .subCategoryId("222")
+            .eventId("a")
+            .build();
+
+    Position expectedPosition3 = Position.builder()
+            .id("3")
+            .name("Drucker")
+            .description("Lorem ipsum")
+            .price(50)
+            .amount(10)
+            .tax(19)
+            .subCategoryId("333")
+            .eventId("b")
             .build();
 }
