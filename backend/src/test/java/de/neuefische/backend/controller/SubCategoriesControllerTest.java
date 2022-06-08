@@ -208,6 +208,7 @@ class SubCategoriesControllerTest {
                 .headers(http -> http.setBearerAuth(userJwt1))
                 .bodyValue(updatedSubCategory)
                 .exchange()
+                //THEN
                 .expectStatus().isForbidden();
     }
 
