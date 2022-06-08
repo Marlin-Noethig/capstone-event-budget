@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -20,6 +21,21 @@ class EventsServiceTest {
     private final EventsRepo eventsRepo = mock(EventsRepo.class);
 
     private final EventsService eventsService = new EventsService(eventsRepo);
+
+
+    @Test
+    void getSubCategories(){
+        //GIVEN
+        when(eventsRepo.findAll()).thenReturn(List.of(testEvent1, testEvent2));
+
+        //WHEN
+        List<Event> actual = eventsService.getEvents();
+
+        //THEN
+        List<Event> expected = List.of(expectedEvent1, expectedEvent2);
+        verify(eventsRepo).findAll();
+        assertEquals(expected, actual);
+    }
 
     @Test
     void addNewEvent_whenSomeFieldIsNull_shouldThrowException() {
@@ -59,8 +75,47 @@ class EventsServiceTest {
         });
     }
 
+    @Test
+    void updateEvent_whenIdDoesNotExist_shouldThrowException() {
+        //GIVEN
+        String idOfToUpdate = "1";
 
+        EventDto eventToUpdate = EventDto.builder()
+                .name("Test Event 1")
+                .startDate(LocalDate.parse("2023-04-01"))
+                .endDate(LocalDate.parse("2023-04-03"))
+                .guests(123)
+                .userIds(new ArrayList<>(List.of("u1", "u2")))
+                .build();
 
+        //THEN
+        assertThrows(NoSuchElementException.class, () -> {
+            //WHEN
+            eventsService.updateEventById(idOfToUpdate, eventToUpdate);
+        });
+    }
+
+    @Test
+    void updateEvent_whenNameIsNull_shouldThrowException() {
+        //GIVEN
+        String idOfToUpdate = "1";
+
+        EventDto eventToUpdate = EventDto.builder()
+                .name("Test Event 1")
+                .startDate(null)
+                .endDate(LocalDate.parse("2023-04-03"))
+                .guests(123)
+                .userIds(new ArrayList<>(List.of("u1", "u2")))
+                .build();
+
+        when(eventsRepo.existsById(any())).thenReturn(true);
+
+        //THEN
+        assertThrows(IllegalArgumentException.class, () -> {
+            //WHEN
+            eventsService.updateEventById(idOfToUpdate, eventToUpdate);
+        });
+    }
 
 
     //Global test variables
