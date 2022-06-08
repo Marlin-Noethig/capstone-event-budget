@@ -4,6 +4,7 @@ package de.neuefische.backend.service;
 import de.neuefische.backend.dto.EventDto;
 import de.neuefische.backend.model.Event;
 import de.neuefische.backend.repository.EventsRepo;
+import de.neuefische.backend.repository.PositionsRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
@@ -15,11 +16,12 @@ import java.util.NoSuchElementException;
 public class EventsService {
 
     private final EventsRepo eventsRepo;
-
+    private final PositionsRepo positionsRepo;
 
     @Autowired
-    public EventsService(EventsRepo eventsRepo) {
+    public EventsService(EventsRepo eventsRepo, PositionsRepo positionsRepo) {
         this.eventsRepo = eventsRepo;
+        this.positionsRepo = positionsRepo;
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
@@ -59,5 +61,15 @@ public class EventsService {
         updatedEvent.setId(id);
 
         return eventsRepo.save(updatedEvent);
+    }
+
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public void deleteEventById(String id) {
+        if (!eventsRepo.existsById(id)){
+            throw new NoSuchElementException("Event with Id " + id + " does not exist.");
+        }
+
+        eventsRepo.deleteById(id);
+        positionsRepo.deleteAllByEventId(id);
     }
 }

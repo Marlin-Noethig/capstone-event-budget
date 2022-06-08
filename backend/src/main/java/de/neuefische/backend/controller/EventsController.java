@@ -43,5 +43,8 @@ public class EventsController {
             return eventsService.updateEventById(id, eventToUpdate);
     }
 
-
+    @DeleteMapping("{id}")
+    public void deleteEventById(@PathVariable String id){
+            eventsService.deleteEventById(id);
+    }
 }
