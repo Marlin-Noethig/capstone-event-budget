@@ -133,15 +133,13 @@ class SubCategoriesControllerTest {
                 .returnResult()
                 .getResponseBody();
 
-
         //THEN
         assertNotNull(actual);
         assertNotNull(actual.getId());
-        SubCategory expected = testSubCategory1;
+        SubCategory expected = expectedSubCategory1;
         expected.setId(actual.getId());
         assertEquals(24, actual.getId().length());
         assertEquals(expected, actual);
-
     }
 
     @Test

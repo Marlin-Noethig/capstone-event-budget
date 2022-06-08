@@ -1,7 +1,9 @@
 package de.neuefische.backend.controller;
 
+import de.neuefische.backend.dto.EventDto;
 import de.neuefische.backend.model.Event;
 import de.neuefische.backend.model.MainCategory;
+import de.neuefische.backend.model.SubCategory;
 import de.neuefische.backend.repository.EventsRepo;
 import de.neuefische.backend.security.dto.AppUserLoginDto;
 import de.neuefische.backend.security.model.AppUser;
@@ -97,6 +99,60 @@ class EventsControllerTest {
         //THEN
         List<Event> expected = List.of(expectedEvent1);
         assertEquals(expected, actual);
+    }
+
+    @Test
+    void postEvent_whenAdmin_shouldBeSuccessfulAndReturnAddedEvent() {
+        //GIVEN
+        //dto corresponds to testEvent1
+        EventDto eventToAdd = EventDto.builder()
+                .name("Test Event 1")
+                .startDate(LocalDate.parse("2023-04-01"))
+                .endDate(LocalDate.parse("2023-04-03"))
+                .guests(300)
+                .userIds(new ArrayList<>(List.of("u1", "u2")))
+                .build();
+
+        //WHEN
+        Event actual = webTestClient.post()
+                .uri("http://localhost:" + port + "/api/events/")
+                .headers(http -> http.setBearerAuth(adminJwt1))
+                .bodyValue(eventToAdd)
+                .exchange()
+                .expectStatus().is2xxSuccessful()
+                .expectBody(Event.class)
+                .returnResult()
+                .getResponseBody();
+
+        //THEN
+        assertNotNull(actual);
+        assertNotNull(actual.getId());
+        Event expected = expectedEvent1;
+        expected.setId(actual.getId());
+        assertEquals(24, actual.getId().length());
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void postEvent_whenUser_shouldReturnClientError403() {
+        //GIVEN
+        //dto corresponds to testEvent1
+        EventDto eventToAdd = EventDto.builder()
+                .name("Test Event 1")
+                .startDate(LocalDate.parse("2023-04-01"))
+                .endDate(LocalDate.parse("2023-04-03"))
+                .guests(300)
+                .userIds(new ArrayList<>(List.of("u1", "u2")))
+                .build();
+
+        //WHEN
+        webTestClient.post()
+                .uri("http://localhost:" + port + "/api/events/")
+                .headers(http -> http.setBearerAuth(userJwt1))
+                .bodyValue(eventToAdd)
+                .exchange()
+                //THEN
+                .expectStatus().isForbidden();
     }
 
     private String generateJwtAndSaveUserToRepo(String id, String mail, String role) {
