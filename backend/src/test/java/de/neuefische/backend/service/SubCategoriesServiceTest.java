@@ -103,7 +103,7 @@ class SubCategoriesServiceTest {
 
 
     @Test
-    void deleteSubCategory_whenId_Wrong_shouldThrowException() {
+    void deleteSubCategory_whenIdWrong_shouldThrowException() {
         //GIVEN
         String wrongIdOdToDelete = "1";
         when(subCategoriesRepo.existsById(wrongIdOdToDelete)).thenReturn(false);

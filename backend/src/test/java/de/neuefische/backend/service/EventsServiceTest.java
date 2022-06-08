@@ -1,10 +1,9 @@
 package de.neuefische.backend.service;
 
 import de.neuefische.backend.dto.EventDto;
-import de.neuefische.backend.dto.SubCategoryDto;
 import de.neuefische.backend.model.Event;
-import de.neuefische.backend.model.SubCategory;
 import de.neuefische.backend.repository.EventsRepo;
+import de.neuefische.backend.repository.PositionsRepo;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -19,9 +18,9 @@ import static org.mockito.Mockito.*;
 class EventsServiceTest {
 
     private final EventsRepo eventsRepo = mock(EventsRepo.class);
+    private final PositionsRepo positionsRepo = mock(PositionsRepo.class);
 
-    private final EventsService eventsService = new EventsService(eventsRepo);
-
+    private final EventsService eventsService = new EventsService(eventsRepo, positionsRepo);
 
     @Test
     void getSubCategories(){
@@ -117,6 +116,18 @@ class EventsServiceTest {
         });
     }
 
+    @Test
+    void deleteEvent_whenIdWrong_shouldThrowException() {
+        //GIVEN
+        String wrongIdOdToDelete = "1";
+        when(eventsRepo.existsById(wrongIdOdToDelete)).thenReturn(false);
+
+        //THEN
+        assertThrows(NoSuchElementException.class, () -> {
+            //WHEN
+            eventsService.deleteEventById(wrongIdOdToDelete);
+        });
+    }
 
     //Global test variables
     Event testEvent1 = Event.builder()
