@@ -9,6 +9,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class EventsService {
@@ -43,5 +44,20 @@ public class EventsService {
 
         Event newEvent = new Event(eventToAdd);
         return eventsRepo.insert(newEvent);
+    }
+
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public Event updateEventById(String id, EventDto eventToUpdate) {
+        if (!eventsRepo.existsById(id)) {
+            throw new NoSuchElementException("No Event with Id " + id + " found to be updated.");
+        }
+        if (eventToUpdate.getName() == null || eventToUpdate.getStartDate() == null || eventToUpdate.getEndDate() == null || eventToUpdate.getGuests() <= 0) {
+            throw new IllegalArgumentException("Updated event is incomplete. Please make sure that every field has a value.");
+        }
+
+        Event updatedEvent = new Event(eventToUpdate);
+        updatedEvent.setId(id);
+
+        return eventsRepo.save(updatedEvent);
     }
 }

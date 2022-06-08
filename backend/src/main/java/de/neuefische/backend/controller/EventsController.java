@@ -38,4 +38,10 @@ public class EventsController {
             return eventsService.addNewEvent(newEvent);
     }
 
+    @PutMapping("{id}")
+    public Event putEventById(@PathVariable String id, @RequestBody EventDto eventToUpdate){
+            return eventsService.updateEventById(id, eventToUpdate);
+    }
+
+
 }

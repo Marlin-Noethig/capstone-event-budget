@@ -155,6 +155,60 @@ class EventsControllerTest {
                 .expectStatus().isForbidden();
     }
 
+    @Test
+    void putEvent_whenAdmin_shouldBeSuccessful() {
+        //GIVEN
+        eventsRepo.insert(testEvent1);
+
+        EventDto eventToUpdate = EventDto.builder()
+                .name("Test Event 1")
+                .startDate(LocalDate.parse("2023-04-01"))
+                .endDate(LocalDate.parse("2023-04-03"))
+                .guests(500) // put a higher number into guests
+                .userIds(new ArrayList<>(List.of("u1", "u2")))
+                .build();
+
+        //WHEN
+        Event actual = webTestClient.put()
+                .uri("http://localhost:" + port + "/api/events/" + testEvent1.getId())
+                .headers(http -> http.setBearerAuth(adminJwt1))
+                .bodyValue(eventToUpdate)
+                .exchange()
+                .expectStatus().is2xxSuccessful()
+                .expectBody(Event.class)
+                .returnResult()
+                .getResponseBody();
+
+        //Then
+        assertNotNull(actual);
+        assertNotNull(actual.getId());
+        Event expected = expectedEvent1;
+        expected.setGuests(500);
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void putEvent_whenUser_shouldReturnClientError403() {
+        //GIVEN
+        eventsRepo.insert(testEvent1);
+
+        EventDto eventToUpdate = EventDto.builder()
+                .name("Test Event 1")
+                .startDate(LocalDate.parse("2023-04-01"))
+                .endDate(LocalDate.parse("2023-04-03"))
+                .guests(500) // put a higher number into guests
+                .userIds(new ArrayList<>(List.of("u1", "u2")))
+                .build();
+
+        //WHEN
+        webTestClient.put()
+                .uri("http://localhost:" + port + "/api/events/" + testEvent1.getId())
+                .headers(http -> http.setBearerAuth(userJwt1))
+                .bodyValue(eventToUpdate)
+                .exchange()
+                .expectStatus().isForbidden();
+    }
+
     private String generateJwtAndSaveUserToRepo(String id, String mail, String role) {
         String hashedPassword = passwordEncoder.encode("super-safe-password");
         AppUser newUser = AppUser.builder()

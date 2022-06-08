@@ -1,7 +1,9 @@
 package de.neuefische.backend.service;
 
 import de.neuefische.backend.dto.EventDto;
+import de.neuefische.backend.dto.SubCategoryDto;
 import de.neuefische.backend.model.Event;
+import de.neuefische.backend.model.SubCategory;
 import de.neuefische.backend.repository.EventsRepo;
 import org.junit.jupiter.api.Test;
 
@@ -56,6 +58,9 @@ class EventsServiceTest {
             eventsService.addNewEvent(eventToAdd);
         });
     }
+
+
+
 
 
     //Global test variables
