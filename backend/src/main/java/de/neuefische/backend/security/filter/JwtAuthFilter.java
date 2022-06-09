@@ -55,14 +55,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     private void setContext(String userMail) {
         AppUser loggedUser = appUserRepository.findByMail(userMail).orElseThrow(() -> new UsernameNotFoundException("No username with this mail found"));
         UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(AppUserInfoDto.builder()
-                        .id(loggedUser.getId())
-                        .mail(loggedUser.getMail())
-                        .firstName(loggedUser.getFirstName())
-                        .lastName(loggedUser.getLastName())
-                        .company(loggedUser.getCompany())
-                        .role(loggedUser.getRole())
-                        .build(), "", List.of(new SimpleGrantedAuthority(loggedUser.getRole())));
+                new UsernamePasswordAuthenticationToken(new AppUserInfoDto(loggedUser), "", List.of(new SimpleGrantedAuthority(loggedUser.getRole())));
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
     }
 
