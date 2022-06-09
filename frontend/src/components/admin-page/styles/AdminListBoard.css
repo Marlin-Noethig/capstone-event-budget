@@ -1,0 +1,9 @@
+
+.admin-view-list{
+    background-color: rgba(211, 211, 211, 0.1);
+    color: white;
+    width: 95%;
+    margin-top: 20px;
+    text-align: left;
+    border-radius: 5px;
+}
