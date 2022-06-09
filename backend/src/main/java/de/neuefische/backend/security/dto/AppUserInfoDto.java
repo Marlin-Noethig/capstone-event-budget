@@ -12,4 +12,8 @@ import lombok.NoArgsConstructor;
 public class AppUserInfoDto {
     private String id;
     private String mail;
+    private String firstName;
+    private String lastName;
+    private String company;
+    private String role;
 }

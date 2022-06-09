@@ -17,5 +17,8 @@ public class AppUser {
     private String id;
     private String mail;
     private String password;
+    private String firstName;
+    private String lastName;
+    private String company;
     private String role;
 }
