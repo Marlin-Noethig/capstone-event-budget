@@ -17,7 +17,7 @@ public class JwtUtilService {
     @Value("${neuefische.capstone-event-budget.jwt.secret}")
     private String jwtSecret;
 
-    public String creatToken(String userMail){
+    public String createToken(String userMail){
 
         return Jwts.builder()
                 .setClaims(new HashMap<>())
