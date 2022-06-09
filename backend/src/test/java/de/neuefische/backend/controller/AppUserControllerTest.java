@@ -17,8 +17,8 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest(webEnvironment =  SpringBootTest.WebEnvironment.RANDOM_PORT)
 class AppUserControllerTest {
 
-    private String adminJwt1;
-    final String userMail1 = "test@tester.de";
+    private String userJwt1;
+    final String userMail1 = "max@muster.de";
 
     @LocalServerPort
     private int port;
@@ -36,7 +36,7 @@ class AppUserControllerTest {
     public void setUp() {
         appUserRepository.deleteAll();
 
-        adminJwt1 = generateJwtAndSaveUserToRepo("u1", userMail1, "USER");
+        userJwt1 = generateJwtAndSaveUserToRepo("u1", userMail1, "Max", "Muster", "Supercompany", "USER");
     }
 
     @Test
@@ -44,7 +44,7 @@ class AppUserControllerTest {
         //WHEN
         AppUserInfoDto actual = webTestClient.get()
                 .uri("http://localhost:" + port + "/api/user/current")
-                .headers(httpHeaders -> httpHeaders.setBearerAuth(adminJwt1))
+                .headers(httpHeaders -> httpHeaders.setBearerAuth(userJwt1))
                 .exchange()
                 .expectStatus().is2xxSuccessful()
                 .expectBody(AppUserInfoDto.class)
@@ -52,18 +52,27 @@ class AppUserControllerTest {
                 .getResponseBody();
 
         //THEN
-        AppUserInfoDto expected = AppUserInfoDto.builder().id("u1").mail(userMail1).build();
+        AppUserInfoDto expected = AppUserInfoDto.builder()
+                .id("u1")
+                .mail(userMail1)
+                .firstName("Max")
+                .lastName("Muster")
+                .company("Supercompany")
+                .role("USER").build();
 
         assertEquals(expected, actual);
 
     }
 
-    private String generateJwtAndSaveUserToRepo(String id, String mail, String role) {
+    private String generateJwtAndSaveUserToRepo(String id, String mail, String firstName, String lastName, String company, String role) {
         String hashedPassword = passwordEncoder.encode("super-safe-password");
         AppUser newUser = AppUser.builder()
                 .id(id)
                 .mail(mail)
                 .password(hashedPassword)
+                .firstName(firstName)
+                .lastName(lastName)
+                .company(company)
                 .role(role)
                 .build();
         appUserRepository.insert(newUser);
