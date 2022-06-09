@@ -1,12 +1,11 @@
 package de.neuefische.backend.controller;
 
+import de.neuefische.backend.dto.EventDto;
 import de.neuefische.backend.model.Event;
 import de.neuefische.backend.security.service.utils.AuthUtils;
 import de.neuefische.backend.service.EventsService;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -32,5 +31,20 @@ public class EventsController {
             String idOfCurrentUser = AuthUtils.getIdOfCurrentUser(authentication);
             return eventsService.getEventsByUserId(idOfCurrentUser);
         }
+    }
+
+    @PostMapping
+    public Event postEvent(@RequestBody EventDto newEvent){
+            return eventsService.addNewEvent(newEvent);
+    }
+
+    @PutMapping("{id}")
+    public Event putEventById(@PathVariable String id, @RequestBody EventDto eventToUpdate){
+            return eventsService.updateEventById(id, eventToUpdate);
+    }
+
+    @DeleteMapping("{id}")
+    public void deleteEventById(@PathVariable String id){
+            eventsService.deleteEventById(id);
     }
 }

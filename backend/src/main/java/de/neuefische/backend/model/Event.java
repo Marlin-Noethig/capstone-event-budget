@@ -1,5 +1,6 @@
 package de.neuefische.backend.model;
 
+import de.neuefische.backend.dto.EventDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,8 +18,16 @@ import java.util.ArrayList;
 @Document(collection = "events")
 public class Event {
 
+    public Event(EventDto dto){
+        this.name = dto.getName();
+        this.startDate = dto.getStartDate();
+        this.endDate = dto.getEndDate();
+        this.guests = dto.getGuests();
+        this.userIds = dto.getUserIds();
+    }
+
     @Id
-    String id;
+    private String id;
     private String name;
     private LocalDate startDate;
     private LocalDate endDate;

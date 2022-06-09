@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface EventsRepo extends MongoRepository<Event, String> {
     List<Event> findAllByUserIdsContaining(String idOfCurrentUser);
+    Event findByName(String name);
 }

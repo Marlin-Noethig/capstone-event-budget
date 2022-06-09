@@ -77,6 +77,7 @@ public class SubCategoriesService {
         if (!subCategoriesRepo.existsById(id)){
             throw new NoSuchElementException("Subcategory with Id " + id + " does not exist.");
         }
+
         subCategoriesRepo.deleteById(id);
         positionsRepo.deleteAllBySubCategoryId(id);
     }

@@ -133,15 +133,13 @@ class SubCategoriesControllerTest {
                 .returnResult()
                 .getResponseBody();
 
-
         //THEN
         assertNotNull(actual);
         assertNotNull(actual.getId());
-        SubCategory expected = testSubCategory1;
+        SubCategory expected = expectedSubCategory1;
         expected.setId(actual.getId());
         assertEquals(24, actual.getId().length());
         assertEquals(expected, actual);
-
     }
 
     @Test
@@ -255,6 +253,27 @@ class SubCategoriesControllerTest {
 
         assertEquals(expectedSubCategories, actualSubCategories);
         assertEquals(expectedPositions, actualPositions);
+    }
+
+    @Test
+    void deleteSubCategoryById_whenUser_shouldReturnClientError403() {
+        //GIVEN
+        mainCategoriesRepo.insert(testMainCategory1);
+        mainCategoriesRepo.insert(testMainCategory2);
+        subCategoriesRepo.insert(testSubCategory1);
+        subCategoriesRepo.insert(testSubCategory2);
+        subCategoriesRepo.insert(testSubCategory3);
+        positionsRepo.insert(testPosition1);
+        positionsRepo.insert(testPosition2);
+        positionsRepo.insert(testPosition3);
+
+        //WHEN
+        webTestClient.delete()
+                .uri("http://localhost:" + port + "/api/sub-categories/" + testSubCategory1.getId())
+                .headers(http -> http.setBearerAuth(userJwt1))
+                .exchange()
+                //THEN
+                .expectStatus().isForbidden();
     }
 
     @Test
