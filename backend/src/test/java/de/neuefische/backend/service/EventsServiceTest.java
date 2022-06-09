@@ -37,7 +37,7 @@ class EventsServiceTest {
     }
 
     @Test
-    void addNewEvent_whenSomeFieldIsNull_shouldThrowException() {
+    void addNewEvent_whenNameAlreadyExists_shouldThrowException() {
         //GIVEN
         EventDto eventToAdd = EventDto.builder()
                 .name("Test Event 1")
@@ -57,7 +57,7 @@ class EventsServiceTest {
     }
 
     @Test
-    void addNewEvent_whenNameAlreadyExits_shouldReturnException() {
+    void addNewEvent_whenSomeFieldIsNull_shouldReturnException() {
         //GIVEN
         EventDto eventToAdd = EventDto.builder()
                 .name("Test Event 1")
@@ -95,7 +95,7 @@ class EventsServiceTest {
     }
 
     @Test
-    void updateEvent_whenNameIsNull_shouldThrowException() {
+    void updateEvent_whenStartDateIsNull_shouldThrowException() {
         //GIVEN
         String idOfToUpdate = "1";
 
