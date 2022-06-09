@@ -1,6 +1,7 @@
 import "./styles/AppTitle.css"
 import {useContext} from "react";
 import {AuthContext} from "../context/AuthProvider";
+import {Link} from "react-router-dom";
 
 
 export default function AppTitle() {
@@ -9,7 +10,7 @@ export default function AppTitle() {
 
     return (
         <div className={"app-title-container"}>
-            <div> </div>
+            <Link to={"/admin"}>Admin</Link>
             <div className={"app-title"}>EventBudget</div>
             <div className={"logout-button-wrapper"}>
                 {token && <button className={"logout-button"} onClick={logout}>Logout</button>}

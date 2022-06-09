@@ -6,6 +6,7 @@ import usePositions from "../hooks/usePositions";
 import useMainCategories from "../hooks/useMainCategories";
 import useSubCategories from "../hooks/useSubCategories";
 import useEvents from "../hooks/useEvents";
+import AdminPage from "./AdminPage";
 
 export default function HomePage() {
 
@@ -34,6 +35,9 @@ export default function HomePage() {
                                                 updatePosition={updatePositionById}
                        />}
                 />
+                <Route path={"admin"}
+                       element={<AdminPage/>}>
+                </Route>
             </Routes>
         </div>
     )
