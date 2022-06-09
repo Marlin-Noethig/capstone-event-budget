@@ -35,7 +35,7 @@ export default function HomePage() {
                                                 updatePosition={updatePositionById}
                        />}
                 />
-                <Route path={"admin"}
+                <Route path={"admin/*"}
                        element={<AdminPage/>}>
                 </Route>
             </Routes>
