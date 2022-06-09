@@ -98,6 +98,65 @@ class MainCategoriesControllerTest {
     }
 
     @Test
+    void patchUserIdsById_whenAdmin_shouldReturnUpdatedMainCategory() {
+        //GIVEN
+        mainCategoriesRepo.insert(testMainCategory1);
+
+        ArrayList<String> updatedUsers = new ArrayList<>((List.of("u1", "u2")));
+
+        //WHEN
+        MainCategory actual = webTestClient.patch()
+                .uri("http://localhost:" + port + "/api/main-categories/" + testMainCategory1.getId())
+                .headers(http -> http.setBearerAuth(adminJwt1))
+                .bodyValue(updatedUsers)
+                .exchange()
+                .expectStatus().is2xxSuccessful()
+                .expectBody(MainCategory.class)
+                .returnResult()
+                .getResponseBody();
+
+        //THEN
+        MainCategory expected = expectedMainCategory1;
+        expected.setUserIds(updatedUsers);
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void patchUserIdsById_whenUser_shouldReturnClientError403() {
+        //GIVEN
+        mainCategoriesRepo.insert(testMainCategory1);
+
+        ArrayList<String> updatedUsers = new ArrayList<>((List.of("u1", "u2")));
+
+        //WHEN
+        webTestClient.patch()
+                .uri("http://localhost:" + port + "/api/main-categories/" + testMainCategory1.getId())
+                .headers(http -> http.setBearerAuth(userJwt1))
+                .bodyValue(updatedUsers)
+                .exchange()
+                //Then
+                .expectStatus().isForbidden();
+    }
+
+    @Test
+    void patchUserIdsById_whenUserInListDoesNotExist_shouldReturnClientError() {
+        //GIVEN
+        mainCategoriesRepo.insert(testMainCategory1);
+
+        ArrayList<String> updatedUsers = new ArrayList<>((List.of("u1", "u2", "u3"))); // "u3" is not in the initiated users
+
+        //WHEN
+        webTestClient.patch()
+                .uri("http://localhost:" + port + "/api/main-categories/" + testMainCategory1.getId())
+                .headers(http -> http.setBearerAuth(adminJwt1))
+                .bodyValue(updatedUsers)
+                .exchange()
+                //Then
+                .expectStatus().isBadRequest();
+    }
+
+    @Test
     void isBalanceAllowed_whenRoleIsAdmin_shouldReturn_true(){
         //GIVEN
         mainCategoriesRepo.insert(testMainCategory1);

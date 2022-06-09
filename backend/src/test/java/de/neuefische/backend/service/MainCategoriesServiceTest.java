@@ -3,6 +3,7 @@ package de.neuefische.backend.service;
 import de.neuefische.backend.model.MainCategory;
 import de.neuefische.backend.repository.MainCategoriesRepo;
 
+import de.neuefische.backend.security.repository.AppUserRepository;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +14,8 @@ import static org.mockito.Mockito.*;
 class MainCategoriesServiceTest {
 
     private final MainCategoriesRepo mainCategoriesRepo = mock(MainCategoriesRepo.class);
-    private final MainCategoriesService mainCategoriesService = new MainCategoriesService(mainCategoriesRepo);
+    private final AppUserRepository appUserRepository = mock(AppUserRepository.class);
+    private final MainCategoriesService mainCategoriesService = new MainCategoriesService(mainCategoriesRepo, appUserRepository);
 
     @Test
     void getMainCategories() {
