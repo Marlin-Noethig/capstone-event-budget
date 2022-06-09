@@ -5,9 +5,7 @@ import de.neuefische.backend.security.service.utils.AuthUtils;
 import de.neuefische.backend.service.MainCategoriesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -32,6 +30,11 @@ public class MainCategoriesController {
             String idOfCurrentUser = AuthUtils.getIdOfCurrentUser(authentication);
             return mainCategoriesService.getMainCategoriesByUserId(idOfCurrentUser);
         }
+    }
+
+    @PatchMapping("{id}")
+    public MainCategory updateUserIdsById(@PathVariable String id, @RequestBody List<String> userIds) {
+        return mainCategoriesService.updateUserIdsById(id, userIds);
     }
 
     @GetMapping("balance-allowed")
