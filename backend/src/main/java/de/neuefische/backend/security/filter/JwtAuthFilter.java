@@ -58,6 +58,10 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 new UsernamePasswordAuthenticationToken(AppUserInfoDto.builder()
                         .id(loggedUser.getId())
                         .mail(loggedUser.getMail())
+                        .firstName(loggedUser.getFirstName())
+                        .lastName(loggedUser.getLastName())
+                        .company(loggedUser.getCompany())
+                        .role(loggedUser.getRole())
                         .build(), "", List.of(new SimpleGrantedAuthority(loggedUser.getRole())));
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
     }
