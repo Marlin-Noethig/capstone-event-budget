@@ -1,17 +1,18 @@
 import {User} from "../../model/User";
+import AdminUserView from "./AdminUserView";
 
 type AdminViewUsersListProps = {
     users: User[]
 }
 
 export default function AdminViewUsersList({users}: AdminViewUsersListProps) {
+
+    const usersSortedByCompanyAndFirstName = [...users].sort((a, b) => {
+        return a.company.localeCompare(b.company) || a.firstName.localeCompare(b.firstName)
+    })
+
     return (<div className={"admin-view-list"}>
         <div className={"admin-view-list-title"}>Users</div>
-        <ul>
-            {users.sort((a, b) => a.company.localeCompare(b.company))
-                .sort((a, b) => a.firstName.localeCompare(b.firstName))
-                .map(user =>
-                    <li>{`${user.firstName} ${user.lastName} (${user.company}), Role: ${user.role}`}</li>)}
-        </ul>
+        {usersSortedByCompanyAndFirstName.map(user => <AdminUserView user={user}/>)}
     </div>)
 }

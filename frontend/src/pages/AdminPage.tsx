@@ -16,7 +16,7 @@ export default function AdminPage({mainCategories, subCategories, events}: Admin
 
     return (
         <div className={"admin-page"}>
-            <Link to={"/"}>Back</Link>
+            <Link to={"/"}>Home</Link>
             <AdminListBoard mainCategories={mainCategories}
                             subCategories={subCategories}
                             events={events}
