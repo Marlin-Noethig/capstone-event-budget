@@ -8,10 +8,11 @@ type AdminViewCategoryListProps = {
     subCategories: SubCategory[]
 }
 
-export default function AdminViewCategoryList({mainCategories, subCategories}:AdminViewCategoryListProps) {
+export default function AdminViewCategoryList({mainCategories, subCategories}: AdminViewCategoryListProps) {
     return (<div className={"admin-view-list"}>
         <div className={"admin-view-list-title"}>Categories</div>
-        {mainCategories.map(mainCategory => <AdminMainCategoryView mainCategory={mainCategory}
+        {mainCategories.map(mainCategory => <AdminMainCategoryView key={mainCategory.id}
+                                                                   mainCategory={mainCategory}
                                                                    subCategories={subCategories.filter(subCategory => subCategory.mainCategoryId === mainCategory.id)}/>)}
     </div>)
 }

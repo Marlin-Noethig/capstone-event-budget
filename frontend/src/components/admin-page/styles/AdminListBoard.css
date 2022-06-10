@@ -22,9 +22,10 @@
 
 .admin-list-item{
     color: black;
-    background-color: lightgray;
     border-radius: 3px;
     margin: 8px 0 8px 0;
     font-weight: bold;
     padding: 3px;
+    background-color: lightgray;
 }
+

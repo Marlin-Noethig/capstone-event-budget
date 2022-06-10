@@ -1,10 +1,10 @@
 import {User} from "../../model/User";
 
-type AAdminViewUsersListProps = {
+type AdminViewUsersListProps = {
     users: User[]
 }
 
-export default function AdminViewUsersList({users}: AAdminViewUsersListProps) {
+export default function AdminViewUsersList({users}: AdminViewUsersListProps) {
     return (<div className={"admin-view-list"}>
         <div className={"admin-view-list-title"}>Users</div>
         <ul>

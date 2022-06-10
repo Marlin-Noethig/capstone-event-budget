@@ -1,4 +1,5 @@
 import {EventData} from "../../model/EventData";
+import AdminEventView from "./AdminEventView";
 
 type AdminViewEventListProps = {
     events: EventData[]
@@ -7,8 +8,6 @@ type AdminViewEventListProps = {
 export default function AdminViewEventsList({events}:AdminViewEventListProps) {
     return (<div className={"admin-view-list"}>
         <div className={"admin-view-list-title"}>Events</div>
-        <ul>
-            {events.map(event => <li>{event.name}</li>)}
-        </ul>
+        {events.map(event => <AdminEventView event={event}/>)}
     </div>)
 }

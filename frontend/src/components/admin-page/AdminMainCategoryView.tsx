@@ -13,6 +13,6 @@ export default function AdminMainCategoryView({mainCategory, subCategories}:Admi
 
     return(<div>
         <div className={"admin-list-item" + isIncomeClassName}>{mainCategory.name}</div>
-        {subCategories.map(subCategory => <AdminSubCategoryView subCategory={subCategory}/>)}
+        {subCategories.map(subCategory => <AdminSubCategoryView key={subCategory.id} subCategory={subCategory}/>)}
     </div>)
 }
