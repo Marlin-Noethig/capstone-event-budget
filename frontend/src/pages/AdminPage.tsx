@@ -13,14 +13,14 @@ type AdminPageProps = {
 
 export default function AdminPage({mainCategories, subCategories, events}: AdminPageProps) {
     const {users} = useUsers();
-    console.log(users)
 
     return (
         <div className={"admin-page"}>
             <Link to={"/"}>Back</Link>
             <AdminListBoard mainCategories={mainCategories}
                             subCategories={subCategories}
-                            events={events}/>
+                            events={events}
+                            users={users}/>
         </div>
     )
 }
