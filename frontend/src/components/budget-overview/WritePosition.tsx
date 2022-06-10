@@ -61,7 +61,6 @@ export default function WritePosition({
             updatePosition(position.id, positionValues);
             toggleEnableEdit();
         }
-
     }
 
     const onChangeNetPrice = (e: ChangeEvent<HTMLInputElement>) => {

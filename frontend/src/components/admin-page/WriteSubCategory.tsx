@@ -5,9 +5,12 @@ import {toast} from "react-toastify";
 type WriteSubCategoryProps = {
     subCategory?: SubCategory
     idOfMainCategory: string
+    addSubCategory?: (newPosition: Omit<SubCategory, "id">) => void,
+    updateSubCategory?: (id: string, newPosition: Omit<SubCategory, "id">) => void,
+    toggleEnableAdd?: () => void
 }
 
-export default function WriteSubCategory({subCategory, idOfMainCategory}: WriteSubCategoryProps) {
+export default function WriteSubCategory({subCategory, idOfMainCategory, addSubCategory, updateSubCategory, toggleEnableAdd}: WriteSubCategoryProps) {
     const [name, setName] = useState<string>(subCategory ? subCategory.name : "");
 
     const onSubmitSubCategory = (event: FormEvent<HTMLFormElement>) => {
@@ -15,6 +18,15 @@ export default function WriteSubCategory({subCategory, idOfMainCategory}: WriteS
         if (!name) {
             toast.warn("Name must be set")
             return
+        }
+        const subCategoryValues = {
+            name: name,
+            mainCategoryId: idOfMainCategory
+        }
+
+        if(addSubCategory && toggleEnableAdd){
+            addSubCategory(subCategoryValues);
+            toggleEnableAdd();
         }
     }
 
@@ -28,7 +40,7 @@ export default function WriteSubCategory({subCategory, idOfMainCategory}: WriteS
                         :
                         <input type={"submit"} value={"add"}/>
                     }
-                    <button onClick={() => console.log("ouch")}>X</button>
+                    <button onClick={toggleEnableAdd}>X</button>
                 </div>
             </form>
         </div>
