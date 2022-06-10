@@ -1,6 +1,7 @@
 import "./styles/AdminViewCategoryList.css"
 import {MainCategory} from "../../model/MainCategory";
 import {SubCategory} from "../../model/SubCategory";
+import AdminMainCategoryView from "./AdminMainCategoryView";
 
 type AdminViewCategoryListProps = {
     mainCategories: MainCategory[],
@@ -10,11 +11,7 @@ type AdminViewCategoryListProps = {
 export default function AdminViewCategoryList({mainCategories, subCategories}:AdminViewCategoryListProps) {
     return (<div className={"admin-view-list"}>
         <div className={"admin-view-list-title"}>Categories</div>
-        <ul>
-            {mainCategories.map(mainCategory => <li>{mainCategory.name}</li>)}
-        </ul>
-        <ul>
-            {subCategories.map(subCategory => <li>{subCategory.name}</li>)}
-        </ul>
+        {mainCategories.map(mainCategory => <AdminMainCategoryView mainCategory={mainCategory}
+                                                                   subCategories={subCategories.filter(subCategory => subCategory.mainCategoryId === mainCategory.id)}/>)}
     </div>)
 }
