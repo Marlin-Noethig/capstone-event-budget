@@ -6,6 +6,7 @@ import usePositions from "../hooks/usePositions";
 import useMainCategories from "../hooks/useMainCategories";
 import useSubCategories from "../hooks/useSubCategories";
 import useEvents from "../hooks/useEvents";
+import AdminPage from "./AdminPage";
 
 export default function HomePage() {
 
@@ -14,18 +15,20 @@ export default function HomePage() {
     const {subCategories} = useSubCategories();
     const {events} = useEvents();
 
+    const eventsSortedByDate = [...events].sort((a, b) => Number(new Date(b.startDate))- Number(new Date(a.startDate)))
+
     return (
         <div className={"home-page"}>
             <Routes>
                 <Route path={"/"}
-                       element={<EventOverview events={events}
+                       element={<EventOverview events={eventsSortedByDate}
                                                mainCategories={mainCategories}
                                                subCategories={subCategories}
                                                positions={positions}
                        />}
                 />
                 <Route path={"budget-overview/:idOfEvent"}
-                       element={<BudgetOverview events={events}
+                       element={<BudgetOverview events={eventsSortedByDate}
                                                 mainCategories={mainCategories}
                                                 subCategories={subCategories}
                                                 positions={positions}
@@ -34,6 +37,11 @@ export default function HomePage() {
                                                 updatePosition={updatePositionById}
                        />}
                 />
+                <Route path={"admin/*"}
+                       element={<AdminPage mainCategories={mainCategories}
+                                           subCategories={subCategories}
+                                           events={eventsSortedByDate}/>}>
+                </Route>
             </Routes>
         </div>
     )

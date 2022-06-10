@@ -30,7 +30,7 @@ export default function MainCategoryView({
     const [collapsed, setCollapsed] = useState<boolean>(true);
 
     const filteredSubCategories = subCategories.filter(subCategory => subCategory.mainCategoryId === mainCategory.id)
-    const isIncomeClassName = mainCategory.income ? "incomes" : "expenses"
+    const isIncomeClassName = mainCategory.income ? " incomes" : " expenses"
 
     const toggleCollapsed = () => {
         setCollapsed(!collapsed)
@@ -38,7 +38,7 @@ export default function MainCategoryView({
 
     return (
         <div>
-            <div className={"category-view main-category " + isIncomeClassName}>
+            <div className={"category-view main-category" + isIncomeClassName}>
                 <span>
                     <button className={"collapse-category-button"}
                             onClick={toggleCollapsed}>{collapsed ? "˄" : "˅"}</button>

@@ -1,0 +1,31 @@
+.admin-list-board{
+    display: grid;
+    grid-template-columns: repeat(3, 33%);
+    justify-items: center;
+}
+
+.admin-view-list{
+    background-color: rgba(211, 211, 211, 0.1);
+    color: white;
+    width: 90%;
+    margin-top: 20px;
+    text-align: left;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.admin-view-list-title{
+    text-align: center;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.admin-list-item{
+    color: black;
+    border-radius: 3px;
+    margin: 8px 0 8px 0;
+    font-weight: bold;
+    padding: 3px;
+    background-color: lightgray;
+}
+
