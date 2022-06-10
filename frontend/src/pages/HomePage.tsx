@@ -37,7 +37,8 @@ export default function HomePage() {
                 />
                 <Route path={"admin/*"}
                        element={<AdminPage mainCategories={mainCategories}
-                                           subCategories={subCategories}/>}>
+                                           subCategories={subCategories}
+                                           events={events}/>}>
                 </Route>
             </Routes>
         </div>
