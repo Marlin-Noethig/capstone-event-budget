@@ -30,7 +30,11 @@ export default function AdminMainCategoryView({
     return (<div>
         <div className={"admin-list-item" + isIncomeClassName}>{mainCategory.name}</div>
         <div className={"sub-category-container"}>
-            {subCategories.map(subCategory => <AdminSubCategoryView key={subCategory.id} subCategory={subCategory}/>)}
+            {subCategories.map(subCategory => <AdminSubCategoryView key={subCategory.id}
+                                                                    subCategory={subCategory}
+                                                                    updateSubCategory={updateSubCategory}
+                                                                    removeSubCategory={removeSubCategory}
+                                                                    idOfMainCategory={mainCategory.id}/>)}
             {enableAdd ?
                 <WriteSubCategory idOfMainCategory={mainCategory.id}
                                   addSubCategory={addSubCategory}

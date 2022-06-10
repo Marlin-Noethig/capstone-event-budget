@@ -8,9 +8,10 @@ type WriteSubCategoryProps = {
     addSubCategory?: (newPosition: Omit<SubCategory, "id">) => void,
     updateSubCategory?: (id: string, newPosition: Omit<SubCategory, "id">) => void,
     toggleEnableAdd?: () => void
+    toggleEnableEdit?: () => void
 }
 
-export default function WriteSubCategory({subCategory, idOfMainCategory, addSubCategory, updateSubCategory, toggleEnableAdd}: WriteSubCategoryProps) {
+export default function WriteSubCategory({subCategory, idOfMainCategory, addSubCategory, updateSubCategory, toggleEnableAdd, toggleEnableEdit}: WriteSubCategoryProps) {
     const [name, setName] = useState<string>(subCategory ? subCategory.name : "");
 
     const onSubmitSubCategory = (event: FormEvent<HTMLFormElement>) => {
@@ -28,6 +29,10 @@ export default function WriteSubCategory({subCategory, idOfMainCategory, addSubC
             addSubCategory(subCategoryValues);
             toggleEnableAdd();
         }
+        if(subCategory && updateSubCategory && toggleEnableEdit){
+            updateSubCategory(subCategory.id, subCategoryValues);
+            toggleEnableEdit();
+        }
     }
 
     return (
@@ -40,7 +45,7 @@ export default function WriteSubCategory({subCategory, idOfMainCategory, addSubC
                         :
                         <input type={"submit"} value={"add"}/>
                     }
-                    <button onClick={toggleEnableAdd}>X</button>
+                    <button onClick={toggleEnableAdd ?? toggleEnableEdit}>X</button>
                 </div>
             </form>
         </div>
