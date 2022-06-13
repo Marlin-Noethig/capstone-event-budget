@@ -19,7 +19,7 @@ export const postEvent: (newEvent: Omit<EventData, "id">, token?: string) => Pro
 }
 
 export const putEventById: (id: string, eventToUpdate: Omit<EventData, "id">, token?: string) => Promise<EventData> = (id, eventToUpdate, token) =>{
-    return axios.post(baseUrl + id, eventToUpdate,token
+    return axios.put(baseUrl + id, eventToUpdate,token
         ? {headers: {"Authorization": token}}
         : {})
         .then(response => response.data)

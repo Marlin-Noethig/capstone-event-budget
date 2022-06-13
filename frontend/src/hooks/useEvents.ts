@@ -4,10 +4,12 @@ import {deleteEventById, getEvents, postEvent, putEventById} from "../service/ap
 import {handleRequestError} from "../service/utils/errorHandlers";
 import {EventData} from "../model/EventData";
 import {toast} from "react-toastify";
+import {useNavigate} from "react-router-dom";
 
 export default function useEvents() {
     const [events, setEvents] = useState<EventData[]>([]);
     const {token} = useContext(AuthContext);
+    const navigate = useNavigate();
 
     useEffect(() => {
         getEvents(token)
@@ -17,14 +19,17 @@ export default function useEvents() {
 
     const addEvent = (newEvent: Omit<EventData, "id">) => {
         postEvent(newEvent, token)
-            .then(addedEvent => setEvents([...events, addedEvent]))
+            .then(addedEvent => {
+                setEvents([...events, addedEvent])
+                navigate("/events/" + addedEvent.id)
+            })
             .then(() => toast.success(`${newEvent.name} has been added.`))
             .catch((error) => handleRequestError(error.response.status));
     }
 
     const updateEventById = (id: string, eventToUpdate: Omit<EventData, "id">) => {
         putEventById(id, eventToUpdate, token)
-            .then(updatedEvent => setEvents(events.map(event => event.id === id? updatedEvent : event)))
+            .then(updatedEvent => setEvents(events.map(event => event.id === id ? updatedEvent : event)))
             .then(() => toast.success(`${eventToUpdate.name} has been added.`))
             .catch((error) => handleRequestError(error.response.status));
     }

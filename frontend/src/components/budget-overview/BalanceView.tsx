@@ -1,5 +1,5 @@
 import "./styles/BalanceView.css"
-import {formatMoney} from "../../service/utils/beatifyHelpers";
+import {formatMoney} from "../../service/utils/formatingHelpers";
 
 type BalanceViewProps = {
     sum: number

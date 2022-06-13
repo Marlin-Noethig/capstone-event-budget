@@ -18,9 +18,9 @@ export default function EventDetailsPage({events, addEvent, updateEvent, removeE
     const {idOfEvent} = useParams();
 
     const displayedEvent = events.find(event => event.id === idOfEvent);
+    const usersWithUserRole = users.filter(user => user.role === "USER")
 
     const [enableEdit, setEnableEdit] = useState<boolean>(false);
-    const [enableAdd, setEnableAdd] = useState<boolean>(false);
 
     const navigate = useNavigate();
 
@@ -37,10 +37,15 @@ export default function EventDetailsPage({events, addEvent, updateEvent, removeE
 
     return (<div className={"event-details-page"}>
             { enableEdit || (!displayedEvent && idOfEvent === "new") ?
-                <WriteEvent/>
+                <WriteEvent users={usersWithUserRole}
+                            event={displayedEvent}
+                            addEvent={addEvent}
+                            updateEvent={updateEvent}
+                            toggleEnableEdit={toggleEnableEdit}
+                />
                 :
                 <div>
-                    <DisplayEventDetails event={displayedEvent} users={users}/>
+                    <DisplayEventDetails event={displayedEvent} users={usersWithUserRole}/>
                     <button onClick={onDelete}>delete</button>
                     <button onClick={toggleEnableEdit}>edit</button>
                 </div>

@@ -15,7 +15,7 @@ export default function DisplayEventDetails({event, users}:DisplayEventDetailsPr
         )
     }
 
-    const assignedUsers = users.filter(user => user.role === "USER").filter(user => event.userIds.includes(user.id))
+    const assignedUsers = users.filter(user => event.userIds.includes(user.id))
 
     return (<div className={"display-event-container"}>
         <div className={"event-infos-container"}>
@@ -26,7 +26,7 @@ export default function DisplayEventDetails({event, users}:DisplayEventDetailsPr
         </div>
         <div className={"collaborators-container"}>
             <div className={"event-infos-heading"}>Assigned collaborators</div>
-            {assignedUsers.map(user => <div>{`${user.firstName} ${user.lastName} (${user.company})`}</div>)}
+            {assignedUsers.map(user => <div key={user.id}>{`${user.firstName} ${user.lastName} (${user.company})`}</div>)}
         </div>
     </div>)
 }
