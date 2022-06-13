@@ -48,7 +48,6 @@ export default function HomePage() {
                 </Route>
                 <Route path={"events/:idOfEvent"}
                        element={<EventDetailsPage events={events}/>}>
-
                 </Route>
             </Routes>
         </div>

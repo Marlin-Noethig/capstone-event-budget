@@ -10,7 +10,7 @@ import {AuthContext} from "../context/AuthProvider";
 import {handleRequestError} from "../service/utils/errorHandlers";
 import {toast} from "react-toastify";
 
-export default function useSubCategories(){
+export default function useSubCategories() {
     const [subCategories, setSubCategories] = useState<SubCategory[]>([]);
     const {token} = useContext(AuthContext);
 
@@ -20,7 +20,7 @@ export default function useSubCategories(){
             .catch((error) => handleRequestError(error.response.status));
     }, [token])
 
-    const addSubCategory = (newSubCategory: Omit<SubCategory, "id">) =>{
+    const addSubCategory = (newSubCategory: Omit<SubCategory, "id">) => {
         postSubCategory(newSubCategory, token)
             .then(addedSubCategory => setSubCategories([...subCategories, addedSubCategory]))
             .then(() => toast.success(`${newSubCategory.name} has been added.`))

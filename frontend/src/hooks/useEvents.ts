@@ -1,10 +1,11 @@
 import {useContext, useEffect, useState} from "react";
 import {AuthContext} from "../context/AuthProvider";
-import {getEvents} from "../service/api-service/events-api-service";
+import {deleteEventById, getEvents, postEvent, putEventById} from "../service/api-service/events-api-service";
 import {handleRequestError} from "../service/utils/errorHandlers";
 import {EventData} from "../model/EventData";
+import {toast} from "react-toastify";
 
-export default function useEvents(){
+export default function useEvents() {
     const [events, setEvents] = useState<EventData[]>([]);
     const {token} = useContext(AuthContext);
 
@@ -14,5 +15,26 @@ export default function useEvents(){
             .catch((error) => handleRequestError(error.response.status));
     }, [token])
 
-    return {events}
+    const addEvent = (newEvent: Omit<EventData, "id">) => {
+        postEvent(newEvent, token)
+            .then(addedEvent => setEvents([...events, addedEvent]))
+            .then(() => toast.success(`${newEvent.name} has been added.`))
+            .catch((error) => handleRequestError(error.response.status));
+    }
+
+    const updateEventById = (id: string, eventToUpdate: Omit<EventData, "id">) => {
+        putEventById(id, eventToUpdate, token)
+            .then(updatedEvent => setEvents(events.map(event => event.id === id? updatedEvent : event)))
+            .then(() => toast.success(`${eventToUpdate.name} has been added.`))
+            .catch((error) => handleRequestError(error.response.status));
+    }
+
+    const removeEventById = (id: string, name: string) => {
+        deleteEventById(id, token)
+            .then(() => setEvents(events.filter(event => event.id !== id)))
+            .then(() => toast.success(`${name} has been deleted.`))
+            .catch((error) => handleRequestError(error.response.status));
+    }
+
+    return {events, addEvent, updateEventById, removeEventById}
 }
