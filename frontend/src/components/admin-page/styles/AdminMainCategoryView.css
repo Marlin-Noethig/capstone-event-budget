@@ -6,3 +6,8 @@
 .incomes{
     background-color: #0D5C63 !important;
 }
+
+.sub-category-container {
+    margin-left: 5px !important;
+    margin-right: 5px !important;
+}

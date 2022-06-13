@@ -8,6 +8,6 @@ type AdminViewEventListProps = {
 export default function AdminViewEventsList({events}:AdminViewEventListProps) {
     return (<div className={"admin-view-list"}>
         <div className={"admin-view-list-title"}>Events</div>
-        {events.map(event => <AdminEventView event={event}/>)}
+        {events.map(event => <AdminEventView key={event.id} event={event}/>)}
     </div>)
 }

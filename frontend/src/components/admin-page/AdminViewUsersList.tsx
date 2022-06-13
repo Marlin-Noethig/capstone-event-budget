@@ -13,6 +13,6 @@ export default function AdminViewUsersList({users}: AdminViewUsersListProps) {
 
     return (<div className={"admin-view-list"}>
         <div className={"admin-view-list-title"}>Users</div>
-        {usersSortedByCompanyAndFirstName.map(user => <AdminUserView user={user}/>)}
+        {usersSortedByCompanyAndFirstName.map(user => <AdminUserView key={user.id} user={user}/>)}
     </div>)
 }

@@ -1,14 +1,45 @@
 import {SubCategory} from "../../model/SubCategory";
 import "./styles/AdminSubCategoryView.css"
+import {useState} from "react";
+import WriteSubCategory from "./WriteSubCategory";
 
 type AdminSubCategoryViewProps = {
     subCategory: SubCategory
+    updateSubCategory: (id: string, newPosition: Omit<SubCategory, "id">) => void,
+    removeSubCategory: (id: string, name: string) => void
+    idOfMainCategory: string
 }
 
-export default function AdminSubCategoryView({subCategory}:AdminSubCategoryViewProps){
-    return(
-        <div>
-            <div className={"admin-list-item sub-category"}>{subCategory.name}</div>
+export default function AdminSubCategoryView({
+                                                 subCategory,
+                                                 updateSubCategory,
+                                                 removeSubCategory,
+                                                 idOfMainCategory
+                                             }: AdminSubCategoryViewProps) {
+    const [enableEdit, setEnableEdit] = useState<boolean>(false);
+    const toggleEnableEdit = () => {
+        setEnableEdit(!enableEdit)
+    }
+
+    const onDelete = () => {
+        removeSubCategory(subCategory.id, subCategory.name)
+    }
+
+    return (
+        <div className={"admin-list-item sub-category"}>
+            {enableEdit ?
+                <WriteSubCategory idOfMainCategory={idOfMainCategory}
+                                  subCategory={subCategory}
+                                  updateSubCategory={updateSubCategory}
+                                  toggleEnableEdit={toggleEnableEdit}/>
+                :
+                <div className={"display-subcategory"}>
+                    <div>{subCategory.name}</div>
+                    <button onClick={onDelete}>delete</button>
+                    <button onClick={toggleEnableEdit}>edit</button>
+                </div>
+            }
+
         </div>
     )
 }

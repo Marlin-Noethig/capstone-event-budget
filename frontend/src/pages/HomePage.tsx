@@ -12,7 +12,7 @@ export default function HomePage() {
 
     const {positions, addNewPosition, updatePositionById, removePositionById} = usePositions();
     const {mainCategories} = useMainCategories();
-    const {subCategories} = useSubCategories();
+    const {subCategories, addSubCategory, updateSubCategoryById, removeSubCategoryById} = useSubCategories();
     const {events} = useEvents();
 
     const eventsSortedByDate = [...events].sort((a, b) => Number(new Date(b.startDate))- Number(new Date(a.startDate)))
@@ -40,6 +40,9 @@ export default function HomePage() {
                 <Route path={"admin/*"}
                        element={<AdminPage mainCategories={mainCategories}
                                            subCategories={subCategories}
+                                           addSubCategory={addSubCategory}
+                                           updateSubCategory={updateSubCategoryById}
+                                           removeSubCategory={removeSubCategoryById}
                                            events={eventsSortedByDate}/>}>
                 </Route>
             </Routes>
