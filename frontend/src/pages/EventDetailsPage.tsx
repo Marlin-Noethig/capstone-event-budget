@@ -1,28 +1,50 @@
 import {EventData} from "../model/EventData";
 import useUsers from "../hooks/useUsers";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import DisplayEventDetails from "../components/EventDetailsPage/DisplayEventDetails";
 import "./styles/EventDetailsPage.css"
+import {useState} from "react";
+import WriteEvent from "../components/EventDetailsPage/WriteEvent";
 
 type EventDetailsPageProps = {
     events: EventData [],
+    addEvent: (newEvent: Omit<EventData, "id">) => void,
+    updateEvent: (id: string, eventToUpdate: Omit<EventData, "id">) => void,
+    removeEvent: (id: string, name: string) => void,
 }
 
-export default function EventDetailsPage({events}: EventDetailsPageProps) {
+export default function EventDetailsPage({events, addEvent, updateEvent, removeEvent}: EventDetailsPageProps) {
     const {users} = useUsers();
     const {idOfEvent} = useParams();
 
     const displayedEvent = events.find(event => event.id === idOfEvent);
 
-    if (!displayedEvent || !idOfEvent) {
-        return <div>
-            Event with provided id has not been found.
-        </div>
+    const [enableEdit, setEnableEdit] = useState<boolean>(false);
+    const [enableAdd, setEnableAdd] = useState<boolean>(false);
+
+    const navigate = useNavigate();
+
+    const toggleEnableEdit = () => {
+        setEnableEdit(!enableEdit);
+    }
+
+    const onDelete = () =>{
+        if(displayedEvent){
+            removeEvent(displayedEvent.id, displayedEvent.name);
+            navigate("/admin")
+        }
     }
 
     return (<div className={"event-details-page"}>
-            <DisplayEventDetails event={displayedEvent} users={users}/>
-            <button>edit</button>
+            { enableEdit || (!displayedEvent && idOfEvent === "new") ?
+                <WriteEvent/>
+                :
+                <div>
+                    <DisplayEventDetails event={displayedEvent} users={users}/>
+                    <button onClick={onDelete}>delete</button>
+                    <button onClick={toggleEnableEdit}>edit</button>
+                </div>
+            }
         </div>
     )
 }

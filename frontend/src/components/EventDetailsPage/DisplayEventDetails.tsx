@@ -3,11 +3,17 @@ import {User} from "../../model/User";
 import "./styles/DisplayEventDetails.css"
 
 type DisplayEventDetailsProps = {
-    event: EventData
+    event: EventData | undefined
     users: User[]
 }
 
 export default function DisplayEventDetails({event, users}:DisplayEventDetailsProps) {
+
+    if (!event){
+        return (
+            <div>Data for event with provided id is not available</div>
+        )
+    }
 
     const assignedUsers = users.filter(user => user.role === "USER").filter(user => event.userIds.includes(user.id))
 
