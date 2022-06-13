@@ -1,6 +1,5 @@
 .event-details-page {
-
+    background-color: rgba(54, 52, 52, 0.3);
+    padding: 20px;
     margin-top: 50px;
-    display: flex;
-    justify-content: center;
 }
