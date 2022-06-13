@@ -26,7 +26,7 @@ export default function MainCategoryOverview({mainCategory, subCategories, posit
                     {formatMoney(getMainSum(positions, filteredSubCategories))} €
                 </span>
             </div>
-            {filteredSubCategories.map(subCategory => <SubCategoryOverview subCategory={subCategory} positions={positions}/>)}
+            {filteredSubCategories.map(subCategory => <SubCategoryOverview key={subCategory.id} subCategory={subCategory} positions={positions}/>)}
         </div>
     )
 }

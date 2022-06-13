@@ -7,6 +7,7 @@ import useMainCategories from "../hooks/useMainCategories";
 import useSubCategories from "../hooks/useSubCategories";
 import useEvents from "../hooks/useEvents";
 import AdminPage from "./AdminPage";
+import EventDetailsPage from "./EventDetailsPage";
 
 export default function HomePage() {
 
@@ -44,6 +45,10 @@ export default function HomePage() {
                                            updateSubCategory={updateSubCategoryById}
                                            removeSubCategory={removeSubCategoryById}
                                            events={eventsSortedByDate}/>}>
+                </Route>
+                <Route path={"events/:idOfEvent"}
+                       element={<EventDetailsPage events={events}/>}>
+
                 </Route>
             </Routes>
         </div>
