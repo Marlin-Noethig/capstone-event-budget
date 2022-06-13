@@ -30,7 +30,7 @@ export default function useEvents() {
     const updateEventById = (id: string, eventToUpdate: Omit<EventData, "id">) => {
         putEventById(id, eventToUpdate, token)
             .then(updatedEvent => setEvents(events.map(event => event.id === id ? updatedEvent : event)))
-            .then(() => toast.success(`${eventToUpdate.name} has been added.`))
+            .then(() => toast.success(`${eventToUpdate.name} has been updated.`))
             .catch((error) => handleRequestError(error.response.status));
     }
 
