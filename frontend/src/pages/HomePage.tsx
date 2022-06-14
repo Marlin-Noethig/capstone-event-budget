@@ -12,7 +12,7 @@ import EventDetailsPage from "./EventDetailsPage";
 export default function HomePage() {
 
     const {positions, addNewPosition, updatePositionById, removePositionById} = usePositions();
-    const {mainCategories} = useMainCategories();
+    const {mainCategories, updateMainCategoryUserIds} = useMainCategories();
     const {subCategories, addSubCategory, updateSubCategoryById, removeSubCategoryById} = useSubCategories();
     const {events, addEvent, updateEventById, removeEventById} = useEvents();
 
@@ -40,6 +40,7 @@ export default function HomePage() {
                 />
                 <Route path={"admin/*"}
                        element={<AdminPage mainCategories={mainCategories}
+                                           updateMainCategory={updateMainCategoryUserIds}
                                            subCategories={subCategories}
                                            addSubCategory={addSubCategory}
                                            updateSubCategory={updateSubCategoryById}
