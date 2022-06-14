@@ -3,3 +3,7 @@ export const formatMoney = (num: number) => {
     num_parts[0] = num_parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     return num_parts.join(",")
 }
+
+export const formatDateToIsoString: (dateToFormat: Date) => string = (dateToFormat) => {
+    return new Date(dateToFormat).toISOString().split("T")[0];
+}

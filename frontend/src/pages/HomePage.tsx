@@ -7,15 +7,16 @@ import useMainCategories from "../hooks/useMainCategories";
 import useSubCategories from "../hooks/useSubCategories";
 import useEvents from "../hooks/useEvents";
 import AdminPage from "./AdminPage";
+import EventDetailsPage from "./EventDetailsPage";
 
 export default function HomePage() {
 
     const {positions, addNewPosition, updatePositionById, removePositionById} = usePositions();
     const {mainCategories} = useMainCategories();
     const {subCategories, addSubCategory, updateSubCategoryById, removeSubCategoryById} = useSubCategories();
-    const {events} = useEvents();
+    const {events, addEvent, updateEventById, removeEventById} = useEvents();
 
-    const eventsSortedByDate = [...events].sort((a, b) => Number(new Date(b.startDate))- Number(new Date(a.startDate)))
+    const eventsSortedByDate = [...events].sort((a, b) => Number(new Date(b.startDate)) - Number(new Date(a.startDate)))
 
     return (
         <div className={"home-page"}>
@@ -44,6 +45,12 @@ export default function HomePage() {
                                            updateSubCategory={updateSubCategoryById}
                                            removeSubCategory={removeSubCategoryById}
                                            events={eventsSortedByDate}/>}>
+                </Route>
+                <Route path={"events/:idOfEvent"}
+                       element={<EventDetailsPage events={events}
+                                                  addEvent={addEvent}
+                                                  updateEvent={updateEventById}
+                                                  removeEvent={removeEventById}/>}>
                 </Route>
             </Routes>
         </div>

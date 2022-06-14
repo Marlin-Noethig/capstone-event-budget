@@ -8,7 +8,6 @@ html, body {
   background-color: #0E0E1B;
   color: white;
   height: 100%;
-
 }
 
 p {
@@ -18,4 +17,9 @@ p {
 button {
   background-color: #DDFFF7;
   border: 0;
+}
+
+button:hover{
+  cursor: pointer;
+  box-shadow: 0 0 3px 3px #0D5C63;
 }
