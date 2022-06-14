@@ -7,6 +7,7 @@ import useUsers from "../hooks/useUsers";
 
 type AdminPageProps = {
     mainCategories: MainCategory[],
+    updateMainCategory: (id: string, updatedUserIds: string[]) => void,
     subCategories: SubCategory[],
     addSubCategory: (newPosition: Omit<SubCategory, "id">) => void,
     updateSubCategory: (id: string, newPosition: Omit<SubCategory, "id">) => void,
@@ -16,6 +17,7 @@ type AdminPageProps = {
 
 export default function AdminPage({
                                       mainCategories,
+                                      updateMainCategory,
                                       subCategories,
                                       addSubCategory,
                                       updateSubCategory,
@@ -28,6 +30,7 @@ export default function AdminPage({
         <div className={"admin-page"}>
             <Link to={"/"}>Home</Link>
             <AdminListBoard mainCategories={mainCategories}
+                            updateMainCategory={updateMainCategory}
                             subCategories={subCategories}
                             addSubCategory={addSubCategory}
                             updateSubCategory={updateSubCategory}

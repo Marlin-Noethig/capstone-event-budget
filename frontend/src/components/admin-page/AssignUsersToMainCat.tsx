@@ -2,13 +2,17 @@ import {User} from "../../model/User";
 import {ChangeEvent, FormEvent, useState} from "react";
 
 type AssignUsersToMainCatProps = {
-    users: User[]
-    assignedUsers: string[]
+    idOfMainCategory: string
+    users: User[],
+    assignedUsers: string[],
+    updateMainCategory: (id: string, updatedUserIds: string[]) => void,
     toggleEnableAssignUsers: () => void
 }
 export default function AssignUsersToMainCat({
+                                                 idOfMainCategory,
                                                  toggleEnableAssignUsers,
                                                  assignedUsers,
+                                                 updateMainCategory,
                                                  users
                                              }: AssignUsersToMainCatProps) {
 
@@ -21,7 +25,7 @@ export default function AssignUsersToMainCat({
 
     const onSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log(userIds);
+        updateMainCategory(idOfMainCategory, userIds)
         toggleEnableAssignUsers();
     }
 

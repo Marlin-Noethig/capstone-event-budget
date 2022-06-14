@@ -9,3 +9,10 @@ export const getMainCategories: (token?: string) => Promise<MainCategory[]> = (t
         : {})
         .then(response => response.data);
 }
+
+export const patchMainCategoryUserIds: (id: string, updatedUserIds: string[], token?: string) => Promise<MainCategory> = (id, updatedUserIds, token) => {
+    return axios.patch(baseUrl + id, updatedUserIds,token
+        ? {headers: {"Authorization": token}}
+        : {})
+        .then(response => response.data)
+}

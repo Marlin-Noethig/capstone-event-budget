@@ -6,6 +6,7 @@ import {User} from "../../model/User";
 
 type AdminViewCategoryListProps = {
     mainCategories: MainCategory[],
+    updateMainCategory: (id: string, updatedUserIds: string[]) => void,
     subCategories: SubCategory[],
     addSubCategory: (newPosition: Omit<SubCategory, "id">) => void,
     updateSubCategory: (id: string, newPosition: Omit<SubCategory, "id">) => void,
@@ -15,6 +16,7 @@ type AdminViewCategoryListProps = {
 
 export default function AdminViewCategoryList({
                                                   mainCategories,
+                                                  updateMainCategory,
                                                   subCategories,
                                                   addSubCategory,
                                                   updateSubCategory,
@@ -25,6 +27,7 @@ export default function AdminViewCategoryList({
         <div className={"admin-view-list-title"}>Categories</div>
         {mainCategories.map(mainCategory => <AdminMainCategoryView key={mainCategory.id}
                                                                    mainCategory={mainCategory}
+                                                                   updateMainCategory={updateMainCategory}
                                                                    subCategories={subCategories.filter(subCategory => subCategory.mainCategoryId === mainCategory.id)}
                                                                    addSubCategory={addSubCategory}
                                                                    updateSubCategory={updateSubCategory}

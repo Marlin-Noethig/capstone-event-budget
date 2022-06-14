@@ -9,6 +9,7 @@ import {User} from "../../model/User";
 
 type AdminMainCategoryViewProps = {
     mainCategory: MainCategory,
+    updateMainCategory: (id: string, updatedUserIds: string[]) => void,
     subCategories: SubCategory[],
     addSubCategory: (newPosition: Omit<SubCategory, "id">) => void,
     updateSubCategory: (id: string, newPosition: Omit<SubCategory, "id">) => void,
@@ -18,6 +19,7 @@ type AdminMainCategoryViewProps = {
 
 export default function AdminMainCategoryView({
                                                   mainCategory,
+                                                  updateMainCategory,
                                                   subCategories,
                                                   addSubCategory,
                                                   updateSubCategory,
@@ -43,7 +45,9 @@ export default function AdminMainCategoryView({
                 {!enableAssignUsers ?
                     <button onClick={toggleEnableAssignUsers}>edit</button>
                     :
-                    <AssignUsersToMainCat users={users}
+                    <AssignUsersToMainCat idOfMainCategory={mainCategory.id}
+                                          users={users}
+                                          updateMainCategory={updateMainCategory}
                                           assignedUsers={mainCategory.userIds}
                                           toggleEnableAssignUsers={toggleEnableAssignUsers}/>}
             </div>
