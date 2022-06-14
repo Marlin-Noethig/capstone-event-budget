@@ -10,7 +10,6 @@ export const getEvents: (token?: string) => Promise<EventData[]> = (token) =>{
         .then(response => response.data);
 }
 
-
 export const postEvent: (newEvent: Omit<EventData, "id">, token?: string) => Promise<EventData> = (newEvent, token) => {
     return axios.post(baseUrl, newEvent, token
         ? {headers: {"Authorization": token}}

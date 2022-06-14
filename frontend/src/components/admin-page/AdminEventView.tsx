@@ -9,7 +9,6 @@ type AdminEventViewProps = {
 export default function AdminEventView({event}: AdminEventViewProps) {
     const navigate = useNavigate();
 
-
     return(
         <div className={"admin-list-item"}>
             <div className={"admin-event-view-title"} onClick={() => navigate(`/events/${event.id}`)}>{event.name}</div>
