@@ -1,10 +1,10 @@
 import {EventData} from "../model/EventData";
 import useUsers from "../hooks/useUsers";
 import {useNavigate, useParams} from "react-router-dom";
-import DisplayEventDetails from "../components/EventDetailsPage/DisplayEventDetails";
+import DisplayEventDetails from "../components/event-details-page/DisplayEventDetails";
 import "./styles/EventDetailsPage.css"
 import {useState} from "react";
-import WriteEvent from "../components/EventDetailsPage/WriteEvent";
+import WriteEvent from "../components/event-details-page/WriteEvent";
 
 type EventDetailsPageProps = {
     events: EventData [],

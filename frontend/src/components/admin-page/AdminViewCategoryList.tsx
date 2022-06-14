@@ -2,6 +2,7 @@ import "./styles/AdminViewCategoryList.css"
 import {MainCategory} from "../../model/MainCategory";
 import {SubCategory} from "../../model/SubCategory";
 import AdminMainCategoryView from "./AdminMainCategoryView";
+import {User} from "../../model/User";
 
 type AdminViewCategoryListProps = {
     mainCategories: MainCategory[],
@@ -9,6 +10,7 @@ type AdminViewCategoryListProps = {
     addSubCategory: (newPosition: Omit<SubCategory, "id">) => void,
     updateSubCategory: (id: string, newPosition: Omit<SubCategory, "id">) => void,
     removeSubCategory: (id: string, name: string) => void
+    users: User[]
 }
 
 export default function AdminViewCategoryList({
@@ -16,7 +18,8 @@ export default function AdminViewCategoryList({
                                                   subCategories,
                                                   addSubCategory,
                                                   updateSubCategory,
-                                                  removeSubCategory
+                                                  removeSubCategory,
+                                                  users
                                               }: AdminViewCategoryListProps) {
     return (<div className={"admin-view-list"}>
         <div className={"admin-view-list-title"}>Categories</div>
@@ -25,6 +28,7 @@ export default function AdminViewCategoryList({
                                                                    subCategories={subCategories.filter(subCategory => subCategory.mainCategoryId === mainCategory.id)}
                                                                    addSubCategory={addSubCategory}
                                                                    updateSubCategory={updateSubCategory}
-                                                                   removeSubCategory={removeSubCategory}/>)}
+                                                                   removeSubCategory={removeSubCategory}
+                                                                   users={users}/>)}
     </div>)
 }

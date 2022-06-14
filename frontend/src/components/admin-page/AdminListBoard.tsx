@@ -31,7 +31,9 @@ export default function AdminListBoard({
                                subCategories={subCategories}
                                addSubCategory={addSubCategory}
                                updateSubCategory={updateSubCategory}
-                               removeSubCategory={removeSubCategory}/>
+                               removeSubCategory={removeSubCategory}
+                               users={users}
+        />
         <AdminViewEventsList events={events}/>
         <AdminViewUsersList users={users}/>
     </div>)
