@@ -23,6 +23,9 @@ export default function AdminViewCategoryList({
                                                   removeSubCategory,
                                                   users
                                               }: AdminViewCategoryListProps) {
+
+    const usersWithUserRole = users.filter(user => user.role === "USER")
+
     return (<div className={"admin-view-list"}>
         <div className={"admin-view-list-title"}>Categories</div>
         {mainCategories.map(mainCategory => <AdminMainCategoryView key={mainCategory.id}
@@ -32,6 +35,6 @@ export default function AdminViewCategoryList({
                                                                    addSubCategory={addSubCategory}
                                                                    updateSubCategory={updateSubCategory}
                                                                    removeSubCategory={removeSubCategory}
-                                                                   users={users}/>)}
+                                                                   users={usersWithUserRole}/>)}
     </div>)
 }
