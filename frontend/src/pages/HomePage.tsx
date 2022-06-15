@@ -18,6 +18,7 @@ export default function HomePage() {
 
     const eventsSortedByDate = [...events].sort((a, b) => Number(new Date(b.startDate)) - Number(new Date(a.startDate)))
     const positionsSortedAlphabetical = [...positions].sort((a, b) => a.name.localeCompare(b.name))
+    const subCategoriesAlphabetical = [...subCategories].sort((a, b) => a.name.localeCompare(b.name))
 
     return (
         <div className={"home-page"}>
@@ -25,14 +26,14 @@ export default function HomePage() {
                 <Route path={"/"}
                        element={<EventOverview events={eventsSortedByDate}
                                                mainCategories={mainCategories}
-                                               subCategories={subCategories}
+                                               subCategories={subCategoriesAlphabetical}
                                                positions={positionsSortedAlphabetical}
                        />}
                 />
                 <Route path={"budget-overview/:idOfEvent"}
                        element={<BudgetOverview events={eventsSortedByDate}
                                                 mainCategories={mainCategories}
-                                                subCategories={subCategories}
+                                                subCategories={subCategoriesAlphabetical}
                                                 positions={positionsSortedAlphabetical}
                                                 addNewPosition={addNewPosition}
                                                 deletePosition={removePositionById}
@@ -42,7 +43,7 @@ export default function HomePage() {
                 <Route path={"admin/*"}
                        element={<AdminPage mainCategories={mainCategories}
                                            updateMainCategory={updateMainCategoryUserIds}
-                                           subCategories={subCategories}
+                                           subCategories={subCategoriesAlphabetical}
                                            addSubCategory={addSubCategory}
                                            updateSubCategory={updateSubCategoryById}
                                            removeSubCategory={removeSubCategoryById}
