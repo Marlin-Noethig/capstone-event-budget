@@ -1,0 +1,25 @@
+.write-event-form-container{
+    display: flex;
+    justify-content: center;
+}
+
+.write-event-form-fields {
+    display: grid;
+    grid-template-columns: 200px 400px;
+}
+
+.write-event-form-fields label{
+    text-align: left;
+}
+
+.write-event-form-fields select {
+    height: 150px;
+}
+
+.write-event-form {
+    text-align: left;
+}
+
+.write-event-form .submit-button{
+    margin-top: 20px;
+}

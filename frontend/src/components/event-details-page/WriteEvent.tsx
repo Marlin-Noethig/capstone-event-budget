@@ -3,6 +3,7 @@ import {EventData} from "../../model/EventData";
 import {ChangeEvent, FormEvent, useState} from "react";
 import {formatDateToIsoString} from "../../service/utils/formattingHelpers";
 import {toast} from "react-toastify";
+import "./styles/WriteEvent.css";
 
 type WriteEventProps = {
     users: User[]
@@ -58,20 +59,31 @@ export default function WriteEvent({users, event, addEvent, updateEvent, toggleE
     }
 
     return (
-        <div>
-            <form onSubmit={onSubmit}>
-                <input type={"text"} value={name} onChange={e => setName(e.target.value)}/>
-                <input type={"date"} value={startDate} onChange={e => setStartDate(e.target.value)}/>
-                <input type={"date"} value={endDate} onChange={e => setEndDate(e.target.value)}/>
-                <input type={"number"} value={guests} min={0} step={1}
-                       onChange={e => setGuests(Number(e.target.value))}/>
-                <select multiple={true} value={userIds} onChange={handleUserIdsChange}>
-                    {users.map(user => <option key={user.id} value={user.id} defaultChecked={userIds.includes(user.id)}>{`${user.firstName} ${user.lastName} (${user.company})`}</option>)}
-                </select>
+        <div className={"write-event-form-container"}>
+            <form className={"write-event-form"} onSubmit={onSubmit}>
+                <div className={"write-event-form-fields"}>
+                    <label>Name: </label>
+                    <input type={"text"} placeholder={"Name of new event"} value={name} onChange={e => setName(e.target.value)}/>
+
+                    <label>Start Date: </label>
+                    <input type={"date"} value={startDate} onChange={e => setStartDate(e.target.value)}/>
+
+                    <label>End Date: </label>
+                    <input type={"date"} value={endDate} onChange={e => setEndDate(e.target.value)}/>
+
+                    <label>Maximum Guests: </label>
+                    <input type={"number"} value={guests} min={0} step={1}
+                           onChange={e => setGuests(Number(e.target.value))}/>
+
+                    <label>Assigned Collaborators: </label>
+                    <select multiple={true} value={userIds} onChange={handleUserIdsChange}>
+                        {users.map(user => <option key={user.id} value={user.id} defaultChecked={userIds.includes(user.id)}>{`${user.firstName} ${user.lastName} (${user.company})`}</option>)}
+                    </select>
+                </div>
                 {event ?
-                    <input type="submit" value={"save"}/>
+                    <input className={"submit-button"} type="submit" value={"save"}/>
                     :
-                    <input type="submit" value={"add"}/>
+                    <input className={"submit-button"} type="submit" value={"add"}/>
                 }
 
             </form>

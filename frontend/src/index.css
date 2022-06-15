@@ -25,3 +25,15 @@ button:hover{
   cursor: pointer;
   background-color: rgba(221, 255, 247, 0.8);
 }
+
+.submit-button {
+  background-color: #DDFFF7;
+  border: 0;
+  border-radius: 3px;
+  margin: 0 5px 0 5px;
+}
+
+.submit-button:hover{
+  cursor: pointer;
+  background-color: rgba(221, 255, 247, 0.8);
+}
