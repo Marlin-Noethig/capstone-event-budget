@@ -17,6 +17,8 @@ p {
 button {
   background-color: #DDFFF7;
   border: 0;
+  border-radius: 3px;
+  margin: 0 5px 0 5px;
 }
 
 button:hover{
