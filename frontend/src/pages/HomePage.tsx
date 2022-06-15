@@ -17,6 +17,7 @@ export default function HomePage() {
     const {events, addEvent, updateEventById, removeEventById} = useEvents();
 
     const eventsSortedByDate = [...events].sort((a, b) => Number(new Date(b.startDate)) - Number(new Date(a.startDate)))
+    const positionsSortedAlphabetical = [...positions].sort((a, b) => a.name.localeCompare(b.name))
 
     return (
         <div className={"home-page"}>
@@ -25,14 +26,14 @@ export default function HomePage() {
                        element={<EventOverview events={eventsSortedByDate}
                                                mainCategories={mainCategories}
                                                subCategories={subCategories}
-                                               positions={positions}
+                                               positions={positionsSortedAlphabetical}
                        />}
                 />
                 <Route path={"budget-overview/:idOfEvent"}
                        element={<BudgetOverview events={eventsSortedByDate}
                                                 mainCategories={mainCategories}
                                                 subCategories={subCategories}
-                                                positions={positions}
+                                                positions={positionsSortedAlphabetical}
                                                 addNewPosition={addNewPosition}
                                                 deletePosition={removePositionById}
                                                 updatePosition={updatePositionById}
