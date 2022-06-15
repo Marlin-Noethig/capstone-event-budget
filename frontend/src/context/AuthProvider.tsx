@@ -56,6 +56,7 @@ export default function AuthProvider({children}: AuthProviderProps) {
                 toast.error("Token is corrupted, clear Web Storage!")
             }
         }
+        //dived by 1000 to eliminate mil-seconds
         const dateNow = Math.floor(new Date().getTime() / 1000)
         if (decodedToken && decodedToken.exp) {
             if (decodedToken.exp < Number(dateNow)) {
@@ -86,8 +87,6 @@ export default function AuthProvider({children}: AuthProviderProps) {
                 localStorage.setItem(balanceKey, data)
             });
     }
-
-
 
 return <AuthContext.Provider value={{token, login, logout, showBalance}}>
     {children}
