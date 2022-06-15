@@ -23,3 +23,14 @@
 .write-event-form .submit-button{
     margin-top: 20px;
 }
+
+.remove-all-users {
+    color: #DDFFF7;
+    font-weight: bold;
+    margin-left: 5px;
+}
+
+.remove-all-users:hover{
+    cursor: pointer;
+    color: rgba(221, 255, 247, 0.8);
+}

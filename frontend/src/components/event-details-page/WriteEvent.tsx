@@ -15,15 +15,20 @@ type WriteEventProps = {
 
 export default function WriteEvent({users, event, addEvent, updateEvent, toggleEnableEdit}: WriteEventProps) {
 
-    const [name, setName] = useState<string>( event ? event.name : "")
-    const [startDate, setStartDate] = useState<string>( event ? formatDateToIsoString(event.startDate) : "")
-    const [endDate, setEndDate] = useState<string>( event ? formatDateToIsoString(event.endDate) : "")
+    const [name, setName] = useState<string>(event ? event.name : "")
+    const [startDate, setStartDate] = useState<string>(event ? formatDateToIsoString(event.startDate) : "")
+    const [endDate, setEndDate] = useState<string>(event ? formatDateToIsoString(event.endDate) : "")
     const [guests, setGuests] = useState<number>(event ? event.guests : 0)
     const [userIds, setUserIds] = useState<string[]>(event ? event.userIds : [])
 
     const handleUserIdsChange = (e: ChangeEvent<HTMLSelectElement>) => {
-        let value = Array.from(e.target.selectedOptions, option => option.value)
-        setUserIds(value)
+        let currentIds = userIds
+        if (!userIds.includes(e.target.value)) {
+            currentIds.push(e.target.value)
+            setUserIds(currentIds)
+        } else {
+            setUserIds(currentIds.filter(id => id !== e.target.value))
+        }
     }
 
     const onSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -32,11 +37,11 @@ export default function WriteEvent({users, event, addEvent, updateEvent, toggleE
             toast.warn("Name must be set")
             return
         }
-        if (!startDate){
+        if (!startDate) {
             toast.warn("Starting date must be set")
             return
         }
-        if (!endDate){
+        if (!endDate) {
             toast.warn("Ending date must be set")
             return
         }
@@ -49,7 +54,7 @@ export default function WriteEvent({users, event, addEvent, updateEvent, toggleE
             userIds: userIds
         }
 
-        if(event) {
+        if (event) {
             updateEvent(event.id, eventValues)
             toggleEnableEdit()
         } else {
@@ -63,7 +68,8 @@ export default function WriteEvent({users, event, addEvent, updateEvent, toggleE
             <form className={"write-event-form"} onSubmit={onSubmit}>
                 <div className={"write-event-form-fields"}>
                     <label>Name: </label>
-                    <input type={"text"} placeholder={"Name of new event"} value={name} onChange={e => setName(e.target.value)}/>
+                    <input type={"text"} placeholder={"Name of new event"} value={name}
+                           onChange={e => setName(e.target.value)}/>
 
                     <label>Start Date: </label>
                     <input type={"date"} value={startDate} onChange={e => setStartDate(e.target.value)}/>
@@ -77,15 +83,16 @@ export default function WriteEvent({users, event, addEvent, updateEvent, toggleE
 
                     <label>Assigned Collaborators: </label>
                     <select multiple={true} value={userIds} onChange={handleUserIdsChange}>
-                        {users.map(user => <option key={user.id} value={user.id} defaultChecked={userIds.includes(user.id)}>{`${user.firstName} ${user.lastName} (${user.company})`}</option>)}
+                        {users.map(user => <option key={user.id} value={user.id}
+                                                   defaultChecked={userIds.includes(user.id)}>{`${user.firstName} ${user.lastName} (${user.company})`}</option>)}
                     </select>
+                    <div className={"remove-all-users"} onClick={() => setUserIds([])}>remove all users</div>
                 </div>
                 {event ?
                     <input className={"submit-button"} type="submit" value={"save"}/>
                     :
                     <input className={"submit-button"} type="submit" value={"add"}/>
                 }
-
             </form>
         </div>
     )

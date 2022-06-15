@@ -19,8 +19,13 @@ export default function AssignUsersToMainCat({
     const [userIds, setUserIds] = useState<string[]>(assignedUsers)
 
     const handleUserIdsChange = (e: ChangeEvent<HTMLSelectElement>) => {
-        let value = Array.from(e.target.selectedOptions, option => option.value)
-        setUserIds(value)
+        let currentIds = userIds
+        if (!userIds.includes(e.target.value)){
+            currentIds.push(e.target.value)
+            setUserIds(currentIds)
+        } else  {
+            setUserIds(currentIds.filter(id => id !== e.target.value))
+        }
     }
 
     const onSubmit = (e: FormEvent<HTMLFormElement>) => {
