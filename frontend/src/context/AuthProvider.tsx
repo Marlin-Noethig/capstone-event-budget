@@ -5,6 +5,7 @@ import {toast} from "react-toastify";
 import {decodeJwt} from "jose";
 
 const authKey: string = "AuthToken"
+const balanceKey: string = "BalanceShown"
 
 export type Credentials = {
     mail: string,
@@ -31,7 +32,7 @@ export const AuthContext = createContext<AuthContextType>({
 
 export default function AuthProvider({children}: AuthProviderProps) {
     const [token, setToken] = useState<string | undefined>(localStorage.getItem(authKey) ?? undefined);
-    const [showBalance, setShowBalance] = useState<boolean>(false);
+    const [showBalance, setShowBalance] = useState<boolean>(JSON.parse(localStorage.getItem(balanceKey) ?? "false"));
     const navigate = useNavigate();
 
     const login = (credentials: Credentials) => {
@@ -70,6 +71,7 @@ export default function AuthProvider({children}: AuthProviderProps) {
     const logout = () => {
         localStorage.removeItem(authKey)
         setToken("")
+        localStorage.removeItem(balanceKey)
         setShowBalance(false)
         toast.info("You have been logged out")
     }
@@ -79,7 +81,10 @@ export default function AuthProvider({children}: AuthProviderProps) {
             ? {headers: {"Authorization": currentToken}}
             : {})
             .then(response => response.data)
-            .then(data => setShowBalance(data));
+            .then(data => {
+                setShowBalance(data)
+                localStorage.setItem(balanceKey, data)
+            });
     }
 
 
