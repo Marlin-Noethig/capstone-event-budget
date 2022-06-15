@@ -1,0 +1,9 @@
+.assign-to-main-form{
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.assign-to-main-form select {
+    margin: 10px 0 10px 0;
+}

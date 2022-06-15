@@ -1,5 +1,6 @@
 import {User} from "../../model/User";
 import {ChangeEvent, FormEvent, useState} from "react";
+import "./styles/AssignUsersToMainCat.css"
 
 type AssignUsersToMainCatProps = {
     idOfMainCategory: string
@@ -35,12 +36,13 @@ export default function AssignUsersToMainCat({
     }
 
     return (<div>
-        <form onSubmit={onSubmit}>
+        <form className={"assign-to-main-form"} onSubmit={onSubmit}>
             <select multiple={true} value={userIds} onChange={handleUserIdsChange}>
                 {users.map(user => <option key={user.id} value={user.id}
                                            defaultChecked={userIds.includes(user.id)}>{`${user.firstName} ${user.lastName} (${user.company})`}</option>)}
             </select>
-            <input type="submit" value={"save"}/>
+            <div className={"remove-all-users"} onClick={() => setUserIds([])}>remove all users</div>
+            <input className={"submit-button"} type="submit" value={"save"}/>
         </form>
     </div>)
 }

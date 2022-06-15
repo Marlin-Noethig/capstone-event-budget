@@ -28,6 +28,8 @@
     color: #DDFFF7;
     font-weight: bold;
     margin-left: 5px;
+    width: fit-content;
+    margin-bottom: 5px;
 }
 
 .remove-all-users:hover{
