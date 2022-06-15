@@ -1,7 +1,7 @@
 import {User} from "../../model/User";
 import {EventData} from "../../model/EventData";
 import {ChangeEvent, FormEvent, useState} from "react";
-import {formatDateToIsoString} from "../../service/utils/formatingHelpers";
+import {formatDateToIsoString} from "../../service/utils/formattingHelpers";
 import {toast} from "react-toastify";
 
 type WriteEventProps = {

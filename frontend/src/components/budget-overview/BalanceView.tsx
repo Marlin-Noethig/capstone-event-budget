@@ -1,5 +1,5 @@
 import "./styles/BalanceView.css"
-import {formatMoney} from "../../service/utils/formatingHelpers";
+import {formatMoney} from "../../service/utils/formattingHelpers";
 
 type BalanceViewProps = {
     sum: number

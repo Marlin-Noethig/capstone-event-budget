@@ -4,7 +4,7 @@ import PositionList from "./PositionList";
 import {Position} from "../../model/Position";
 import {useState} from "react";
 import {getSubSum} from "../../service/utils/sumHelpers";
-import {formatMoney} from "../../service/utils/formatingHelpers";
+import {formatMoney} from "../../service/utils/formattingHelpers";
 
 type SubCategoryViewProps = {
     subCategory: SubCategory,
