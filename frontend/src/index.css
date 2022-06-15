@@ -23,4 +23,5 @@ button {
 
 button:hover{
   cursor: pointer;
+  background-color: rgba(221, 255, 247, 0.8);
 }
