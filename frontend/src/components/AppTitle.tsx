@@ -20,7 +20,7 @@ export default function AppTitle() {
     return (
         <div className={"app-title-container"}>
                 {currentUser ?
-                    <div className={"display-current-user"}>{`Hello ${currentUser.firstName} ${currentUser.lastName}`} </div>
+                    <div className={"display-current-user"}>{`${currentUser.firstName.toUpperCase()} ${currentUser.lastName.toUpperCase()}`} </div>
                     :
                     <div> </div>
                 }
