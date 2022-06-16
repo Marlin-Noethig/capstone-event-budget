@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.security.Timestamp;
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
@@ -18,7 +18,8 @@ public class PositionChange {
 
     @Id
     private String id;
-    private Timestamp timestamp;
+    private LocalDateTime timestamp;
+    private String method;
     private Position data;
     private String fullUserName;
     private String positionId;
