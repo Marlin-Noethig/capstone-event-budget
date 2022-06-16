@@ -5,6 +5,7 @@ import {Position} from "../../model/Position";
 import {useEffect, useState} from "react";
 import {getSubSum} from "../../service/utils/accountingHelpers";
 import {formatMoney} from "../../service/utils/formattingHelpers";
+import usePositionChanges from "../../hooks/usePositionChanges";
 
 type SubCategoryViewProps = {
     subCategory: SubCategory,
@@ -29,6 +30,10 @@ export default function SubCategoryView({
     const filteredPositions = positions.filter(position => position.subCategoryId === subCategory.id)
     const [enableAdd, setEnableAdd] = useState<boolean>(false);
     const [collapsed, setCollapsed] = useState<boolean>(false);
+
+    const {positionChanges} = usePositionChanges(subCategory.id);
+
+    console.log(positionChanges)
 
     useEffect(() =>{
         if(collapseAll !== undefined){

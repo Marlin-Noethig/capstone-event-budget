@@ -21,7 +21,7 @@ public class PositionChange {
     private LocalDateTime timestamp;
     private String method;
     private Position data;
-    private String fullUserName;
+    private String userInfo;
     private String positionId;
     private String subCategoryId;
 

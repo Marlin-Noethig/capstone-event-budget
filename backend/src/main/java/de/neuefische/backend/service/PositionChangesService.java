@@ -29,7 +29,7 @@ public class PositionChangesService {
                 .timestamp(LocalDateTime.now().plus(Duration.ofHours(2)))
                 .method(method)
                 .data(changedPosition)
-                .fullUserName(currentUser.getFirstName() + " " + currentUser.getLastName() + " (" + currentUser.getCompany() +")")
+                .userInfo(currentUser.getFirstName() + " " + currentUser.getLastName() + " (" + currentUser.getCompany() +")")
                 .positionId(changedPosition.getId())
                 .subCategoryId(changedPosition.getSubCategoryId())
                 .build();
