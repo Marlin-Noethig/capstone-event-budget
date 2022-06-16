@@ -1,6 +1,7 @@
 .app-title-container{
     display: flex;
     justify-content: space-between;
+    padding: 10px;
 }
 
 .app-title{
@@ -8,7 +9,6 @@
     font-style: italic;
     font-size: 26px;
     text-align: center;
-    padding: 10px;
 }
 
 .logout-button-wrapper{
@@ -18,5 +18,13 @@
 }
 
 .logout-button{
-    margin-right: 10px;
+}
+
+.display-current-user{
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #DDFFF7;
 }

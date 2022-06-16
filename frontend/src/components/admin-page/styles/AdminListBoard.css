@@ -1,6 +1,7 @@
 .admin-list-board{
     display: grid;
     grid-template-columns: repeat(3, 33%);
+    justify-content: center;
     justify-items: center;
 }
 

@@ -3,7 +3,7 @@ import {grossToNet, netToGross} from "../../service/utils/taxHelpers";
 import {Position} from "../../model/Position";
 import "./styles/WritePosition.css"
 import {toast} from "react-toastify";
-import {formatMoney} from "../../service/utils/formatingHelpers";
+import {formatMoney} from "../../service/utils/formattingHelpers";
 
 
 type WritePositionProps = {

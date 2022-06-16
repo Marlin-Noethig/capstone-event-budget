@@ -5,7 +5,7 @@ import "./styles/MainCategoryView.css"
 import {Position} from "../../model/Position";
 import {useState} from "react";
 import {getMainSum} from "../../service/utils/sumHelpers";
-import {formatMoney} from "../../service/utils/formatingHelpers";
+import {formatMoney} from "../../service/utils/formattingHelpers";
 
 type MainCategoryViewProps = {
     mainCategory: MainCategory,

@@ -1,7 +1,7 @@
 import {MainCategory} from "../../model/MainCategory";
 import {SubCategory} from "../../model/SubCategory";
 import {Position} from "../../model/Position";
-import {formatMoney} from "../../service/utils/formatingHelpers";
+import {formatMoney} from "../../service/utils/formattingHelpers";
 import {getMainSum} from "../../service/utils/sumHelpers";
 import SubCategoryOverview from "./SubCategoryOverview";
 

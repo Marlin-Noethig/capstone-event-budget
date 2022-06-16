@@ -30,6 +30,8 @@ export default function AdminMainCategoryView({
     const [enableAdd, setEnableAdd] = useState<boolean>(false);
     const [enableAssignUsers, setEnableAssignUsers] = useState<boolean>(false);
 
+    const verticalViewClass = enableAssignUsers ? " vertical" : ""
+
     const toggleEnableAdd = () => {
         setEnableAdd(!enableAdd)
     }
@@ -40,7 +42,7 @@ export default function AdminMainCategoryView({
 
     return (<div>
         <div className={"admin-list-item" + isIncomeClassName}>
-            <div className={"admin-main-category-wrapper"}>
+            <div className={"admin-main-category-wrapper" + verticalViewClass}>
                 <div>{mainCategory.name}</div>
                 {!enableAssignUsers ?
                     <button onClick={toggleEnableAssignUsers}>edit</button>

@@ -1,7 +1,7 @@
 import {Position} from "../../model/Position";
 import {netToGross} from "../../service/utils/taxHelpers";
 import "./styles/ViewPosition.css"
-import {formatMoney} from "../../service/utils/formatingHelpers";
+import {formatMoney} from "../../service/utils/formattingHelpers";
 
 type ViewPositionProps = {
     position: Position
