@@ -22,7 +22,7 @@ export default function AppTitle() {
                     :
                     <div> </div>
                 }
-            <div className={"app-title"}>EventBudget</div>
+            {!token && <div className={"app-title"}>EventBudget</div>}
             {token ? <NavigationBar isAdmin={initiateIsAdmin()} logout={logout}/> : <div> </div>}
         </div>
     )
