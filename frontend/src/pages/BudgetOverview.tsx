@@ -44,8 +44,6 @@ export default function BudgetOverview({
         </div>
     }
 
-    console.log(getBreakEven(positionsOfEvent, subCategories, mainCategories, displayedEvent.guests))
-
     return (
         <div className={"budget-overview-container"}>
             <div className={"budget-overview-wrapper"}>
@@ -68,6 +66,7 @@ export default function BudgetOverview({
                 />)}
             </div>
             {showBalance && <BalanceView sum={getBalance(positionsOfEvent, subCategories, mainCategories)}
+                                         breakEven={getBreakEven(positionsOfEvent, subCategories, mainCategories, displayedEvent.guests)}
                                          onBudgedList={true}/>}
         </div>
     )
