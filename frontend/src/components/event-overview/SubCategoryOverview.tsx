@@ -1,7 +1,7 @@
 import {SubCategory} from "../../model/SubCategory";
 import {Position} from "../../model/Position";
 import {formatMoney} from "../../service/utils/formattingHelpers";
-import {getSubSum} from "../../service/utils/sumHelpers";
+import {getSubSum} from "../../service/utils/accountingHelpers";
 
 type SubCategoryOverviewProps = {
     subCategory: SubCategory,

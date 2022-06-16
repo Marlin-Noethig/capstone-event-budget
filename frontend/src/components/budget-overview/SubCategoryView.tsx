@@ -3,7 +3,7 @@ import "./styles/SubCategoryView.css"
 import PositionList from "./PositionList";
 import {Position} from "../../model/Position";
 import {useEffect, useState} from "react";
-import {getSubSum} from "../../service/utils/sumHelpers";
+import {getSubSum} from "../../service/utils/accountingHelpers";
 import {formatMoney} from "../../service/utils/formattingHelpers";
 
 type SubCategoryViewProps = {
