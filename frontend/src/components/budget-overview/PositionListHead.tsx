@@ -17,7 +17,7 @@ export default function PositionListHead({toggleEnableAdd}:PositionListHeadProps
                 <li>Gross Price</li>
                 <li>SUM</li>
             </ul>
-            <button onClick={toggleEnableAdd}>new position</button>
+            <button onClick={toggleEnableAdd}>new</button>
         </div>
     )
 }
