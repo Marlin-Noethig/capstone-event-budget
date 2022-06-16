@@ -73,7 +73,7 @@ export default function SubCategoryView({
 
             />}
             {collapsed && <div className={"show-deleted"} onClick={toggleShowLog}>SHOW DELETED OF {subCategory.name.toUpperCase()}</div>}
-            {showLog && <PositionChangeLog subCategoryId={subCategory.id} idOfEvent={idOfEvent}/>}
+            {collapsed && showLog && <PositionChangeLog subCategoryId={subCategory.id} idOfEvent={idOfEvent}/>}
         </div>
     )
 }

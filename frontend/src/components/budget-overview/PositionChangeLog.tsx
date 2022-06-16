@@ -20,6 +20,8 @@ export default function PositionChangeLog({positionId, subCategoryId, idOfEvent}
         filteredChanges = positionChanges.filter(change => change.method === "DELETE").filter(change => change.data.eventId === idOfEvent)
     }
 
+    let sortedChanges = [...filteredChanges].sort((a, b) => Number(b.timestamp) - Number(a.timestamp))
+
     if (filteredChanges.length < 1) {
         return (
             <div>No changes occurred yet.</div>
@@ -28,7 +30,7 @@ export default function PositionChangeLog({positionId, subCategoryId, idOfEvent}
 
     return(
         <div className={"position-change-log"}>
-            {filteredChanges.map(change => <PositionChangeLogEntry key={change.id} change={change}/>)}
+            {sortedChanges.map(change => <PositionChangeLogEntry key={change.id} change={change}/>)}
         </div>
     )
 }
