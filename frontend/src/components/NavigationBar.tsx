@@ -1,6 +1,5 @@
 import {useNavigate} from "react-router-dom";
 
-
 type NavigationBarProps = {
     isAdmin: boolean
     logout: () => void
