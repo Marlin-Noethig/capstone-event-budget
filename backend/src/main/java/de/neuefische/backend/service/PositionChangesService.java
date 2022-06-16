@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class PositionChangesService {
@@ -17,6 +18,10 @@ public class PositionChangesService {
     @Autowired
     public PositionChangesService(PositionChangesRepo positionChangesRepo) {
         this.positionChangesRepo = positionChangesRepo;
+    }
+
+    public List<PositionChange> getPositionChangesBySubCategoryId (String subCategoryId){
+        return positionChangesRepo.findAllBySubCategoryId(subCategoryId);
     }
 
     public void addPositionChange (Position changedPosition, AppUserInfoDto currentUser, String method){
