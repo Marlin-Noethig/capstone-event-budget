@@ -30,6 +30,11 @@ export const getBalance = (positions: Position[], subCategories: SubCategory[], 
 }
 
 export const getBreakEven: (positions: Position[], subCategories: SubCategory[], mainCategories: MainCategory[], guests: number) => number = (positions, subCategories, mainCategories, guests) => {
+
+    if (positions.length < 1){
+        return 0
+    }
+
     const mainsFilteredForExpenses = mainCategories.filter(mainCategory => !mainCategory.income)
     const mainsFilteredForIncome = mainCategories.filter(mainCategory => mainCategory.income)
 
