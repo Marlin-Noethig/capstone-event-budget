@@ -1,0 +1,24 @@
+.position-change-log-entry {
+    background-color: rgba(143, 145, 162, 0.1);
+    margin: 5px 0 5px 0;
+    padding: 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    font-size: 12px;
+}
+
+.position-change-log-entry div {
+    text-align: left;
+    margin-right: 20px;
+}
+
+
+.change-data-name{
+    text-decoration: underline;
+}
+
+.change-data {
+    display: flex;
+    justify-content: space-around;
+}

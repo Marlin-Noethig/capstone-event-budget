@@ -1,6 +1,7 @@
 import usePositionChanges from "../../hooks/usePositionChanges";
 import PositionChangeLogEntry from "./PositionChangeLogEntry";
 import {PositionChange} from "../../model/PositionChange";
+import "./styles/PositionChangeLog.css";
 
 type PositionChangeLogProps = {
     positionId?: string
