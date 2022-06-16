@@ -44,8 +44,6 @@ export default function BudgetOverview({
         </div>
     }
 
-    console.log("collapse all: " + collapseAll)
-
     return (
         <div className={"budget-overview-container"}>
             <div className={"budget-overview-wrapper"}>

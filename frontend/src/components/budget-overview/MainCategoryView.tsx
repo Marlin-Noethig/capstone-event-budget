@@ -29,9 +29,6 @@ export default function MainCategoryView({
                                              collapseAll
                                          }: MainCategoryViewProps) {
 
-
-
-
     const [collapsed, setCollapsed] = useState<boolean>(true);
 
     useEffect(() =>{
@@ -44,8 +41,6 @@ export default function MainCategoryView({
 
     const filteredSubCategories = subCategories.filter(subCategory => subCategory.mainCategoryId === mainCategory.id)
     const isIncomeClassName = mainCategory.income ? " incomes" : " expenses"
-
-    console.log("collapsed Main: " + collapsed)
 
     const toggleCollapsed = () => {
         setCollapsed(!collapsed)
