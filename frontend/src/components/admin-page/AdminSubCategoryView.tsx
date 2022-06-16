@@ -32,8 +32,10 @@ export default function AdminSubCategoryView({
                 :
                 <div className={"display-subcategory"}>
                     <div>{subCategory.name}</div>
-                    <button onClick={toggleEnableEdit}>edit</button>
-                    <DeletionDialogue subCategory={subCategory} deleteFunction={removeSubCategory}/>
+                    <div className={"display-subcategory-buttons"}>
+                        <button onClick={toggleEnableEdit}>edit</button>
+                        <DeletionDialogue subCategory={subCategory} deleteFunction={removeSubCategory}/>
+                    </div>
                 </div>
             }
         </div>

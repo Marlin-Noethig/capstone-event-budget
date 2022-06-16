@@ -2,3 +2,12 @@
     font-size: 14px;
     background-color: lightgray;
 }
+
+.display-subcategory{
+    display: flex;
+    justify-content: space-between;
+}
+
+.display-subcategory-buttons{
+    display: flex;
+}
