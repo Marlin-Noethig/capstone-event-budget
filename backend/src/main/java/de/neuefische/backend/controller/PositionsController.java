@@ -34,8 +34,9 @@ public class PositionsController {
     }
 
     @PostMapping
-    public Position postPosition(@RequestBody PositionDto newPosition){
-        return positionsService.addNewPosition(newPosition);
+    public Position postPosition(@RequestBody PositionDto newPosition, Authentication authentication){
+        AppUserInfoDto currentUser = (AppUserInfoDto) authentication.getPrincipal();
+        return positionsService.addNewPosition(newPosition, currentUser);
     }
 
     @PutMapping("{id}")
@@ -45,7 +46,8 @@ public class PositionsController {
     }
 
     @DeleteMapping("{id}")
-    public void deletePositionById(@PathVariable String id){
-        positionsService.deletePositionById(id);
+    public void deletePositionById(@PathVariable String id, Authentication authentication){
+        AppUserInfoDto currentUser = (AppUserInfoDto) authentication.getPrincipal();
+        positionsService.deletePositionById(id, currentUser);
     }
 }

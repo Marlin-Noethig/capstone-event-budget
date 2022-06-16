@@ -57,7 +57,7 @@ class PositionsServiceTest {
                         .build());
         //WHEN
 
-        Position actual = positionsService.addNewPosition(dtoPosition1);
+        Position actual = positionsService.addNewPosition(dtoPosition1, currentUser);
         //THEN
         Position expected = Position.builder()
                 .id("test-id-123")
@@ -84,7 +84,7 @@ class PositionsServiceTest {
         //THEN
         assertThrows(IllegalArgumentException.class, () -> {
             //WHEN
-            positionsService.addNewPosition(positionToAdd);
+            positionsService.addNewPosition(positionToAdd, currentUser);
         });
     }
 
@@ -178,7 +178,7 @@ class PositionsServiceTest {
         when(positionsRepo.existsById(idOfToDelete)).thenReturn(true);
 
         //WHEN
-        positionsService.deletePositionById(idOfToDelete);
+        positionsService.deletePositionById(idOfToDelete, currentUser);
 
         //THEN
         verify(positionsRepo).deleteById("1");
@@ -195,7 +195,7 @@ class PositionsServiceTest {
         //WHEN
         assertThrows(NoSuchElementException.class, () -> {
             //WHEN
-            positionsService.deletePositionById(wrongIdOfToDelete);
+            positionsService.deletePositionById(wrongIdOfToDelete, currentUser);
         });
     }
 

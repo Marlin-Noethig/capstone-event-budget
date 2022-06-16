@@ -7,6 +7,7 @@ import de.neuefische.backend.security.dto.AppUserInfoDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 
 @Service
@@ -18,16 +19,16 @@ public class PositionChangesService {
         this.positionChangesRepo = positionChangesRepo;
     }
 
-    public PositionChange addPositionChange (Position changedPosition, AppUserInfoDto currentUser, String method){
+    public void addPositionChange (Position changedPosition, AppUserInfoDto currentUser, String method){
         PositionChange newPositionChange = PositionChange.builder()
-                .timestamp(LocalDateTime.now())
+                .timestamp(LocalDateTime.now().plus(Duration.ofHours(2)))
                 .method(method)
                 .data(changedPosition)
-                .fullUserName(currentUser.getFirstName() + " " + currentUser.getLastName())
+                .fullUserName(currentUser.getFirstName() + " " + currentUser.getLastName() + " (" + currentUser.getCompany() +")")
                 .positionId(changedPosition.getId())
                 .subCategoryId(changedPosition.getSubCategoryId())
                 .build();
 
-        return positionChangesRepo.insert(newPositionChange);
+        positionChangesRepo.insert(newPositionChange);
     }
 }

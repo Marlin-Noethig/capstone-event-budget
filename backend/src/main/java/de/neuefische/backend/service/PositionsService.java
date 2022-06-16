@@ -53,12 +53,15 @@ public class PositionsService {
         return positionsRepo.findAllBySubCategoryIdIsInAndEventIdIsIn(subCategoryIds, eventIds);
     }
 
-    public Position addNewPosition(PositionDto newPosition) {
+    public Position addNewPosition(PositionDto newPosition, AppUserInfoDto currentUser) {
         Position positionToAdd = new Position(newPosition);
         if (newPosition.getName() == null || newPosition.getAmount() <= 0){
             throw new IllegalArgumentException("Name of new position must be set and amount must be more than 0!");
         }
-        return positionsRepo.insert(positionToAdd);
+
+        Position addedPosition = positionsRepo.insert(positionToAdd);
+        positionChangesService.addPositionChange(addedPosition, currentUser, "ADD");
+        return addedPosition;
     }
 
     public Position updatePositionById(String id, PositionDto positionToUpdate, AppUserInfoDto currentUser) {
@@ -76,11 +79,15 @@ public class PositionsService {
         return updatedPosition;
     }
 
-    public void deletePositionById(String id) {
+    public void deletePositionById(String id, AppUserInfoDto currentUser) {
         if (!positionsRepo.existsById(id)) {
             throw new NoSuchElementException("Position with Id " + id +  " does not exist.");
         }
 
+        Position positionToDelete = positionsRepo.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Position to delete not found"));
+
+        positionChangesService.addPositionChange(positionToDelete, currentUser, "DELETE");
         positionsRepo.deleteById(id);
 
     }
