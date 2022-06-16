@@ -15,8 +15,6 @@ export default function AppTitle() {
         return false;
     }
 
-    const isAdmin: boolean = initiateIsAdmin();
-
     return (
         <div className={"app-title-container"}>
                 {currentUser ?
@@ -25,7 +23,7 @@ export default function AppTitle() {
                     <div> </div>
                 }
             <div className={"app-title"}>EventBudget</div>
-            {token ? <NavigationBar isAdmin={isAdmin} logout={logout}/> : <div> </div>}
+            {token ? <NavigationBar isAdmin={initiateIsAdmin()} logout={logout}/> : <div> </div>}
         </div>
     )
 }
