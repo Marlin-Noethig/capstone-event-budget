@@ -2,6 +2,7 @@ package de.neuefische.backend.controller;
 
 import de.neuefische.backend.dto.PositionDto;
 import de.neuefische.backend.model.Position;
+import de.neuefische.backend.security.dto.AppUserInfoDto;
 import de.neuefische.backend.security.service.utils.AuthUtils;
 import de.neuefische.backend.service.PositionsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,8 +39,9 @@ public class PositionsController {
     }
 
     @PutMapping("{id}")
-    public Position putPositionById(@PathVariable String id, @RequestBody PositionDto updatedPosition){
-        return positionsService.updatePositionById(id, updatedPosition);
+    public Position putPositionById(@PathVariable String id, @RequestBody PositionDto updatedPosition, Authentication authentication){
+        AppUserInfoDto currentUser = (AppUserInfoDto) authentication.getPrincipal();
+        return positionsService.updatePositionById(id, updatedPosition, currentUser);
     }
 
     @DeleteMapping("{id}")

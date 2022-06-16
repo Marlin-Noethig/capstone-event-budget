@@ -5,6 +5,7 @@ import de.neuefische.backend.model.Event;
 import de.neuefische.backend.model.Position;
 import de.neuefische.backend.model.SubCategory;
 import de.neuefische.backend.repository.PositionsRepo;
+import de.neuefische.backend.security.dto.AppUserInfoDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
@@ -18,12 +19,14 @@ public class PositionsService {
     private final PositionsRepo positionsRepo;
     private final SubCategoriesService subCategoriesService;
     private final EventsService eventsService;
+    private final PositionChangesService positionChangesService;
 
     @Autowired
-    public PositionsService(PositionsRepo positionsRepo, SubCategoriesService subCategoriesService, EventsService eventsService) {
+    public PositionsService(PositionsRepo positionsRepo, SubCategoriesService subCategoriesService, EventsService eventsService, PositionChangesService positionChangesService) {
         this.positionsRepo = positionsRepo;
         this.subCategoriesService = subCategoriesService;
         this.eventsService = eventsService;
+        this.positionChangesService = positionChangesService;
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
@@ -58,16 +61,19 @@ public class PositionsService {
         return positionsRepo.insert(positionToAdd);
     }
 
-    public Position updatePositionById(String id, PositionDto updatedPosition) {
+    public Position updatePositionById(String id, PositionDto positionToUpdate, AppUserInfoDto currentUser) {
         if (!positionsRepo.existsById(id)) {
             throw new NoSuchElementException("Position with Id " + id +  " does not exist.");
         }
-        if (updatedPosition.getName() == null || updatedPosition.getAmount() <= 0){
+        if (positionToUpdate.getName() == null || positionToUpdate.getAmount() <= 0){
             throw new IllegalArgumentException("Name of updated position must be set and amount must be more than 0!");
         }
-        Position positionToSave = new Position(updatedPosition);
+        Position positionToSave = new Position(positionToUpdate);
         positionToSave.setId(id);
-        return positionsRepo.save(positionToSave);
+
+        Position updatedPosition = positionsRepo.save(positionToSave);
+        positionChangesService.addPositionChange(updatedPosition, currentUser,"UPDATE");
+        return updatedPosition;
     }
 
     public void deletePositionById(String id) {
