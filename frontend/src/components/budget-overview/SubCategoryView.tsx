@@ -36,8 +36,8 @@ export default function SubCategoryView({
         setShowLog(!showLog)
     }
 
-    useEffect(() =>{
-        if(collapseAll !== undefined){
+    useEffect(() => {
+        if (collapseAll !== undefined) {
             setCollapsed(collapseAll)
         } else {
             setCollapsed(false)
@@ -72,8 +72,12 @@ export default function SubCategoryView({
                                         idOfEvent={idOfEvent}
 
             />}
-            {collapsed && <div className={"show-deleted"} onClick={toggleShowLog}>SHOW DELETED OF {subCategory.name.toUpperCase()}</div>}
-            {collapsed && showLog && <PositionChangeLog subCategoryId={subCategory.id} idOfEvent={idOfEvent}/>}
+            {collapsed && <div className={"show-deleted"} onClick={toggleShowLog}>SHOW DELETED
+                OF {subCategory.name.toUpperCase()}</div>}
+            {collapsed && showLog && <PositionChangeLog subCategoryId={subCategory.id}
+                                                        idOfEvent={idOfEvent}
+                                                        toggleShowLog={toggleShowLog}
+                                                        addNewPosition={addNewPosition}/>}
         </div>
     )
 }

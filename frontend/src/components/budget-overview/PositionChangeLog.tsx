@@ -2,14 +2,18 @@ import usePositionChanges from "../../hooks/usePositionChanges";
 import PositionChangeLogEntry from "./PositionChangeLogEntry";
 import {PositionChange} from "../../model/PositionChange";
 import "./styles/PositionChangeLog.css";
+import {Position} from "../../model/Position";
 
 type PositionChangeLogProps = {
     positionId?: string
     subCategoryId: string
     idOfEvent: string
+    toggleShowLog: () => void
+    updatePosition?: (id: string, newPosition: Omit<Position, "id">) => void
+    addNewPosition?: (newPosition: Omit<Position, "id">) => void
 }
 
-export default function PositionChangeLog({positionId, subCategoryId, idOfEvent}: PositionChangeLogProps){
+export default function PositionChangeLog({positionId, subCategoryId, idOfEvent, toggleShowLog, updatePosition, addNewPosition}: PositionChangeLogProps){
 
     const {positionChanges} = usePositionChanges(subCategoryId);
 
@@ -31,7 +35,12 @@ export default function PositionChangeLog({positionId, subCategoryId, idOfEvent}
 
     return(
         <div className={"position-change-log"}>
-            {sortedChanges.map(change => <PositionChangeLogEntry key={change.id} change={change}/>)}
+            {sortedChanges.map(change => <PositionChangeLogEntry key={change.id}
+                                                                 change={change}
+                                                                 toggleShowLog={toggleShowLog}
+                                                                 updatePosition={updatePosition}
+                                                                 addNewPosition={addNewPosition}
+            />)}
         </div>
     )
 }

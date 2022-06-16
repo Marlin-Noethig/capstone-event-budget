@@ -12,6 +12,8 @@ type ViewPositionProps = {
     toggleEnableEdit: () => void
     subCategoryId: string
     idOfEvent: string
+    updatePosition: (id: string, newPosition: Omit<Position, "id">) => void
+
 }
 
 export default function ViewPosition({
@@ -19,7 +21,8 @@ export default function ViewPosition({
                                          deletePosition,
                                          toggleEnableEdit,
                                          subCategoryId,
-                                         idOfEvent
+                                         idOfEvent,
+                                         updatePosition
                                      }: ViewPositionProps) {
 
     const [showLog, setShowLog] = useState<boolean>(false);
@@ -48,7 +51,9 @@ export default function ViewPosition({
             </div>
             {showLog && <PositionChangeLog positionId={position.id}
                                            subCategoryId={subCategoryId}
-                                           idOfEvent={idOfEvent}/>}
+                                           idOfEvent={idOfEvent}
+                                           toggleShowLog={toggleShowLog}
+                                           updatePosition={updatePosition}/>}
         </div>
 
     )

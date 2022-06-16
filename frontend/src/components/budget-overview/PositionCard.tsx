@@ -41,6 +41,7 @@ export default function PositionCard({
                                toggleEnableEdit={toggleEnableEdit}
                                subCategoryId={subCategoryId}
                                idOfEvent={idOfEvent}
+                               updatePosition={updatePosition}
             />
             }
         </div>
