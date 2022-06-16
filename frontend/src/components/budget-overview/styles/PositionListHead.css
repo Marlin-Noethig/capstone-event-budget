@@ -1,5 +1,6 @@
 .position-list-head{
     display: flex;
+    justify-content: space-between;
 }
 
 .position-list-head ul{

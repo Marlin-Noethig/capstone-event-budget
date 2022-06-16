@@ -29,11 +29,6 @@
     text-align: left;
 }
 
-.delete-position-button{
-    cursor: pointer;
-    background-color: #914949;
-    border: 0;
-    border-radius: 3px;
-    font-weight: bold;
-    color: floralwhite;
+.position-view-buttons-container{
+  display: flex;
 }

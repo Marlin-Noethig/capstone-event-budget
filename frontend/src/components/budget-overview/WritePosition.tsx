@@ -99,9 +99,9 @@ export default function WritePosition({
 
             <div className={"write-position-form-buttons"}>
                 {position ?
-                    <input type={"submit"} value={"save"} className={"save-button"}/>
+                    <input type={"submit"} value={"save"} className={"submit-button"}/>
                     :
-                    <input type={"submit"} value={"add"} className={"add-button"}/>
+                    <input type={"submit"} value={"add"} className={"submit-button"}/>
                 }
                 <button onClick={toggleEnableAdd ? toggleEnableAdd : toggleEnableEdit}>X</button>
             </div>

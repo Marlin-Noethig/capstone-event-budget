@@ -24,7 +24,7 @@ export default function ViewPosition({position, deletePosition, toggleEnableEdit
                 <li>{formatMoney((position.price * position.amount))}€</li>
             </ul>
             <div className={"position-view-buttons-container"}>
-                <button className={"edit-position-button"} onClick={toggleEnableEdit}>edit</button>
+                <button onClick={toggleEnableEdit}>edit</button>
                 <DeletionDialogue position={position} deleteFunction={deletePosition}/>
             </div>
         </div>
