@@ -6,3 +6,19 @@
 .sub-category-start span{
     margin-right: 10px;
 }
+
+
+.show-deleted {
+    text-align: left;
+    margin-bottom: 5px;
+    border-left: .1px solid #DDFFF7;
+    padding: 0 5px 0 5px;
+    font-size: 12px;
+    width: fit-content;
+}
+
+.show-deleted:hover {
+    cursor: pointer;
+    background-color: #DDFFF7;
+    color: #0E0E1B;
+}

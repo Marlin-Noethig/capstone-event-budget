@@ -5,6 +5,7 @@ import {Position} from "../../model/Position";
 import {useEffect, useState} from "react";
 import {getSubSum} from "../../service/utils/accountingHelpers";
 import {formatMoney} from "../../service/utils/formattingHelpers";
+import PositionChangeLog from "./PositionChangeLog";
 
 type SubCategoryViewProps = {
     subCategory: SubCategory,
@@ -29,6 +30,11 @@ export default function SubCategoryView({
     const filteredPositions = positions.filter(position => position.subCategoryId === subCategory.id)
     const [enableAdd, setEnableAdd] = useState<boolean>(false);
     const [collapsed, setCollapsed] = useState<boolean>(false);
+    const [showLog, setShowLog] = useState<boolean>(false);
+
+    const toggleShowLog = () => {
+        setShowLog(!showLog)
+    }
 
     useEffect(() =>{
         if(collapseAll !== undefined){
@@ -66,6 +72,8 @@ export default function SubCategoryView({
                                         idOfEvent={idOfEvent}
 
             />}
+            {collapsed && <div className={"show-deleted"} onClick={toggleShowLog}>SHOW DELETED OF {subCategory.name.toUpperCase()}</div>}
+            {showLog && <PositionChangeLog subCategoryId={subCategory.id} idOfEvent={idOfEvent}/>}
         </div>
     )
 }
