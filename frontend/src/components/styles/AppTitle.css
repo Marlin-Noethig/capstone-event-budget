@@ -1,27 +1,27 @@
-.app-title-container{
+.app-title-container {
     display: flex;
     justify-content: space-between;
     padding: 10px;
 }
 
-.app-title{
+.app-title {
     font-weight: bold;
     font-style: italic;
     font-size: 26px;
     text-align: center;
 }
 
-.logout-button-wrapper{
+.logout-button-wrapper {
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.display-current-user{
+.display-current-user {
     color: white;
     font-weight: bold;
     font-size: 14px;
-    padding: 5px;
     border-radius: 5px;
-    border: 1px solid #DDFFF7;
+    display: flex;
+    align-items: center;
 }

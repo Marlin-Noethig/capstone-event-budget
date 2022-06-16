@@ -1,6 +1,5 @@
 .category-view{
     display: flex;
-    font-weight: bold;
     border-radius: 3px;
     padding: 3px 10px 3px 3px;
     margin-bottom: 5px;
@@ -10,6 +9,7 @@
 
 .main-category{
     color: white;
+    font-weight: bold;
 }
 
 .expenses{
