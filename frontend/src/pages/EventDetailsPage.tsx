@@ -38,8 +38,10 @@ export default function EventDetailsPage({events, addEvent, updateEvent, removeE
                 :
                 <div>
                     <DisplayEventDetails event={displayedEvent} users={usersWithUserRole}/>
-                    <button onClick={toggleEnableEdit}>edit</button>
-                    <DeletionDialogue event={displayedEvent} deleteFunction={removeEvent}/>
+                    <div className={"event-details-buttons"}>
+                        <button onClick={toggleEnableEdit}>edit</button>
+                        <DeletionDialogue event={displayedEvent} deleteFunction={removeEvent}/>
+                    </div>
                 </div>
             }
         </div>
