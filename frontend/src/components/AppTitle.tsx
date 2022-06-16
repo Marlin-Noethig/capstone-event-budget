@@ -1,7 +1,7 @@
 import "./styles/AppTitle.css"
 import {useContext} from "react";
 import {AuthContext} from "../context/AuthProvider";
-import {Link} from "react-router-dom";
+import NavigationBar from "./NavigationBar";
 
 
 export default function AppTitle() {
@@ -15,22 +15,15 @@ export default function AppTitle() {
         return false;
     }
 
-    const isAdmin: boolean = initiateIsAdmin();
-
     return (
         <div className={"app-title-container"}>
-            <div>
                 {currentUser ?
-                    <div className={"display-current-user"}>{`Hey, ${currentUser.firstName} ${currentUser.lastName}!`} </div>
+                    <div className={"display-current-user"}>{`${currentUser.firstName.toUpperCase()} ${currentUser.lastName.toUpperCase()}`} </div>
                     :
-                    <></>
+                    <div> </div>
                 }
-            </div>
-            <div className={"app-title"}>EventBudget</div>
-            <div className={"logout-button-wrapper"}>
-                {token && isAdmin && <Link to={"/admin"}>Admin</Link>}
-                {token && <button className={"logout-button"} onClick={logout}>Logout</button>}
-            </div>
+            {!token && <div className={"app-title"}>EventBudget</div>}
+            {token ? <NavigationBar isAdmin={initiateIsAdmin()} logout={logout}/> : <div> </div>}
         </div>
     )
 }

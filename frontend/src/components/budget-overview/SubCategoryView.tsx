@@ -2,8 +2,8 @@ import {SubCategory} from "../../model/SubCategory";
 import "./styles/SubCategoryView.css"
 import PositionList from "./PositionList";
 import {Position} from "../../model/Position";
-import {useState} from "react";
-import {getSubSum} from "../../service/utils/sumHelpers";
+import {useEffect, useState} from "react";
+import {getSubSum} from "../../service/utils/accountingHelpers";
 import {formatMoney} from "../../service/utils/formattingHelpers";
 
 type SubCategoryViewProps = {
@@ -12,7 +12,8 @@ type SubCategoryViewProps = {
     addNewPosition: (newPosition: Omit<Position, "id">) => void,
     deletePosition: (id: string, name: string) => void,
     updatePosition: (id: string, newPosition: Omit<Position, "id">) => void
-    idOfEvent: string
+    idOfEvent: string,
+    collapseAll: boolean | undefined
 }
 
 export default function SubCategoryView({
@@ -21,12 +22,21 @@ export default function SubCategoryView({
                                             addNewPosition,
                                             deletePosition,
                                             updatePosition,
-                                            idOfEvent
+                                            idOfEvent,
+                                            collapseAll
                                         }: SubCategoryViewProps) {
 
     const filteredPositions = positions.filter(position => position.subCategoryId === subCategory.id)
     const [enableAdd, setEnableAdd] = useState<boolean>(false);
     const [collapsed, setCollapsed] = useState<boolean>(false);
+
+    useEffect(() =>{
+        if(collapseAll !== undefined){
+            setCollapsed(collapseAll)
+        } else {
+            setCollapsed(false)
+        }
+    }, [collapseAll])
 
     const toggleEnableAdd = () => {
         setEnableAdd(!enableAdd)

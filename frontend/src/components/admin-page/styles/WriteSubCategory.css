@@ -1,0 +1,9 @@
+.sub-category-write-form{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.write-sub-category-buttons{
+    display: flex;
+}

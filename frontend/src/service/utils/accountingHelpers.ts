@@ -28,3 +28,22 @@ export const getBalance = (positions: Position[], subCategories: SubCategory[], 
     })
     return mainSums.reduce((a, b) => (a + b), 0)
 }
+
+export const getBreakEven: (positions: Position[], subCategories: SubCategory[], mainCategories: MainCategory[], guests: number) => number = (positions, subCategories, mainCategories, guests) => {
+
+    if (positions.length < 1){
+        return 0
+    }
+
+    const mainsFilteredForExpenses = mainCategories.filter(mainCategory => !mainCategory.income)
+    const mainsFilteredForIncome = mainCategories.filter(mainCategory => mainCategory.income)
+
+    let totalExpenses = getBalance(positions, subCategories, mainsFilteredForExpenses);
+    //to reverse the operation from above for recycling purposes
+    totalExpenses *= -1;
+
+    const totalIncomes = getBalance(positions, subCategories, mainsFilteredForIncome)
+
+    //round up because there are no decimal guests
+    return Math.ceil((totalExpenses / (totalIncomes/guests)))
+}

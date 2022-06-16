@@ -1,6 +1,7 @@
 import {SubCategory} from "../../model/SubCategory";
 import {FormEvent, useState} from "react";
 import {toast} from "react-toastify";
+import "./styles/WriteSubCategory.css";
 
 type WriteSubCategoryProps = {
     subCategory?: SubCategory
@@ -36,18 +37,16 @@ export default function WriteSubCategory({subCategory, idOfMainCategory, addSubC
     }
 
     return (
-        <div className={"admin-list-item"}>
-            <form onSubmit={onSubmitSubCategory} action="">
+            <form className={"sub-category-write-form"} onSubmit={onSubmitSubCategory} action="">
                 <input type="text" value={name} onChange={e => setName(e.target.value)}/>
                 <div className={"write-sub-category-buttons"}>
                     {subCategory ?
-                        <input type={"submit"} value={"save"}/>
+                        <input className={"submit-button"} type={"submit"} value={"save"}/>
                         :
-                        <input type={"submit"} value={"add"}/>
+                        <input className={"submit-button"} type={"submit"} value={"add"}/>
                     }
                     <button onClick={toggleEnableAdd ?? toggleEnableEdit}>X</button>
                 </div>
             </form>
-        </div>
     )
 }

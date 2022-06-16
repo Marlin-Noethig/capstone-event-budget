@@ -83,7 +83,7 @@ export default function WritePosition({
     return (
         <form onSubmit={onSubmitNewPosition} className={"write-position-form"}>
             <div className={"write-position-form-inputs overview-grid-item"}>
-                <input type={"text"} value={name} onChange={e => setName(e.target.value)}/>
+                <input type={"text"} value={name} autoFocus={true} onChange={e => setName(e.target.value)}/>
                 <input type={"text"} value={description} onChange={e => setDescription(e.target.value)}/>
                 <input type={"number"} value={amount} min={0} step={"any"}
                        onChange={e => setAmount(Number(e.target.value))}/>
@@ -99,9 +99,9 @@ export default function WritePosition({
 
             <div className={"write-position-form-buttons"}>
                 {position ?
-                    <input type={"submit"} value={"save"} className={"save-button"}/>
+                    <input type={"submit"} value={"save"} className={"submit-button"}/>
                     :
-                    <input type={"submit"} value={"add"} className={"add-button"}/>
+                    <input type={"submit"} value={"add"} className={"submit-button"}/>
                 }
                 <button onClick={toggleEnableAdd ? toggleEnableAdd : toggleEnableEdit}>X</button>
             </div>

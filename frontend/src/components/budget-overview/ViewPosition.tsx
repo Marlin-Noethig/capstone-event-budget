@@ -2,6 +2,7 @@ import {Position} from "../../model/Position";
 import {netToGross} from "../../service/utils/taxHelpers";
 import "./styles/ViewPosition.css"
 import {formatMoney} from "../../service/utils/formattingHelpers";
+import DeletionDialogue from "../DeletionDialogue";
 
 type ViewPositionProps = {
     position: Position
@@ -10,10 +11,6 @@ type ViewPositionProps = {
 }
 
 export default function ViewPosition({position, deletePosition, toggleEnableEdit}:ViewPositionProps){
-
-    const onDelete = () =>{
-        deletePosition(position.id, position.name)
-    }
 
     return(
         <div className={"position-item-container"}>
@@ -27,8 +24,8 @@ export default function ViewPosition({position, deletePosition, toggleEnableEdit
                 <li>{formatMoney((position.price * position.amount))}€</li>
             </ul>
             <div className={"position-view-buttons-container"}>
-                <button className={"edit-position-button"} onClick={toggleEnableEdit}>edit</button>
-                <button className={"delete-position-button"} onClick={onDelete}>delete</button>
+                <button onClick={toggleEnableEdit}>edit</button>
+                <DeletionDialogue position={position} deleteFunction={deletePosition}/>
             </div>
         </div>
     )

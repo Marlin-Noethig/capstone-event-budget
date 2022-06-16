@@ -1,4 +1,3 @@
-import {Link} from "react-router-dom";
 import AdminListBoard from "../components/admin-page/AdminListBoard";
 import {MainCategory} from "../model/MainCategory";
 import {SubCategory} from "../model/SubCategory";
@@ -28,7 +27,6 @@ export default function AdminPage({
 
     return (
         <div className={"admin-page"}>
-            <Link to={"/"}>Home</Link>
             <AdminListBoard mainCategories={mainCategories}
                             updateMainCategory={updateMainCategory}
                             subCategories={subCategories}

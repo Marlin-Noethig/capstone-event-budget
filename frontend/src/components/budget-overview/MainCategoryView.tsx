@@ -3,8 +3,8 @@ import {SubCategory} from "../../model/SubCategory";
 import SubCategoryView from "./SubCategoryView";
 import "./styles/MainCategoryView.css"
 import {Position} from "../../model/Position";
-import {useState} from "react";
-import {getMainSum} from "../../service/utils/sumHelpers";
+import {useEffect, useState} from "react";
+import {getMainSum} from "../../service/utils/accountingHelpers";
 import {formatMoney} from "../../service/utils/formattingHelpers";
 
 type MainCategoryViewProps = {
@@ -15,6 +15,7 @@ type MainCategoryViewProps = {
     deletePosition: (id: string, name: string) => void,
     updatePosition: (id: string, newPosition: Omit<Position, "id">) => void
     idOfEvent: string
+    collapseAll: boolean | undefined
 }
 
 export default function MainCategoryView({
@@ -24,10 +25,19 @@ export default function MainCategoryView({
                                              addNewPosition,
                                              deletePosition,
                                              updatePosition,
-                                             idOfEvent
+                                             idOfEvent,
+                                             collapseAll
                                          }: MainCategoryViewProps) {
 
     const [collapsed, setCollapsed] = useState<boolean>(true);
+
+    useEffect(() =>{
+        if(collapseAll !== undefined){
+            setCollapsed(collapseAll)
+        } else {
+            setCollapsed(true)
+        }
+    }, [collapseAll])
 
     const filteredSubCategories = subCategories.filter(subCategory => subCategory.mainCategoryId === mainCategory.id)
     const isIncomeClassName = mainCategory.income ? " incomes" : " expenses"
@@ -58,6 +68,7 @@ export default function MainCategoryView({
                                                                                     deletePosition={deletePosition}
                                                                                     updatePosition={updatePosition}
                                                                                     idOfEvent={idOfEvent}
+                                                                                    collapseAll={collapseAll}
 
             />)}
         </div>

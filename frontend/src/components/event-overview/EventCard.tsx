@@ -3,7 +3,7 @@ import {SubCategory} from "../../model/SubCategory";
 import {Position} from "../../model/Position";
 import {EventData} from "../../model/EventData";
 import BalanceView from "../budget-overview/BalanceView";
-import {getBalance} from "../../service/utils/sumHelpers";
+import {getBalance} from "../../service/utils/accountingHelpers";
 import {useContext} from "react";
 import {AuthContext} from "../../context/AuthProvider";
 import MainCategoryOverview from "./MainCategoryOverview";

@@ -1,5 +1,8 @@
 .position-list-head{
     display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+    padding-right: 5px;
 }
 
 .position-list-head ul{

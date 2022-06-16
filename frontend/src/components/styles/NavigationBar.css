@@ -1,0 +1,15 @@
+nav {
+    display: flex;
+}
+
+.nav-element{
+    font-size: 14px;
+    border-left: .1px solid #DDFFF7;
+    padding: 10px;
+}
+
+.nav-element:hover {
+    background-color: rgba(221, 255, 247, 0.8);
+    color: #0E0E1B;
+    cursor: pointer;
+}

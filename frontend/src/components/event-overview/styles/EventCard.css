@@ -1,7 +1,7 @@
 .event-card {
     padding: 5px;
     border-radius: 5px;
-    width: 90%;
+    width: 95%;
 }
 
 .event-card-heading {
@@ -14,7 +14,7 @@
 }
 
 .event-card-heading:hover {
-    color: black;
-    background-color: #DDFFF7;
+    color: #0E0E1B;
+    background-color: rgba(221, 255, 247, 0.8);
     cursor: pointer;
 }
