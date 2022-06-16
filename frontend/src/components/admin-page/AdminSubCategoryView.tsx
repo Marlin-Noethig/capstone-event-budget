@@ -2,6 +2,7 @@ import {SubCategory} from "../../model/SubCategory";
 import "./styles/AdminSubCategoryView.css"
 import {useState} from "react";
 import WriteSubCategory from "./WriteSubCategory";
+import DeletionDialogue from "../DeletionDialogue";
 
 type AdminSubCategoryViewProps = {
     subCategory: SubCategory
@@ -21,10 +22,6 @@ export default function AdminSubCategoryView({
         setEnableEdit(!enableEdit)
     }
 
-    const onDelete = () => {
-        removeSubCategory(subCategory.id, subCategory.name)
-    }
-
     return (
         <div className={"admin-list-item sub-category"}>
             {enableEdit ?
@@ -35,11 +32,10 @@ export default function AdminSubCategoryView({
                 :
                 <div className={"display-subcategory"}>
                     <div>{subCategory.name}</div>
-                    <button onClick={onDelete}>delete</button>
                     <button onClick={toggleEnableEdit}>edit</button>
+                    <DeletionDialogue subCategory={subCategory} deleteFunction={removeSubCategory}/>
                 </div>
             }
-
         </div>
     )
 }

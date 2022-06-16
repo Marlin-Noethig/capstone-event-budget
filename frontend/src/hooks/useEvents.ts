@@ -37,7 +37,7 @@ export default function useEvents() {
     const removeEventById = (id: string, name: string) => {
         deleteEventById(id, token)
             .then(() => setEvents(events.filter(event => event.id !== id)))
-            .then(() => toast.success(`${name} has been deleted.`))
+            .then(() => toast.success(`${name} has been removed.`))
             .catch((error) => handleRequestError(error.response.status));
     }
 

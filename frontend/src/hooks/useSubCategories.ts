@@ -37,7 +37,7 @@ export default function useSubCategories() {
     const removeSubCategoryById = (id: string, name: string) => {
         deleteSubCategoryById(id, token)
             .then(() => setSubCategories(subCategories.filter(subCategory => subCategory.id !== id)))
-            .then(() => toast.success(`${name} has been deleted.`))
+            .then(() => toast.success(`${name} has been removed.`))
             .catch((error) => handleRequestError(error.response.status));
     }
 

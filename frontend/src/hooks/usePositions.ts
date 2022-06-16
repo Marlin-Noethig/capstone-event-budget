@@ -37,7 +37,7 @@ export default function usePositions() {
     const removePositionById = (id: string, name: string) => {
         deletePositionById(id, token)
             .then(() => setPositions(positions.filter(position => position.id !== id)))
-            .then(() => toast.success(`${name} has been deleted.`))
+            .then(() => toast.success(`${name} has been removed.`))
             .catch((error) => handleRequestError(error.response.status));
     }
 

@@ -1,10 +1,11 @@
 import {EventData} from "../model/EventData";
 import useUsers from "../hooks/useUsers";
-import {useNavigate, useParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import DisplayEventDetails from "../components/event-details-page/DisplayEventDetails";
 import "./styles/EventDetailsPage.css"
 import {useState} from "react";
 import WriteEvent from "../components/event-details-page/WriteEvent";
+import DeletionDialogue from "../components/DeletionDialogue";
 
 type EventDetailsPageProps = {
     events: EventData [],
@@ -22,17 +23,8 @@ export default function EventDetailsPage({events, addEvent, updateEvent, removeE
 
     const [enableEdit, setEnableEdit] = useState<boolean>(false);
 
-    const navigate = useNavigate();
-
     const toggleEnableEdit = () => {
         setEnableEdit(!enableEdit);
-    }
-
-    const onDelete = () =>{
-        if(displayedEvent){
-            removeEvent(displayedEvent.id, displayedEvent.name);
-            navigate("/admin")
-        }
     }
 
     return (<div className={"event-details-page"}>
@@ -46,8 +38,8 @@ export default function EventDetailsPage({events, addEvent, updateEvent, removeE
                 :
                 <div>
                     <DisplayEventDetails event={displayedEvent} users={usersWithUserRole}/>
-                    <button onClick={onDelete}>delete</button>
                     <button onClick={toggleEnableEdit}>edit</button>
+                    <DeletionDialogue event={displayedEvent} deleteFunction={removeEvent}/>
                 </div>
             }
         </div>
