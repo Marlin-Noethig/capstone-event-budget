@@ -85,7 +85,7 @@ public class PositionsService {
         }
 
         Position positionToDelete = positionsRepo.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Position to delete not found"));
+                .orElseThrow(() -> new NoSuchElementException("Position to delete not found."));
 
         positionChangesService.addPositionChange(positionToDelete, currentUser, "DELETE");
         positionsRepo.deleteById(id);

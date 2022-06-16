@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -176,6 +177,7 @@ class PositionsServiceTest {
         String idOfToDelete= "1";
 
         when(positionsRepo.existsById(idOfToDelete)).thenReturn(true);
+        when(positionsRepo.findById(idOfToDelete)).thenReturn(Optional.ofNullable(testPosition1));
 
         //WHEN
         positionsService.deletePositionById(idOfToDelete, currentUser);
