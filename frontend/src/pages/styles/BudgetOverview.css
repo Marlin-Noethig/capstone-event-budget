@@ -1,3 +1,26 @@
 .budget-overview-wrapper{
     padding: 10px;
 }
+
+.collapse-hide-wrapper{
+    display: flex;
+    flex-direction: row-reverse;
+    margin-bottom: 5px;
+}
+
+.collapse-hide-buttons {
+    display: flex;
+}
+
+.collapse-hide-buttons div{
+    padding: 5px;
+    font-size: 12px;
+    border-left: 0.1px solid #DDFFF7;
+    color: #DDFFF7;
+}
+
+.collapse-hide-buttons div:hover{
+    background-color: rgba(221, 255, 247, 0.8);
+    color: #0E0E1B;
+    cursor: pointer;
+}
