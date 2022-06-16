@@ -1,6 +1,6 @@
 import EventDetailView from "../components/budget-overview/EventDetailView";
 import MainCategoryView from "../components/budget-overview/MainCategoryView";
-import {getBalance} from "../service/utils/accountingHelpers";
+import {getBalance, getBreakEven} from "../service/utils/accountingHelpers";
 import BalanceView from "../components/budget-overview/BalanceView";
 import "./styles/BudgetOverview.css"
 import {MainCategory} from "../model/MainCategory";
@@ -43,6 +43,8 @@ export default function BudgetOverview({
             Event with provided id has not been found.
         </div>
     }
+
+    console.log(getBreakEven(positionsOfEvent, subCategories, mainCategories, displayedEvent.guests))
 
     return (
         <div className={"budget-overview-container"}>
