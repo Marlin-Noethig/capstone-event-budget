@@ -57,5 +57,5 @@ export const getMargin = (positions: Position[], subCategories: SubCategory[], m
     //to reverse the operation from above for recycling purposes
     totalExpenses *= -1;
 
-    return (currentBalance / totalExpenses)
+    return (currentBalance / totalExpenses) * 100
 }

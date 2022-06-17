@@ -1,6 +1,6 @@
 import EventDetailView from "../components/budget-overview/EventDetailView";
 import MainCategoryView from "../components/budget-overview/MainCategoryView";
-import {getBalance, getBreakEven} from "../service/utils/accountingHelpers";
+import {getBalance, getBreakEven, getMargin} from "../service/utils/accountingHelpers";
 import BalanceView from "../components/budget-overview/BalanceView";
 import "./styles/BudgetOverview.css"
 import {MainCategory} from "../model/MainCategory";
@@ -67,6 +67,7 @@ export default function BudgetOverview({
             </div>
             {showBalance && <BalanceView sum={getBalance(positionsOfEvent, subCategories, mainCategories)}
                                          breakEven={getBreakEven(positionsOfEvent, subCategories, mainCategories, displayedEvent.guests)}
+                                         margin={getMargin(positionsOfEvent, subCategories,mainCategories)}
                                          onBudgedList={true}/>}
         </div>
     )
