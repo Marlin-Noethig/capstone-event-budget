@@ -14,3 +14,16 @@ Sonar Badges for Frontend
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=marlin-noethig_capstone-event-budget-frontend&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=marlin-noethig_capstone-event-budget-frontend)
 [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=marlin-noethig_capstone-event-budget-frontend&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=marlin-noethig_capstone-event-budget-frontend)
 [![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=marlin-noethig_capstone-event-budget-frontend&metric=sqale_index)](https://sonarcloud.io/summary/new_code?id=marlin-noethig_capstone-event-budget-frontend)
+
+
+If you are interested in trying out the App, feel free to use these credentials:
+
+Test user:
+
+username: user@test.com
+password: testuserpassword
+
+Test admin:
+
+username: admin@test.com
+password: testadminpassword
