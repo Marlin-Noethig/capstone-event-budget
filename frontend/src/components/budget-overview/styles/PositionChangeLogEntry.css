@@ -10,8 +10,13 @@
 
 .position-change-log-entry-wrapper {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: flex-start;
+}
+
+.position-change-log-entry div {
+    display: flex;
+    flex-direction: row;
 }
 
 .position-change-log-entry div {
@@ -26,6 +31,7 @@
 
 .change-data {
     display: flex;
+    flex-direction: row;
     justify-content: space-around;
 }
 
