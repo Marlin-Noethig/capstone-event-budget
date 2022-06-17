@@ -26,13 +26,16 @@
 
 .remove-all-users {
     color: #DDFFF7;
-    font-weight: bold;
     margin-left: 5px;
     width: fit-content;
     margin-bottom: 5px;
+    padding: 5px;
+    border-left: 0.1px solid #DDFFF7;
+    font-size: 12px;
 }
 
 .remove-all-users:hover{
+    background-color: #DDFFF7;
+    color: #0E0E1B;
     cursor: pointer;
-    color: rgba(221, 255, 247, 0.8);
 }
