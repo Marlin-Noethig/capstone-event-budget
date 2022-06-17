@@ -39,6 +39,9 @@ export default function PositionCard({
             /> : <ViewPosition position={position}
                                deletePosition={deletePosition}
                                toggleEnableEdit={toggleEnableEdit}
+                               subCategoryId={subCategoryId}
+                               idOfEvent={idOfEvent}
+                               updatePosition={updatePosition}
             />
             }
         </div>

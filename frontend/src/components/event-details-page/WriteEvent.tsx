@@ -86,7 +86,7 @@ export default function WriteEvent({users, event, addEvent, updateEvent, toggleE
                         {users.map(user => <option key={user.id} value={user.id}
                                                    defaultChecked={userIds.includes(user.id)}>{`${user.firstName} ${user.lastName} (${user.company})`}</option>)}
                     </select>
-                    <div className={"remove-all-users"} onClick={() => setUserIds([])}>remove all users</div>
+                    <div className={"remove-all-users"} onClick={() => setUserIds([])}>REMOVE ALL USERS</div>
                 </div>
                 {event ?
                     <input className={"submit-button"} type="submit" value={"save"}/>

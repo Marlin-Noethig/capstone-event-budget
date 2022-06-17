@@ -1,0 +1,46 @@
+.position-change-log-entry {
+    background-color: rgba(143, 145, 162, 0.1);
+    margin: 5px 0 5px 0;
+    padding: 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-size: 12px;
+}
+
+.position-change-log-entry-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.position-change-log-entry div {
+    text-align: left;
+    margin-right: 20px;
+    display: flex;
+    flex-direction: row;
+}
+
+
+.change-data-name{
+    text-decoration: underline;
+}
+
+.change-data {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.restore-position {
+    color: #DDFFF7;
+    border-left: 0.1px solid #DDFFF7;
+    height: fit-content;
+    padding: 5px;
+}
+
+.restore-position:hover{
+    background-color: #DDFFF7;
+    color: #0E0E1B;
+    cursor: pointer;
+}

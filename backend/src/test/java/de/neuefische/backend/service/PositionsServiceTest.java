@@ -3,10 +3,12 @@ package de.neuefische.backend.service;
 import de.neuefische.backend.dto.PositionDto;
 import de.neuefische.backend.model.Position;
 import de.neuefische.backend.repository.PositionsRepo;
+import de.neuefische.backend.security.dto.AppUserInfoDto;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -18,7 +20,8 @@ class PositionsServiceTest {
     private final PositionsRepo positionsRepo = mock(PositionsRepo.class);
     private final SubCategoriesService subCategoriesService = mock(SubCategoriesService.class);
     private final EventsService eventsService = mock(EventsService.class);
-    private final PositionsService positionsService = new PositionsService(positionsRepo, subCategoriesService, eventsService);
+    private final PositionChangesService positionChangesService = mock(PositionChangesService.class);
+    private final PositionsService positionsService = new PositionsService(positionsRepo, subCategoriesService, eventsService, positionChangesService);
 
     @Test
     void getPositions_whenGetAll_retrieveAll() {
@@ -55,7 +58,7 @@ class PositionsServiceTest {
                         .build());
         //WHEN
 
-        Position actual = positionsService.addNewPosition(dtoPosition1);
+        Position actual = positionsService.addNewPosition(dtoPosition1, currentUser);
         //THEN
         Position expected = Position.builder()
                 .id("test-id-123")
@@ -82,7 +85,7 @@ class PositionsServiceTest {
         //THEN
         assertThrows(IllegalArgumentException.class, () -> {
             //WHEN
-            positionsService.addNewPosition(positionToAdd);
+            positionsService.addNewPosition(positionToAdd, currentUser);
         });
     }
 
@@ -111,7 +114,7 @@ class PositionsServiceTest {
         when(positionsRepo.save(any())).thenReturn(updatedPosition);
 
         //WHEN
-        Position actual = positionsService.updatePositionById(idOfToUpdate, positionToUpdate);
+        Position actual = positionsService.updatePositionById(idOfToUpdate, positionToUpdate, currentUser);
 
         //THEN
         assertThat(actual, is(updatedPosition));
@@ -133,7 +136,7 @@ class PositionsServiceTest {
         //THEN
         assertThrows(NoSuchElementException.class, () -> {
             //WHEN
-            positionsService.updatePositionById(idOfToUpdate, positionToUpdate);
+            positionsService.updatePositionById(idOfToUpdate, positionToUpdate, currentUser);
         });
     }
 
@@ -164,7 +167,7 @@ class PositionsServiceTest {
         //THEN
         assertThrows(IllegalArgumentException.class, () -> {
             //WHEN
-            positionsService.updatePositionById(idOfToUpdate, positionToUpdate);
+            positionsService.updatePositionById(idOfToUpdate, positionToUpdate, currentUser);
         });
     }
 
@@ -174,9 +177,10 @@ class PositionsServiceTest {
         String idOfToDelete= "1";
 
         when(positionsRepo.existsById(idOfToDelete)).thenReturn(true);
+        when(positionsRepo.findById(idOfToDelete)).thenReturn(Optional.ofNullable(testPosition1));
 
         //WHEN
-        positionsService.deletePositionById(idOfToDelete);
+        positionsService.deletePositionById(idOfToDelete, currentUser);
 
         //THEN
         verify(positionsRepo).deleteById("1");
@@ -193,7 +197,7 @@ class PositionsServiceTest {
         //WHEN
         assertThrows(NoSuchElementException.class, () -> {
             //WHEN
-            positionsService.deletePositionById(wrongIdOfToDelete);
+            positionsService.deletePositionById(wrongIdOfToDelete, currentUser);
         });
     }
 
@@ -240,6 +244,15 @@ class PositionsServiceTest {
             .price(50)
             .amount(10)
             .tax(19)
+            .build();
+
+    AppUserInfoDto currentUser = AppUserInfoDto.builder()
+            .id("123")
+            .mail("mimi@muster.de")
+            .firstName("Mimi")
+            .lastName("muster")
+            .company("Super Company")
+            .role("ADMIN")
             .build();
 
 }
