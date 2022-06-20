@@ -45,6 +45,10 @@ export default function WriteEvent({users, event, addEvent, updateEvent, toggleE
             toast.warn("Ending date must be set")
             return
         }
+        if (guests <= 0 ){
+            toast.warn("Guests must be more than 0.")
+            return
+        }
 
         const eventValues = {
             name: name,
