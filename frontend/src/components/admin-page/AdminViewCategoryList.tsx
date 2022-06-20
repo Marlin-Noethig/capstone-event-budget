@@ -1,4 +1,3 @@
-import "./styles/AdminViewCategoryList.css"
 import {MainCategory} from "../../model/MainCategory";
 import {SubCategory} from "../../model/SubCategory";
 import AdminMainCategoryView from "./AdminMainCategoryView";

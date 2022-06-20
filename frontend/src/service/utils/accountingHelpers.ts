@@ -47,3 +47,15 @@ export const getBreakEven: (positions: Position[], subCategories: SubCategory[],
     //round up because there are no decimal guests
     return Math.ceil((totalExpenses / (totalIncomes/guests)))
 }
+
+export const getMargin = (positions: Position[], subCategories: SubCategory[], mainCategories: MainCategory[]) => {
+    const currentBalance = getBalance(positions, subCategories, mainCategories)
+
+    const mainsFilteredForExpenses = mainCategories.filter(mainCategory => !mainCategory.income)
+
+    let totalExpenses = getBalance(positions, subCategories, mainsFilteredForExpenses);
+    //to reverse the operation from above for recycling purposes
+    totalExpenses *= -1;
+
+    return (currentBalance / totalExpenses) * 100
+}
