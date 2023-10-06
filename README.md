@@ -17,10 +17,9 @@ Sonar Badges for Frontend
 
 
 
-
 If you are interested in trying out the App, feel free to use the following link and credentials:
 
-https://capstone-event-budget.herokuapp.com
+[https://eventbudget.fly.dev](https://eventbudget.fly.dev)
 
 Test user:
 
