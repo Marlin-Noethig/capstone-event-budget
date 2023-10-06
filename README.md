@@ -30,3 +30,5 @@ Test admin:
 
 username: admin@test.com
 password: testadminpassword
+
+You can also hit me up on marlin3003@gmx.de if you want to get a connection to the database to test out this project locally.
