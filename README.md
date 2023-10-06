@@ -16,3 +16,18 @@ Sonar Badges for Frontend
 [![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=marlin-noethig_capstone-event-budget-frontend&metric=sqale_index)](https://sonarcloud.io/summary/new_code?id=marlin-noethig_capstone-event-budget-frontend)
 
 
+
+
+If you are interested in trying out the App, feel free to use the following link and credentials:
+
+https://capstone-event-budget.herokuapp.com
+
+Test user:
+
+username: user@test.com
+password: testuserpassword
+
+Test admin:
+
+username: admin@test.com
+password: testadminpassword
